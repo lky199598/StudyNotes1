@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<div id="content">
+
+<h1>JAVA</h1>
+文本节点1<br>
+<p>JSP</p>
+<h2>Servlet</h2>
+<li>HTML</li>
+文本节点二<br>
+<p>JavaScript</p>
+</div>
+
+<script type="text/javascript">
+
+//清除元素节点内容
+function ClearText() {
+	var content = document.getElementById("content");
+	
+	for(var i=0; i<content.childNodes.length; i++)
+		 if(content.childNodes[i].nodeType == 1)
+			content.removeChild(content.childNodes[i]);
+}
+
+//一次性清除节点内容
+function ClearText2() {
+	var content = document.getElementById("content");
+	
+	for(var i=content.childNodes.length-1; i>=0; i--)
+			content.removeChild(content.childNodes[i]);
+}
+
+//多次方清除节点内容
+function ClearText3() {
+	var content = document.getElementById("content");
+	
+	for(var i=0; i<content.childNodes.length; i++)
+			content.removeChild(content.childNodes[i]);
+}
+</script>
+
+<input type="button" onclick="ClearText()" value="清除元素节点内容"/><br><br>
+
+<button onclick="ClearText2()">一次性清除节点内容</button><br><br>
+
+<button onclick="ClearText3()">多次方清除节点内容</button>
+</body>
+</html>

@@ -1,0 +1,56 @@
+package bao;
+
+import java.io.File;
+import java.io.IOException;
+
+public class jjj
+{
+    public void backup(String database, String file)
+    {
+        File f=new File(file);
+        if(!f.getParentFile().exists())
+        {
+            System.out.println("该文件所在目录不存在，准备创建！\n");
+            f.getParentFile().mkdirs();
+        }
+        Runtime r=Runtime.getRuntime();
+        Process p;
+        try
+        {
+            p=r.exec("cmd.exe /c mysqldump -uroot " + database + ">" + file);
+            /*
+             * int n; StringBuffer str=new StringBuffer(); byte[] b=new byte[1024];
+             * while((n=p.getInputStream().read(b)) != -1) { str.append(new String(b, 0, n)); }
+             */
+
+            System.out.println("数据库" + database + "备份成功!");
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void load(String database, String file) throws IOException
+    {
+        File f=new File(file);
+        if(!f.exists())
+        {
+            System.out.println("文件不存在!\n");
+            throw new IOException();
+        }
+
+        Runtime r=Runtime.getRuntime();
+        Process p=r.exec("cmd.exe /c mysql -uroot " + database + "<" + file);
+        System.out.println("数据库" + database + "恢复成功!\n");
+    }
+
+    public static void main(String[] args) throws IOException
+    {
+        // TODO 自动生成的方法存根
+        jjj f=new jjj();
+        // f.backup("lesson", "E:/AAAAA/dir1/a.sql");
+        f.load("lesson", "E:/AAAAA/dir1/a.sql");
+    }
+}

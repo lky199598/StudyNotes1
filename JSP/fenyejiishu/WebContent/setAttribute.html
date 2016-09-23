@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<p>我的课程</p>
+
+<ul>
+<li title="Java">Java</li>
+<li title="JS">JavaScript</li>
+<li title="JSP">JSP</li>
+<li title="">C++</li>
+<li title="Servlet">Servlet</li>
+<li title="">HTML</li>
+</ul>
+
+<script type="text/javascript">
+
+var list = document.getElementsByTagName("li");
+for(var i=0; i<list.length; i++)
+	{
+	var text = list[i].getAttribute("title");
+	if(text=="")
+		{
+	    list[i].setAttribute("title", "没有内容");
+	    document.write(list[i].getAttribute("title")+"<br>");
+		}
+	else
+		document.write(text+"<br>");
+	}
+
+</script>
+
+</body>
+</html>

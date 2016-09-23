@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+
+<body>
+<h1 id="link" title="getAttribute()获取标签的属性值" onclick="getAtt()">点击我,获取标签的属性值</h1>
+
+<script type="text/javascript">
+function getAtt() {
+	var l=document.getElementById("link");
+	var i=document.getAttribute("id");
+	var tit=document.getAttribute("title");
+	document.write("14345");
+	document.write("h1标签的ID: "+i+"<br>");
+	document.write("h1标签的title: "+tit);
+}
+getAtt();
+</script>
+</body>
+
+</html>

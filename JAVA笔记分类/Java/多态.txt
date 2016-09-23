@@ -1,0 +1,142 @@
+import java.util.Scanner;
+
+abstract class shape
+{
+    private String color="While";
+
+    shape(String c)
+    {
+        color=c;
+    }
+
+    abstract double getarea();
+
+    abstract double perimeter();
+
+    void SetColor(String c)
+    {
+        color=c;
+    }
+
+    public String toString()
+    {
+        return null;
+    }
+}
+
+class circle extends shape
+{
+    private double r;
+
+    circle(String c, double r)
+    {
+        super(c);
+        this.r=r;
+
+    }
+
+    public double getarea()
+    {
+        return Math.PI * r * r;
+    }
+
+    public double perimeter()
+    {
+        return Math.PI * 2 * r;
+    }
+
+    public String toString()
+    {
+        return "The Circle area is: " + getarea() + ", Perimeter is: " + perimeter();
+    }
+}
+
+class Rectangle extends shape
+{
+    double height, width;
+
+    Rectangle(String c, double w, double h)
+    {
+        super(c);
+        width=w;
+        height=h;
+    }
+
+    public double getarea()
+    {
+        return width * height;
+    }
+
+    public double perimeter()
+    {
+        return (width + height) * 2;
+    }
+
+    public String toString()
+    {
+        return "The Rectangle area is: " + getarea() + ", Perimeter is: " + perimeter();
+    }
+}
+
+class Triangle extends shape
+{
+    double a, b, c;
+
+    Triangle(String color, double a, double b, double c)
+    {
+        super(color);
+        this.a=a;
+        this.b=b;
+        this.c=c;
+    }
+
+    public double getarea()
+    {
+        double s=(a + b + c) / 2;
+        return Math.sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+
+    public double perimeter()
+    {
+        return a + b + c;
+    }
+
+    public String toString()
+    {
+        return "The Triangle area is: " + getarea() + ", Perimeter is: " + perimeter();
+    }
+}
+
+public class ccc
+{
+    /**
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        // TODO 自动生成的方法存根
+        Scanner input=new Scanner(System.in);
+        System.out.println("请输入圆的半径： ");
+        double radius=input.nextDouble();
+
+        circle cir=new circle(null, radius);
+        System.out.println(cir.toString());
+
+        System.out.println("\n请输入矩形的宽与高： ");
+        double w=input.nextDouble();
+        double h=input.nextDouble();
+
+        Rectangle r=new Rectangle(null, w, h);
+        System.out.println(r.toString());
+
+        System.out.println("\n请输入三角形的三条边长度： ");
+        double a=input.nextDouble();
+        double b=input.nextDouble();
+        double c=input.nextDouble();
+
+        Triangle t=new Triangle(null, a, b, c);
+        System.out.println(t.toString());
+
+    }
+
+}

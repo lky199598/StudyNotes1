@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-31 12:06:43 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="JavaBean.Order" table="ORDER">
+        <id name="order_id" type="java.lang.Integer">
+            <column name="ORDER_ID" />
+            <generator class="increment" />
+        </id>
+        <property name="tradeDate" type="java.util.Date">
+            <column name="TRADEDATE" />
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="STATUS" />
+        </property>
+        <property name="amount" type="java.lang.Double">
+            <column name="AMOUNT" />
+        </property>
+         <many-to-one name="customer" class="JavaBean.Customer" fetch="join" cascade="all">
+            <column name="CUSTOMER_ID" />
+        </many-to-one> 
+    </class>
+</hibernate-mapping>

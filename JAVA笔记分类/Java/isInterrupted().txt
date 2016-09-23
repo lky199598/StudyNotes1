@@ -1,0 +1,38 @@
+package A;
+
+public class ccc
+{
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        Thread b=new bbbbb();
+        b.start();
+    }
+
+}
+
+class bbbbb extends Thread
+{
+    public void run()
+    {
+        System.out.println("\nisInterrupted(): " + isInterrupted());
+        interrupt();
+        System.out.println("\ninterrupt(): isInterrupted(): " + isInterrupted());
+        System.out.println("\ninterrupt(): isInterrupted(): " + isInterrupted());
+        try
+        {
+            sleep(100);
+        }
+        catch(InterruptedException e)
+        {
+            System.out.println("\ncatch(): isInterrupted(): " + isInterrupted());
+            System.out.println("\nÐÝÃß³ö´í£º " + e.getMessage());
+
+        }
+        System.out.println("\nisInterrupted(): " + isInterrupted());
+    }
+
+}

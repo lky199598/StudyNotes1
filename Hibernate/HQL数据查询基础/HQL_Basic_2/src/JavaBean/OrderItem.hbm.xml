@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-31 12:06:43 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="JavaBean.OrderItem" table="ORDERITEM">
+        <id name="orderitem_id" type="java.lang.Long">
+            <column name="ORDERITEM_ID" />
+            <generator class="increment" />
+        </id>
+        <property name="discount" type="java.lang.Double">
+            <column name="DISCOUNT" />
+        </property>
+        <property name="actPrice" type="java.lang.Double">
+            <column name="ACTPRICE" />
+        </property>
+        <property name="amount" type="java.lang.Double">
+            <column name="AMOUNT" />
+        </property>
+        <many-to-one name="order" class="JavaBean.Order" fetch="join" cascade="all">
+            <column name="ORDER_ID" />
+        </many-to-one>
+        <many-to-one name="commodity" class="JavaBean.Commodity" fetch="join" cascade="all">
+            <column name="COMMODITY_ID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

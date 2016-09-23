@@ -1,0 +1,171 @@
+Java中的equals()
+经过几天的学习，终于对equals的用法有了比较全面的认识，并做一个总结。
+
+1.equals的本意——即在Object对象中定义的equals()方法有什么样的意义。
+
+（此处先附上==的作用，后面仍有叙述。因为==和equals()方法的关系是很密切的，后面有我自己的看法。
+
+    ==用于比较引用和比较基本数据类型时具有不同的功能：
+     比较基本数据类型，如果两个值相同，则结果为true
+     而在比较引用时，如果引用指向内存中的同一对象，结果为true）
+
+ 
+
+   public  boolean equals(Object obj)
+
+   其比较规则为：当参数obj引用的对象与当前对象为同一个对象时，就返回true,否则返回false.
+
+public class Fish {
+    private int weight;
+    private String color;
+
+ 
+
+    public Fish(int weight, String color) {
+        this.color = color;
+        this.weight = weight;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+ 
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+}
+
+public class EqualsTest {
+    public static void main(String[] args) {
+        Fish f1 = new Fish(1, "blue");
+        Fish f2 = new Fish(1, "blue");
+
+ 
+
+        System.out.println(f1 == f2);
+        System.out.println(f1.equals(f2));
+    }
+}
+
+——————运行结果为——————
+
+false
+false
+
+由此可见，equals()方法的本意为确定两个对象的引用是否相同。
+
+2.而JDK类中有一些类覆盖了oject类的equals()方法，比较规则为：如果两个对象的类型一致，并且内容一致，则返回true,这些类有：
+java.io.file,java.util.Date,java.lang.string,包装类（Integer,Double等）
+
+public class EqualsTest {
+    public static void main(String[] args) {
+        String s1=new String("sss");
+        String s2=new String("sss");
+        
+        System.out.println(s1==s2);
+        System.out.println(s1.equals(s2));
+    }
+}
+
+————————运行结果为——————
+
+false
+true
+
+由此知道，在String中equals()方法被进行了覆盖，使其意义变为比较两个对象的内容是否一致
+
+3.如果我们要自己覆盖equals()方法，让其比较内容或者有别的使用方法（当然我们一般都是用于比较内容的，但是覆盖的方法中真正的实现究竟是什么样的，谁知道呢O(∩_∩)O~）
+
+public class Fish {
+    private int weight;
+    private String color;
+
+ 
+
+    public Fish(int weight, String color) {
+        this.color = color;
+        this.weight = weight;
+    }
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((color == null) ? 0 : color.hashCode());
+        result = prime * result + weight;
+        return result;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Fish other = (Fish) obj;
+        if (color == null) {
+            if (other.color != null)
+                return false;
+        } else if (!color.equals(other.color))
+            return false;
+        if (weight != other.weight)
+            return false;
+        return true;
+    }
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+}
+
+public class EqualsTest {
+    public static void main(String[] args) {
+        Fish f1 = new Fish(1, "blue");
+        Fish f2 = new Fish(1, "blue");
+
+ 
+
+        System.out.println(f1 == f2);
+        System.out.println(f1.equals(f2));
+    }
+}
+
+——————运行结果为——————
+
+false
+true
+
+此例子中我复写了equals()方法和hashcode()方法，使得equals()方法脱离的本意，不再是比较两个对象的引用是否相同，而是比较其内容是否相同。
+
+以上内容为一般书上的总结，下面是我自己想到的一些东西。
+
+我们可以知道计算机归根到底进行的只是一些二进制数的与或非运算，加法乘法运算。由此有了些基本的运算符，所有的函数本质上其实现都是使用基本运算符来实现的。而==是基本运算符中的一个，它的作用：用于比较引用和比较基本数据类型时具有不同的功能：
+     比较基本数据类型，如果两个值相同，则结果为true
+     而在比较引用时，如果引用指向内存中的同一对象，结果为true
+
+而equals()作为方法，我们可以推测知道，它其中的实现所使用的肯定是==运算符。再进一步的思考，equals()本意不正是==运算符进行对象比较时候的作用吗。那么，既然是两者有同样的作用，为什么还要弄出一个equals()方法来呢。因为==运算符不允许我们进行覆盖，也就是说它限制了我们的表达。在上面的第三个例子中，我们复写equals()方法，达到比较对象内容是否相同的目的。而这些通过==运算符是做不到的。

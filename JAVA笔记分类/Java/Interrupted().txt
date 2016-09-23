@@ -1,0 +1,41 @@
+package A;
+
+public class ddd
+{
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        Thread b=new bbbbbb();
+        b.start();
+    }
+
+}
+
+class bbbbbb extends Thread
+{
+    public void run()
+    {
+        System.out.println("\nInterrupted(): " + interrupted());
+        interrupt();
+
+        System.out.println("\ninterrupt(): Interrupted(): " + interrupted());
+
+        System.out.println("\ninterrupt(): Interrupted(): " + interrupted());
+
+        try
+        {
+            sleep(100);
+        }
+        catch(InterruptedException e)
+        {
+            System.out.println("\ncatch(): Interrupted(): " + interrupted());
+            System.out.println("\nĞİÃß³ö´í£º " + e.getMessage());
+
+        }
+        System.out.println("\nisInterrupted(): " + interrupted());
+    }
+
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-21 15:20:20 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="JavaBean.Student" table="STUDENT">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" />
+        </property>
+        <property name="date" type="java.util.Date">
+            <column name="DATE" />
+        </property>
+        <property name="picture" type="java.sql.Blob">
+            <column name="PICTURE" />
+        </property> 
+    </class>
+</hibernate-mapping>

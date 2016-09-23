@@ -1,0 +1,353 @@
+package A;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+
+public class student implements Serializable, Comparable<student>
+{
+    private static final long serialVersionUID=123L;
+
+    private String id;
+    private String name;
+    private int java;
+    private int system;
+    private int web;
+    private int total;
+
+    public student(String id, String name, int java, int system, int web)
+    {
+        this.id=id;
+        this.name=name;
+        this.java=java;
+        this.system=system;
+        this.web=web;
+        total=java + system + web;
+    }
+
+    public String getID()
+    {
+        return id;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public int getJava()
+    {
+        return java;
+    }
+
+    public int getSystem()
+    {
+        return system;
+    }
+
+    public int getWeb()
+    {
+        return web;
+    }
+
+    public int getTotal()
+    {
+        return total;
+    }
+
+    public String toString()
+    {
+        return "Student  [id=" + id + ", name=" + name + ", java=" + java + ", system=" + system + ", web=" + web + ", total=" + total + "]\n";
+    }
+
+    public static void main(String[] args)
+    {
+        txt t=new txt();
+        t.write_file();
+        t.read_file();
+
+        dat d=new dat();
+        d.write_file();
+        d.read_file();
+
+    }
+
+    public int compareTo(student o)// 第一种排序方法
+    {
+        return o.total - total;
+    }
+}
+
+class studentcomparator implements Comparator<student>// 第二种排序方法
+{
+    public int compare(student o1, student o2)
+    {
+        return o1.getTotal() - o2.getTotal();
+    }
+}
+
+class txt
+{
+
+    private final static String filename="student.txt";
+
+    public void write_file()
+    {
+        List<student> db=new ArrayList<student>();
+        db.add(new student("555", "eee", 75, 85, 95));
+        db.add(new student("111", "aaa", 70, 80, 90));
+        db.add(new student("222", "bbb", 71, 81, 91));
+        db.add(new student("444", "ddd", 73, 83, 93));
+        db.add(new student("333", "ccc", 72, 82, 92));
+
+        File file=null;
+        FileWriter fw=null;// 字符输出流
+        BufferedWriter bw=null;
+        try
+        {
+            file=new File(filename);
+            if(!file.exists())
+            {
+                boolean flag=file.createNewFile();
+                if(flag)
+                    System.out.println(file + "创建成功！\n");
+                else
+                {
+                    System.out.println(file + "文件创建失败！\n");
+                    throw new IOException();
+                }
+            }
+            bw=new BufferedWriter(new FileWriter(file));
+
+            for(student stu : db)
+            {
+                bw.write(stu.getID() + " " + stu.getName() + " " + stu.getJava() + " " + stu.getSystem() + " " + stu.getWeb());
+                bw.newLine();
+            }
+        }
+
+        catch(FileNotFoundException e)
+        {
+            System.out.println("文件未找到!\n");
+            e.printStackTrace();
+        }
+
+        catch(IOException e)
+        {
+            System.out.println("发生I/O异常!\n");
+            e.printStackTrace();
+        }
+
+        finally
+        {
+            try
+            {
+                bw.close();
+                System.out.println(file + "写入成功!\n");
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void read_file()
+    {
+        File file=null;
+        BufferedReader br=null;
+        List<student> stu=new ArrayList<student>();
+        try
+        {
+            file=new File(filename);
+            br=new BufferedReader(new FileReader(file));
+            student st=null;
+
+            String str;
+            while((str=br.readLine()) != null)
+            {
+                String[] data=str.split(" ");
+                st=new student(data[0], data[1], Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]));
+                stu.add(st);
+            }
+
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println(file + "未找到!\n");
+            e.printStackTrace();
+        }
+        catch(IOException e1)
+        {
+            e1.printStackTrace();
+        }
+
+        finally
+        {
+            try
+            {
+                br.close();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+            System.out.println("从" + file + "读取完毕!\n");
+            sort(stu);
+        }
+
+    }
+
+    public void sort(List<student> stu)
+    {
+        Collections.sort(stu, new studentcomparator());
+        for(int i=0; i < stu.size(); i++)
+            System.out.println(stu.get(i));
+    }
+
+}
+
+class dat
+{
+    private final static String filename="student.dat";
+
+    public void write_file()
+    {
+        List<student> db=new ArrayList<student>();
+        db.add(new student("555", "eee", 75, 85, 95));
+        db.add(new student("111", "aaa", 70, 80, 90));
+        db.add(new student("222", "bbb", 71, 81, 91));
+        db.add(new student("444", "ddd", 73, 83, 93));
+        db.add(new student("333", "ccc", 72, 82, 92));
+        File file=null;
+        ObjectOutputStream oos=null;
+        try
+        {
+            file=new File(filename);
+            if(!file.exists())
+            {
+                boolean flag=file.createNewFile();
+                if(flag)
+                    System.out.println("\n\n" + file + "创建成功!\n");
+                else
+                {
+                    System.out.println("\n\n" + file + "创建失败！\n");
+                    throw new IOException();
+                }
+            }
+
+            oos=new ObjectOutputStream(new FileOutputStream(file));
+            Iterator<student> it=db.iterator();
+
+            while(it.hasNext())
+            {
+                oos.writeObject(it.next());
+                oos.flush();
+            }
+
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println(file + "未找到!");
+            e.printStackTrace();
+        }
+
+        catch(IOException e)
+        {
+            System.out.println("发生I/O异常!\n");
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                oos.close();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+            System.out.println("\n\n" + file + "写入成功!\n");
+        }
+    }
+
+    public void read_file()
+    {
+        List<student> stu=new ArrayList<student>();
+        File file=null;
+        ObjectInputStream ois=null;
+
+        try
+        {
+            file=new File(filename);
+            if(!file.exists())
+                throw new FileNotFoundException();
+
+            ois=new ObjectInputStream(new FileInputStream(file));
+
+            student s=null;
+            while(true)
+            {
+                try
+                {
+                    s=(student) ois.readObject();
+                }
+                catch(EOFException e)
+                {
+                    System.out.println("从" + file + "读取完毕!\n");
+                    break;
+                }
+                if(s != null)
+                    stu.add(s);
+            }
+        }
+
+        catch(FileNotFoundException e)
+        {
+            System.out.println(file + "未找到！");
+            e.printStackTrace();
+        }
+        catch(IOException e)
+        {
+
+            System.out.println("发生I/O异常!\n");
+            e.printStackTrace();
+        }
+        catch(ClassNotFoundException e)
+        {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                ois.close();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            Collections.sort(stu);
+            for(student s : stu)
+                System.out.println(s);
+        }
+    }
+
+}

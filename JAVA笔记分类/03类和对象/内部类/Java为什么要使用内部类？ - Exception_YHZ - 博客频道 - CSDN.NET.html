@@ -1,0 +1,1337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0056)http://blog.csdn.net/yu422560654/article/details/7466260 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/kcom"></script><script type="text/javascript" async="" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/kcom(1)"></script>   
+   
+
+    <script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script><script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/repoAddr2.js"></script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/yu422560654/article/details/7466260#">
+
+    <title>Java为什么要使用内部类？ - Exception_YHZ
+        - 博客频道 - CSDN.NET</title>
+    
+    <meta name="description" content="刚开始也不知道什么是pbr （Physically Based Rendering）后来才发现这是一种新的渲染方式与之对应的是材质是pbs（Physically Based Shader）(unity中pbr材质)PBR做法 albedo map 无光颜色贴图normal map 法线贴图metallic map 金属度贴图roughness 粗糙度贴图(u">
+    <script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/jquery.js" type="text/javascript"></script>
+      <script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/jquery-version.js"></script>
+    <script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ad.js"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">
+        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/tracking(1).js"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/yu422560654/rss/list">
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/nobg_code.css">
+ 
+
+
+<script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/share.js"></script><link rel="stylesheet" type="text/css" href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/job_reco.css"><script type="text/javascript" charset="utf-8" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/main.js"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/bdsstyle.css" rel="stylesheet" type="text/css"><link rel="stylesheet" type="text/css" href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/style(1).css"><link type="text/css" rel="stylesheet" href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/style(2).css"><script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/logger.js"></script><script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/get_ads.php" type="text/javascript"></script><link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style0_16.css?v=6aba13f0.css"></head>
+<body><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div><div id="MathJax_Message" style="display: none;"></div><iframe frameborder="0" style="display: none;"></iframe>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/html.js" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="http://passport.csdn.net/account/mobileregister?ref=toolbar&action=mobileRegister">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="about:block" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix" style="display:none;"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt style="border: none;"><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew" style="display: none;"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd style="display:none"> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd style="display:none"> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">JOB<img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/yu422560654">Exception_YHZ</a></h2>
+            <h3>Stay Hungry,Stay Foolish.</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/yu422560654?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/yu422560654?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/yu422560654/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "yu422560654";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/yu422560654";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/90" target="_blank">
+<font color="red">【免费公开课】音视频技术WebRTC初探
+</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="https://code.csdn.net/blog/38" target="_blank">
+<font color="blue">CODE产品升级了，私仓无限，加入产品群更有福利等您拿！</font></a>
+&nbsp;&nbsp;&nbsp;
+<a href="http://blog.csdn.net/foruok/article/details/51189466" target="_blank">
+<font color="red">【专家图书】 《你好哇，程序员》新鲜出炉
+</font></a>
+
+
+</div>                        </div>
+                        
+
+
+
+<!-- 广告位开始 -->
+<div class="J_adv" data-view="true" data-mod="ad_popu_72" data-mtp="40" data-order="40" data-con="ad_content_217" style="width: 1px; height: 1px; position: fixed; right: 10px; bottom: 10px; background-color: transparent;"><div id="location_parent"></div><script>document.getElementById('location_parent').parentNode.style.height='1px';document.getElementById('location_parent').parentNode.style.width='1px';document.getElementById('location_parent').parentNode.style.position='fixed';document.getElementById('location_parent').parentNode.style.right='10px';document.getElementById('location_parent').parentNode.style.bottom='10px';document.getElementById('location_parent').parentNode.style.backgroundColor='transparent';</script><!-- 广告占位容器 --><!-- 投放代码 --><script type="text/javascript">(window['cproStyleApi'] = window['cproStyleApi'] || {})['u2392861']={at:'3',rsi0:'300',rsi1:'250',pat:'17',tn:'baiduCustNativeAD_xuanfu',rss1:'#FFFFFF',conBW:'1',adp:'1',ptt:'0',titFF:'%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91',titFS:'14',rss2:'#000000',titSU:'0'};/*服务器频道首页置顶Banner960*90，创建于2014-7-3*/(window.cproArray = window.cproArray || []).push({id:'u2392861'});  </script>  <script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/f.js" type="text/javascript"></script></div>
+<!-- 广告位结束 -->
+
+  
+<link href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/jquery.cookie.js"></script>
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/main(1).js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0">
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0">
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/MathJax.js"></script>
+
+ <script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/web-storage-cache.min.js"></script>
+
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/web-storage-cache.min.js"></script>
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/replace.min.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+          
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET.html">
+        Java为什么要使用内部类？            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href="http://www.csdn.net/tag/java" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">java</a><a href="http://www.csdn.net/tag/string" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">string</a><a href="http://www.csdn.net/tag/class" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">class</a><a href="http://www.csdn.net/tag/constructor" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">constructor</a><a href="http://www.csdn.net/tag/parameters" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">parameters</a><a href="http://www.csdn.net/tag/interface" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">interface</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2012-04-16 16:30</span>
+            <span class="link_view" title="阅读次数">6764人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(5)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle(&#39;Java为什么要使用内部类？&#39;,&#39;7466260&#39;);return false;" title="收藏" target="_blank">收藏</a></span>
+             <span class="link_report"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#report" onclick="javascript:report(7466260,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody" style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            var lib = eval("("+$("#lib").attr("value")+")");
+            var html = "";
+            if (lib.err == 0) {
+                $.each(lib.data, function (i) {
+                    var obj = lib.data[i];
+                    //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                    html += ' <a href="' + obj.url + '" target="_blank">';
+                    html += ' <img src="' + obj.logo + '">';
+                    html += ' <em><b>' + obj.name + '</b></em>';
+                    html += ' </a>';
+                });
+                if (html != "") {
+                    setTimeout(function () {
+                        $("#lib").html(html);
+                        /*
+                        var testhtml = "";
+                        testhtml += '<a href="#">';
+                        testhtml += '<img src="http://img.knowledge.csdn.net/upload/base/1455589744328_328.jpg">';
+                        testhtml += '<em>Android知识库</em>';
+                        testhtml += '</a>';
+                        $(".embody_c").html(testhtml);
+                        */
+                        $("#embody").show();
+                    }, 100);
+                }
+            }          
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label onclick="GetCategoryArticles(&#39;863270&#39;,&#39;yu422560654&#39;,&#39;top&#39;,&#39;7466260&#39;);">
+                        <span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">java<em>（42）</em></span>
+                      <img class="arrow-down" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a href="http://blog.csdn.net/yu422560654/article/category/863270" target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_863270">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/category.js"></script>  
+
+  
+
+  
+  
+     
+
+<div style="clear:both"></div><div style="border:solid 1px #ccc; background:#eee; float:left; min-width:200px;padding:4px 10px;"><p style="text-align:right;margin:0;"><span style="float:left;">目录<a href="http://blog.csdn.net/yu422560654/article/details/7466260#" title="系统根据文章中H1到H6标签自动生成文章目录">(?)</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" onclick="javascript:return openct(this);" title="展开">[+]</a></p><ol style="display:none;margin-left:14px;padding-left:14px;line-height:160%;"><li><a href="http://blog.csdn.net/yu422560654/article/details/7466260#t0">内部类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </a></li><ol><li><a href="http://blog.csdn.net/yu422560654/article/details/7466260#t1">&nbsp;第一次见面
+</a></li><ol><li><a href="http://blog.csdn.net/yu422560654/article/details/7466260#t2">&nbsp;</a></li></ol><li><a href="http://blog.csdn.net/yu422560654/article/details/7466260#t3">&nbsp;非静态内部类对象有着指向其外部类对象的引用</a></li><li><a href="http://blog.csdn.net/yu422560654/article/details/7466260#t4">静态内部类嵌套类</a></li><li><a href="http://blog.csdn.net/yu422560654/article/details/7466260#t5">局部内部类</a></li></ol><li><a href="http://blog.csdn.net/yu422560654/article/details/7466260#t6">匿名类</a></li></ol></div><div style="clear:both"></div><div id="article_content" class="article_content">
+
+<h1><a name="t0"></a>1.内部类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </h1>
+<p><span style="font-size:16px">首先举一个简单的例子，如果你想实现一个接口，但是这个接口中的一个方法和你构想的这个类中的一个 方法的名称，参数相同，你应该怎么办？这时候，你可以建一个内部类实现这个接口。由于内部类对外部类的所有内容都是可访问的，所以这样做可以完成所有你直 接实现这个接口的功能。</span><span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不过你可能要质疑，更改一下方法的不就行了吗？</span><span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 的确，以此作为设计内部类的理由，实在没有说服 力。</span><span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><span style="color:#ff0000">真正的原因是这样的，<span style="font-family:Liberation Serif,serif">java</span>中的内部类和接口加在一起，可以的解决常被<span style="font-family:Liberation Serif,serif">C++</span>程序员抱怨<span style="font-family:Liberation Serif,serif">java</span>中存在的一个问题<span style="font-family:Liberation Serif,serif">——</span>没有多继承。实际上，<span style="font-family:Liberation Serif,serif">C++</span>的多继承设计起来很复杂，而<span style="font-family:Liberation Serif,serif">java</span>通过内部类加上接口，可以很好的实现多继承的效果。</span></strong></span><span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 内部类：一个内部类的定义是定义在另一个内部的类。</span><span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px">原因是：</span><span style="font-family:Liberation Serif,serif"><br>
+<span style="font-size:16px">1.</span></span><span style="font-size:16px">一个内部类的对象能够访问创建它的对象的实现，包括私有数据。</span><span style="font-family:Liberation Serif,serif"><br>
+<span style="font-size:16px">2. </span></span><span style="font-size:16px">对于同一个包中的其他类来说，内部类能够隐藏起来。</span><span style="font-family:Liberation Serif,serif"><br>
+<span style="font-size:16px">3.</span></span><span style="font-size:16px">匿名内部类可以很方便的定义回调。</span><span style="font-family:Liberation Serif,serif"><br>
+<span style="font-size:16px">4.</span></span><span style="font-size:16px">使用内部类可以非常方便的编写事件驱动程序</span></p>
+<p><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 内部类可以让你更优雅地设计你的程序结构。下面从以下几个方面来介绍：</span></p>
+<h2><a name="t1"></a>&nbsp;第一次见面<br>
+</h2>
+<div class="dp-highlighter bg_java"><div class="bar"><div class="tools"><b>[java]</b> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><div style="position: absolute; left: 517px; top: 1130px; width: 29px; height: 14px; z-index: 99;"><embed id="ZeroClipboardMovie_1" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="29" height="14" name="ZeroClipboardMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=29&amp;height=14" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-j"><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">interface</span><span>&nbsp;Contents&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　<span class="keyword">int</span><span>&nbsp;value();&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">interface</span><span>&nbsp;Destination&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　String&nbsp;readLabel();&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">public interface Contents {
+　int value();
+}
+
+public interface Destination {
+　String readLabel();
+}</pre>
+<p><br>
+&nbsp;</p>
+<div class="dp-highlighter bg_java"><div class="bar"><div class="tools"><b>[java]</b> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><div style="position: absolute; left: 517px; top: 1391px; width: 29px; height: 14px; z-index: 99;"><embed id="ZeroClipboardMovie_2" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="29" height="14" name="ZeroClipboardMovie_2" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=2&amp;width=29&amp;height=14" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-j"><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;Goods&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;Content&nbsp;</span><span class="keyword">implements</span><span>&nbsp;Contents&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;i&nbsp;=&nbsp;</span><span class="number">11</span><span>;&nbsp;&nbsp;</span></span></li><li class=""><span>　　<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;value()&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　　<span class="keyword">return</span><span>&nbsp;i;&nbsp;&nbsp;</span></span></li><li class=""><span>　　}&nbsp;&nbsp;</span></li><li class="alt"><span>　&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>　<span class="keyword">protected</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;GDestination&nbsp;</span><span class="keyword">implements</span><span>&nbsp;Destination&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　&nbsp;<span class="keyword">private</span><span>&nbsp;String&nbsp;label;&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　<span class="keyword">private</span><span>&nbsp;GDestination(String&nbsp;whereTo)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　　&nbsp;label&nbsp;=&nbsp;whereTo;&nbsp;&nbsp;</span></li><li class="alt"><span>　　}&nbsp;&nbsp;</span></li><li class=""><span>　　<span class="keyword">public</span><span>&nbsp;String&nbsp;readLabel()&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　　<span class="keyword">return</span><span>&nbsp;label;&nbsp;&nbsp;</span></span></li><li class=""><span>　　}&nbsp;&nbsp;</span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>　<span class="keyword">public</span><span>&nbsp;Destination&nbsp;dest(String&nbsp;s)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;GDestination(s);&nbsp;&nbsp;</span></span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>　<span class="keyword">public</span><span>&nbsp;Contents&nbsp;cont()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;Content();&nbsp;&nbsp;</span></span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">class</span><span>&nbsp;TestGoods&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　Goods&nbsp;p&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;Goods();&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　&nbsp;Contents&nbsp;c&nbsp;=&nbsp;p.cont();&nbsp;&nbsp;</span></li><li class=""><span>　　Destination&nbsp;d&nbsp;=&nbsp;p.dest(<span class="string">"Beijing"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">public class Goods {
+　private class Content implements Contents {
+　　 private int i = 11;
+　　public int value() {
+　　　return i;
+　　}
+　 }
+
+　protected class GDestination implements Destination {
+　　 private String label;
+　　private GDestination(String whereTo) {
+　　　 label = whereTo;
+　　}
+　　public String readLabel() {
+　　　return label;
+　　}
+　}
+
+　public Destination dest(String s) {
+　　 return new GDestination(s);
+　}
+
+　public Contents cont() {
+　　 return new Content();
+　}
+}
+
+class TestGoods {
+　public static void main(String[] args) {
+　　Goods p = new Goods();
+　　 Contents c = p.cont();
+　　Destination d = p.dest("Beijing");
+    }
+}</pre>
+<p><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-size:16px">在这个例子里类 <span style="font-family:Liberation Serif,serif">
+Content </span>和 <span style="font-family:Liberation Serif,serif">GDestination </span>
+被定义在了类 <span style="font-family:Liberation Serif,serif">Goods </span>内部，并且分别有着 <span style="font-family:Liberation Serif,serif">
+protected </span>和 <span style="font-family:Liberation Serif,serif">private </span>
+修饰符来控制访问级别。<span style="font-family:Liberation Serif,serif">Content </span>代表着 <span style="font-family:Liberation Serif,serif">
+Goods </span>的内容，而 <span style="font-family:Liberation Serif,serif">GDestination </span>
+代表着 <span style="font-family:Liberation Serif,serif">Goods </span>的目的地。它们分别实现了两个接口<span style="font-family:Liberation Serif,serif">Content</span>和<span style="font-family:Liberation Serif,serif">Destination</span>。在后面的<span style="font-family:Liberation Serif,serif">main</span>方法里，直接用
+<span style="font-family:Liberation Serif,serif">Contents c </span>和 <span style="font-family:Liberation Serif,serif">
+Destination d</span>进行操作，你甚至连这两个内部类的名字都没有看见！这样，<span style="color:#ff0000"><strong>内部类的第一个好处就体现出来了<span style="font-family:Liberation Serif,serif">——</span>隐藏你不想让别人知道的操作，也即封装性。</strong></span></span></p>
+<p><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同时，我们也发现了在外部类作用范围之外得到内部类对象的第一个方法，那就是利用其外部类的方法创建并返回。上例中的<span style="font-family:Liberation Serif,serif">cont()</span>和
+<span style="font-family:Liberation Serif,serif">dest() </span>方法就是这么做的。那么还有没有别的方法呢？当然有，其语法格式如下：</span><span style="font-family:Liberation Serif,serif"><br>
+</span></p>
+<div class="dp-highlighter bg_java"><div class="bar"><div class="tools"><b>[java]</b> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><div style="position: absolute; left: 517px; top: 2317px; width: 29px; height: 14px; z-index: 99;"><embed id="ZeroClipboardMovie_3" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="29" height="14" name="ZeroClipboardMovie_3" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=3&amp;width=29&amp;height=14" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-j"><li class="alt"><span><span>outerObject=</span><span class="keyword">new</span><span>&nbsp;outerClass(Constructor&nbsp;Parameters);&nbsp;&nbsp;</span></span></li><li class=""><span>outerClass.innerClass&nbsp;innerObject=outerObject.<span class="keyword">new</span><span>&nbsp;InnerClass(Constructor&nbsp;Parameters);&nbsp;&nbsp;</span></span></li></ol></div><pre class="java" name="code" style="display: none;">outerObject=new outerClass(Constructor Parameters);
+outerClass.innerClass innerObject=outerObject.new InnerClass(Constructor Parameters);</pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:16px">注意在创建非静态内部类对象时，一定要先创建起相应的外部类对象。至于原因，也就引出了我们下一个话题<span style="font-family:Liberation Serif,serif">——</span><br>
+</span></p>
+<h3><a name="t2"></a>&nbsp;</h3>
+<h2><a name="t3"></a>&nbsp;非静态内部类对象有着指向其外部类对象的引用</h2>
+<p>&nbsp;<span style="font-size:16px">修改上面的例子</span></p>
+<div class="dp-highlighter bg_java"><div class="bar"><div class="tools"><b>[java]</b> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><div style="position: absolute; left: 517px; top: 2560px; width: 29px; height: 14px; z-index: 99;"><embed id="ZeroClipboardMovie_4" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="29" height="14" name="ZeroClipboardMovie_4" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=4&amp;width=29&amp;height=14" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-j"><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;Goods&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　&nbsp;<span class="keyword">private</span><span>&nbsp;valueRate=</span><span class="number">2</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>　<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;Content&nbsp;</span><span class="keyword">implements</span><span>&nbsp;Contents&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　&nbsp;&nbsp;<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;i&nbsp;=&nbsp;</span><span class="number">11</span><span>&nbsp;*&nbsp;valueRate;&nbsp;&nbsp;</span></span></li><li class=""><span>　　<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">int</span><span>&nbsp;value()&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　　<span class="keyword">return</span><span>&nbsp;i;&nbsp;&nbsp;</span></span></li><li class=""><span>　　}&nbsp;&nbsp;</span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>　<span class="keyword">protected</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;GDestination&nbsp;</span><span class="keyword">implements</span><span>&nbsp;Destination&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　<span class="keyword">private</span><span>&nbsp;String&nbsp;label;&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　<span class="keyword">private</span><span>&nbsp;GDestination(String&nbsp;whereTo)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　　label&nbsp;=&nbsp;whereTo;&nbsp;&nbsp;</span></li><li class="alt"><span>　　}&nbsp;&nbsp;</span></li><li class=""><span>　　<span class="keyword">public</span><span>&nbsp;String&nbsp;readLabel()&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　　<span class="keyword">return</span><span>&nbsp;label;&nbsp;&nbsp;</span></span></li><li class=""><span>　　}&nbsp;&nbsp;</span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>　<span class="keyword">public</span><span>&nbsp;Destination&nbsp;dest(String&nbsp;s)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;GDestination(s);&nbsp;&nbsp;</span></span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>　&nbsp;<span class="keyword">public</span><span>&nbsp;Contents&nbsp;cont()&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;Content();&nbsp;&nbsp;</span></span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">public class Goods {
+　 private valueRate=2;
+
+　private class Content implements Contents {
+　  private int i = 11 * valueRate;
+　　public int value() {
+　　　return i;
+　　}
+　}
+
+　protected class GDestination implements Destination {
+　　private String label;
+　　private GDestination(String whereTo) {
+　　　label = whereTo;
+　　}
+　　public String readLabel() {
+　　　return label;
+　　}
+　}
+
+　public Destination dest(String s) {
+　　return new GDestination(s);
+　}
+
+　 public Contents cont() {
+　　return new Content();
+　}
+}</pre>
+<p><br>
+<span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在这里我们给 <span style="font-family:Liberation Serif,serif">
+Goods </span>类增加了一个 <span style="font-family:Liberation Serif,serif">private </span>
+成员变量 <span style="font-family:Liberation Serif,serif">valueRate</span>，意义是货物的价值系数，在内部类
+<span style="font-family:Liberation Serif,serif">Content </span>的方法 <span style="font-family:Liberation Serif,serif">
+value() </span>计算价值时把它乘上。我们发现，<span style="font-family:Liberation Serif,serif">value()
+</span>可以访问 <span style="font-family:Liberation Serif,serif">valueRate</span>，这也是<strong><span style="color:#ff0000">内部类的第二个好处<span style="font-family:Liberation Serif,serif">——</span>一个内部类对象可以访问创建它的外部类对象的内容，甚至包括私有变量！</span></strong>这是一个非常有用的特性，为我们在设计时提供了更多的思路和捷径。要想实现这个功能，内部类对象就必须有指向外部类对象的引用。<span style="color:#3333ff"><span style="font-family:Liberation Serif,serif">Java
+</span>编译器在创建内部类对象时，隐式的把其外部类对象的引用也传了进去并一直保存着。这样就使得内部类对象始终可以访问其外部类对象，同时这也是为什么在外部 类作用范围之外向要创建内部类对象必须先创建其外部类对象的原因。（具体原因见：<a href="http://blog.csdn.net/yu422560654/article/details/6978981">http://blog.csdn.net/yu422560654/article/details/6978981</a>）</span></span></p>
+<p><font size="3"><span style="color:#3333ff"><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有人会问，如果内部类里的一个成员变量与外部类的一个成员变量同名，也即外部类 的同名成员变量被屏蔽了，怎么办？没事，<span style="font-family:Liberation Serif,serif">Java</span>里用如下格式表达外部类的引用：</span><span style="font-family:Liberation Serif,serif"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>outerClass.this<br>
+</strong></span><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有了它，我们就不怕这种屏蔽的情况了。</span></span></font></p>
+<p>&nbsp;</p>
+<h2><a name="t4"></a>静态内部类（嵌套类）</h2>
+<p><font face="Liberation Serif, serif"><span style="font-family:Liberation Serif,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;和普通的类一样，内部类也可以有静态的。不过和非静态内部类相比，区别就在于静态内部类没有了指向外部的引用。这实际上和
+<span style="font-family:Liberation Serif,serif">C++ </span>中的嵌套类很相像了，<span style="font-family:Liberation Serif,serif">Java
+</span>内部类与 <span style="font-family:Liberation Serif,serif">C++ </span>嵌套类最大的不同就在于是否有指向外部的引用这一点上，当然从设计的角度以及以它一些细节来讲还有区别。</span><span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px"><span style="font-family:Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>除此之外，在任何非静态内部类中，都不能有静态数据，静态方法或者又一个静态内部类（内部类的嵌套可以不止一层）。不过静态内部类中却可以拥有这一切。这也算是两者的第二个区别吧。</span></span></font></p>
+<p><span style="font-family:Liberation Serif,serif"><span style="font-family:Liberation Serif,serif"></span></span>&nbsp;</p>
+<h2><a name="t5"></a>局部内部类</h2>
+<p><font face="Liberation Serif, serif"><font face="Liberation Serif, serif"><span style="font-family:Liberation Serif,serif"><span style="font-size:16px"><span style="font-family:Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>是的，<span style="font-family:Liberation Serif,serif">Java
+</span>内部类也可以是局部的，它可以定义在一个方法甚至一个代码块之内。</span><span style="font-family:Liberation Serif,serif"><br>
+</span></span></font></font></p>
+<div class="dp-highlighter bg_java"><div class="bar"><div class="tools"><b>[java]</b> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><div style="position: absolute; left: 517px; top: 3869px; width: 29px; height: 14px; z-index: 99;"><embed id="ZeroClipboardMovie_5" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="29" height="14" name="ZeroClipboardMovie_5" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=5&amp;width=29&amp;height=14" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-j"><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;Goods1&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　<span class="keyword">public</span><span>&nbsp;Destination&nbsp;dest(String&nbsp;s)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　<span class="keyword">class</span><span>&nbsp;GDestination&nbsp;</span><span class="keyword">implements</span><span>&nbsp;Destination&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　　<span class="keyword">private</span><span>&nbsp;String&nbsp;label;&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　　<span class="keyword">private</span><span>&nbsp;GDestination(String&nbsp;whereTo)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　　　label&nbsp;=&nbsp;whereTo;&nbsp;&nbsp;</span></li><li class="alt"><span>　　　}&nbsp;&nbsp;</span></li><li class=""><span>　　　&nbsp;<span class="keyword">public</span><span>&nbsp;String&nbsp;readLabel()&nbsp;{&nbsp;</span><span class="keyword">return</span><span>&nbsp;label;&nbsp;}&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>　　<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;GDestination(s);&nbsp;&nbsp;</span></span></li><li class=""><span>　}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>　<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　&nbsp;　Goods1&nbsp;g=&nbsp;<span class="keyword">new</span><span>&nbsp;Goods1();&nbsp;&nbsp;</span></span></li><li class=""><span>　　Destination&nbsp;d&nbsp;=&nbsp;g.dest(<span class="string">"Beijing"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>　}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">public class Goods1 {
+　public Destination dest(String s) {
+　　class GDestination implements Destination {
+　　　private String label;
+　　　private GDestination(String whereTo) {
+　　　　label = whereTo;
+　　　}
+　　　 public String readLabel() { return label; }
+　　}
+
+　　return new GDestination(s);
+　}
+
+　public static void main(String[] args) {
+　 　Goods1 g= new Goods1();
+　　Destination d = g.dest("Beijing");
+　}
+}</pre>
+<p><span style="font-size:16px"><span style="font-family:Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>上面就是这样一个例子。在方法<span style="font-family:Liberation Serif,serif">dest</span>中我们定义了一个内部类，最后由这个方法返回这个内部类的对象。如果我们在用一个内部类的时候仅需要创建它的一个对象并传给外部，就可以这样做。当然，定义在方法中的内部类可以使设计多样化，用途绝不仅仅在这一点。</span></p>
+<p><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下面有一个更怪的例子：</span></p>
+<span style="font-size:16px"><span style="font-family:Liberation Serif,serif"></span></span><div class="dp-highlighter bg_java"><div class="bar"><div class="tools"><b>[java]</b> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><div style="position: absolute; left: 517px; top: 4399px; width: 29px; height: 14px; z-index: 99;"><embed id="ZeroClipboardMovie_6" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="29" height="14" name="ZeroClipboardMovie_6" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=6&amp;width=29&amp;height=14" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-j"><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;Goods2{&nbsp;&nbsp;</span></span></li><li class=""><span>　<span class="keyword">private</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;internalTracking(</span><span class="keyword">boolean</span><span>&nbsp;b)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　<span class="keyword">if</span><span>(b)&nbsp;{&nbsp;&nbsp;</span></span></li><li class=""><span>　　　<span class="keyword">class</span><span>&nbsp;TrackingSlip&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　　　<span class="keyword">private</span><span>&nbsp;String&nbsp;id;&nbsp;&nbsp;</span></span></li><li class=""><span>　　　　&nbsp;TrackingSlip(String&nbsp;s)&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>　　　　　id&nbsp;=&nbsp;s;&nbsp;&nbsp;</span></li><li class=""><span>　　　　}&nbsp;&nbsp;</span></li><li class="alt"><span>　　　　String&nbsp;getSlip()&nbsp;{&nbsp;<span class="keyword">return</span><span>&nbsp;id;&nbsp;}&nbsp;&nbsp;</span></span></li><li class=""><span>　　　}&nbsp;&nbsp;</span></li><li class="alt"><span>　　　TrackingSlip&nbsp;ts&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;TrackingSlip(</span><span class="string">"slip"</span><span>);&nbsp;&nbsp;</span></span></li><li class=""><span>　　　String&nbsp;s&nbsp;=&nbsp;ts.getSlip();&nbsp;&nbsp;</span></li><li class="alt"><span>　　}&nbsp;&nbsp;</span></li><li class=""><span>　}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>　&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;track()&nbsp;{&nbsp;internalTracking(</span><span class="keyword">true</span><span>);&nbsp;}&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>　<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String[]&nbsp;args)&nbsp;{&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　Goods2&nbsp;g=&nbsp;<span class="keyword">new</span><span>&nbsp;Goods2();&nbsp;&nbsp;</span></span></li><li class=""><span>　　g.track();&nbsp;&nbsp;</span></li><li class="alt"><span>　&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">public class Goods2{
+　private void internalTracking(boolean b) {
+　　if(b) {
+　　　class TrackingSlip {
+　　　　private String id;
+　　　　 TrackingSlip(String s) {
+　　　　　id = s;
+　　　　}
+　　　　String getSlip() { return id; }
+　　　}
+　　　TrackingSlip ts = new TrackingSlip("slip");
+　　　String s = ts.getSlip();
+　　}
+　}
+
+　 public void track() { internalTracking(true); }
+
+　public static void main(String[] args) {
+　　Goods2 g= new Goods2();
+　　g.track();
+　 }
+}</pre>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><span style="color:#ff0000">你不能在 <span style="font-family:Liberation Serif,serif">
+if </span>之外创建这个内部类的对象，因为这已经超出了它的作用域。不过在编译的时候，内部类 <span style="font-family:Liberation Serif,serif">
+TrackingSlip </span>和其他类一样同时被编译，只不过它由它自己的作用域，超出了这个范围就无效，除此之外它和其他内部类并没有区别。</span></strong></p>
+<p>&nbsp;</p>
+<h1><a name="t6"></a>2. 匿名类</h1>
+<font face="Liberation Serif, serif"><font face="Liberation Serif, serif"><span style="font-family:Liberation Serif,serif"><span style="font-family:Liberation Serif,serif"><span style="font-family:Liberation Serif,serif"></span></span></span></font></font>
+<p><span style="font-family:Liberation Serif,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;匿名类是不能有名称的类，所以没办法引用他们。必须在创建时，作为<span style="font-family:Liberation Serif,serif">new</span>语句的一部分来声明他们。
+</span><span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px">这就要采用另一种形式 的<span style="font-family:Liberation Serif,serif">new</span>语句，如下所示：&nbsp;</span><span style="font-family:Liberation Serif,serif"><br>
+<br>
+<span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new &lt;</span></span><span style="font-size:16px">类或接口<span style="font-family:Liberation Serif,serif">&gt; &lt;</span>类的主体</span><span style="font-size:16px"><span style="font-family:Liberation Serif,serif">&gt;<br>
+<br>
+</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这种形式的<span style="font-family:Liberation Serif,serif">new</span>语句声明一个 新的匿名类，他对一个给定的类进行扩展，或实现一个给定的接口。他还创建那个类的一个新实例，并把他作为语句的结果而返回。要扩展的类和要实现的接口是
+<span style="font-family:Liberation Serif,serif">new</span>语句的操作数，后跟匿名类的主体。 </span>
+<span style="font-family:Liberation Serif,serif"><br>
+</span><span style="font-size:16px">假如匿名类对另一个类进行扩展，他的主体能够访问类的成员、覆盖他的方法等等，这和其他任何标准的类都 是相同的。假如匿名类实现了一个接口，他的主体必须实现接口的方法。</span><span style="font-family:Liberation Serif,serif"><br>
+<br>
+</span><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意匿名类的声明是在编译时进行的，实例化在运行时进行。这意味着 <span style="font-family:Liberation Serif,serif">
+for</span>循环中的一个<span style="font-family:Liberation Serif,serif">new</span>语句会创建相同匿名类的几个实例，而不是创建几个不同匿名类的一个实例。</span><span style="font-family:Liberation Serif,serif"><br>
+<br>
+</span><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从技术上说，匿名类可被视为非静态的内 部类，所以他们具备和方法内部声明的非静态内部类相同的权限和限制。</span><span style="font-family:Liberation Serif,serif"><br>
+<br>
+</span><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假如要执行的任务需要一个对象，但却不值得创建全新的对象（原因可能 是所需的类过于简单，或是由于他只在一个方法内部使用），匿名类就显得很有用。匿名类尤其适合在<span style="font-family:Liberation Serif,serif">Swing</span>应用程式中快速创建事件处理程式。</span><span style="font-family:Liberation Serif,serif"><br>
+</span></span></p>
+<div class="dp-highlighter bg_java"><div class="bar"><div class="tools"><b>[java]</b> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><span data-mod="popu_168"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><div style="position: absolute; left: 517px; top: 5595px; width: 29px; height: 14px; z-index: 99;"><embed id="ZeroClipboardMovie_7" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="29" height="14" name="ZeroClipboardMovie_7" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=7&amp;width=29&amp;height=14" wmode="transparent"></div></span><span data-mod="popu_169"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a></span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a></div></div><ol start="1" class="dp-j"><li class="alt"><span><span class="keyword">interface</span><span>&nbsp;pr&nbsp;{&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>　<span class="keyword">void</span><span>&nbsp;print1();&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">class</span><span>&nbsp;noNameClass&nbsp;{&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>　<span class="keyword">public</span><span>&nbsp;pr&nbsp;dest()&nbsp;{&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">new</span><span>&nbsp;pr()&nbsp;{&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>　　　&nbsp;<span class="keyword">public</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;print1()&nbsp;{&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span>　　　　System.out.println(<span class="string">"Hello&nbsp;world!!"</span><span>);&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>　&nbsp;　　}&nbsp;&nbsp;&nbsp;</span></li><li class="alt"><span>　　};&nbsp;&nbsp;</span></li><li class=""><span>　}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">public</span><span>&nbsp;</span><span class="keyword">static</span><span>&nbsp;</span><span class="keyword">void</span><span>&nbsp;main(String&nbsp;args[])&nbsp;{&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>　&nbsp;noNameClass&nbsp;c&nbsp;=&nbsp;<span class="keyword">new</span><span>&nbsp;noNameClass();&nbsp;&nbsp;</span></span></li><li class="alt"><span>　pr&nbsp;hw&nbsp;=&nbsp;c.dest();&nbsp;&nbsp;</span></li><li class=""><span>　&nbsp;hw.print1();&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li></ol></div><pre class="java" name="code" style="display: none;">interface pr { 
+　void print1(); 
+}
+
+public class noNameClass { 
+　public pr dest() { 
+　　return new pr() { 
+　　　 public void print1() { 
+　　　　System.out.println("Hello world!!"); 
+　 　　} 
+　　};
+　}
+}
+
+public static void main(String args[]) { 
+　 noNameClass c = new noNameClass();
+　pr hw = c.dest();
+　 hw.print1();
+}</pre>
+<p><br>
+<span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有一点需要注意的 是，匿名内部类由于没有名字，所以它没有构造函数（但是如果这个匿名内部类继承了一个只含有带参数构造函数的父类，创建它的时候必须带上这些参数，并在实 现的过程中使用
+<span style="font-family:Liberation Serif,serif">super </span>关键字调用相应的内容）。如果你想要初始化它的成员变量，有下面几种方法：</span><span style="font-family:Liberation Serif,serif"><br>
+<span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. </span></span><span style="font-size:16px">如果是在一个方法的匿名内部类，可以利用这个方法传进你想要的参数，不过记住，这些参数必须被声明为
+<span style="font-family:Liberation Serif,serif">final </span>。</span><span style="font-family:Liberation Serif,serif"><br>
+<span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. </span></span><span style="font-size:16px">将匿名内部类改造成有名字的局部内部类，这样它就可以拥有构造函数了。</span><span style="font-family:Liberation Serif,serif"><br>
+<span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. </span></span><span style="font-size:16px">在这个匿名内部类中使用初始化代码块</span></p>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad bdshare-button-style0-16" style="float: right;" data-mod="popu_172" data-bd-bind="1461248771844">
+<a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important" target="_blank"></a>
+<a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important" target="_blank"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css">
+
+    
+<!--172.16.140.13-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+        <div id="digg" articleid="7466260">
+            <dl id="btnDigg" class="digg digg_disable">
+               
+                 <dt>顶</dt>
+                <dd>5</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;/yu422560654/article/details/7400947&#39;;">上一篇</span><a href="http://blog.csdn.net/yu422560654/article/details/7400947" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">Java抽象类与接口</a></li>
+                <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;/yu422560654/article/details/7467566&#39;;">下一篇</span><a href="http://blog.csdn.net/yu422560654/article/details/7467566" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">每天一道面试题，为今年找工作早做准备！笨鸟先飞，哈哈(2012年4月篇)</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article" style="">
+                <h4>我的同类文章</h4>
+                <div class="similar_c" style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span style="cursor:pointer" onclick="GetCategoryArticles(&#39;863270&#39;,&#39;yu422560654&#39;,&#39;foot&#39;,&#39;7466260&#39;);">java<em>（42）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141" style="max-height:195px;">
+                        <a href="http://blog.csdn.net/" style="display:none" target="_blank">http://blog.csdn.net</a>
+                        <ul class="similar_list fl"><li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8668830" id="foot_aritcle_8668830undefined5825180022511631" target="_blank" title="Eclipse.ini说明">Eclipse.ini说明</a><span>2013-03-13</span><label><i>阅读</i><b>922</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8065786" id="foot_aritcle_8065786undefined659373007947579" target="_blank" title="说说Java线程池">说说Java线程池</a><span>2012-10-12</span><label><i>阅读</i><b>485</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8048006" id="foot_aritcle_8048006undefined17246871790848672" target="_blank" title="Java中的hashCode()与equals()">Java中的hashCode()与equals()</a><span>2012-10-08</span><label><i>阅读</i><b>344</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8032320" id="foot_aritcle_8032320undefined6065505216829479" target="_blank" title="java动态代理（JDK和cglib）">java动态代理（JDK和cglib）</a><span>2012-09-29</span><label><i>阅读</i><b>301</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8028780" id="foot_aritcle_8028780undefined34395062434487045" target="_blank" title="Java:使用wait()与notify()实现线程间协作">Java:使用wait()与notify()实现线程间协作</a><span>2012-09-28</span><label><i>阅读</i><b>390</b></label></li> </ul>
+
+                        <ul class="similar_list fr"><li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8595028" id="foot_aritcle_8595028undefined13367746979929507" target="_blank" title="JUnit的各种断言">JUnit的各种断言</a><span>2013-02-20</span><label><i>阅读</i><b>272</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8060779" id="foot_aritcle_8060779undefined5735815730877221" target="_blank" title="java中多种方式读文件">java中多种方式读文件</a><span>2012-10-11</span><label><i>阅读</i><b>486</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8036684" id="foot_aritcle_8036684undefined42711049132049084" target="_blank" title="工厂方法模式与抽象工厂模式">工厂方法模式与抽象工厂模式</a><span>2012-10-02</span><label><i>阅读</i><b>593</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8030543" id="foot_aritcle_8030543undefined36723194387741387" target="_blank" title="Java序列化的机制和原理">Java序列化的机制和原理</a><span>2012-09-29</span><label><i>阅读</i><b>289</b></label></li> <li><em>•</em><a href="http://blog.csdn.net/yu422560654/article/details/8024042" id="foot_aritcle_8024042undefined0708504430949688" target="_blank" title="再议Static">再议Static</a><span>2012-09-27</span><label><i>阅读</i><b>332</b></label></li> </ul>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/863270" class="MoreArticle">更多文章</a></div>
+                </div>
+            </div>    
+    <script type="text/javascript">
+        $(function () {
+            GetCategoryArticles('863270', 'yu422560654','foot','7466260');
+        });
+    </script>
+      
+</div>
+<div id="suggest">
+
+</div>
+         <script language="javascript" type="text/javascript">     
+             $(function(){
+                 $.get("/yu422560654/svc/GetSuggestContent/7466260",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="http://static.blog.csdn.net/css/replace.css">
+
+<div id="relate" data-mod="popu_218" class="tracking-ad" style="display: none;">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c">
+        </div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived"> 
+    <div class="embody embody_b" id="libkeyparent" style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "7466260",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    <div class="tracking-ad" data-mod="popu_84"><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/489" title="零基础学HTML 5实战开发(第一季)" strategy="v3:content" target="_blank">零基础学HTML 5实战开发(第一季)</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/772" title="Java之路" strategy="v3:content" target="_blank">Java之路</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/512" title="iOS8-Swift开发教程" strategy="v3:content" target="_blank">iOS8-Swift开发教程</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/395" title="零基础学Java系列从入门到精通" strategy="v3:content" target="_blank">零基础学Java系列从入门到精通</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;"><a href="http://edu.csdn.net/course/detail/336" title="HTML 5移动开发从入门到精通" strategy="v3:hot" target="_blank">HTML 5移动开发从入门到精通</a></dd></div></div>  
+
+    
+     <div id="res" data-mod="popu_36" class="tracking-ad" style="width: 42%; float: left; margin-right: 30px; display: block;"><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/ahwr24/article/details/10437495" title="Java内部类的使用小结" strategy="SearchAlgorithm" target="_blank">Java内部类的使用小结</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/zz20104534/article/details/9833367" title="android基础篇------------java基础5 四种内部类的使用和区别" strategy="SearchAlgorithm" target="_blank">android基础篇------------java基础5 四种内部类的使用和区别</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/u014196852/article/details/41204981" title="Java 内部类种类及使用解析" strategy="SearchAlgorithm" target="_blank">Java 内部类种类及使用解析</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/wangcomputer2010/article/details/17377943" title="Java 内部类种类及使用解析" strategy="SearchAlgorithm" target="_blank">Java 内部类种类及使用解析</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/SuperVictim/article/details/50736842" title="java内部类里面使用static" strategy="SearchAlgorithm" target="_blank">java内部类里面使用static</a></dd></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'Java为什么要使用内部类？' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+    <div id="ad_cen">        
+<!-- 广告位开始 -->
+<div class="J_adv" data-view="true" data-mod="ad_popu_71" data-mtp="36" data-order="40" data-con="ad_content_216" style="width: 728px; height: 90px;"><!-- 广告占位容器 --><div id="cpro_u1607657"><iframe id="iframeu1607657_0" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/kcom.html" width="728" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0; vertical-align:bottom;margin:0;" allowtransparency="true"></iframe></div><!-- 投放代码 --><script type="text/javascript">(window['cproStyleApi'] = window['cproStyleApi'] ||{})['u1607657']={at:'3',rsi0:'728',rsi1:'90',pat:'6',tn:'baiduCustNativeAD',rss1:'#FFFFFF',conBW:'1',adp:'1',ptt:'0',titFF:'%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91',titFS:'',rss2:'#000000',titSU:'0',ptbg:'90',piw:'0',pih:'0',ptp:'0'};/*服务器频道首页置顶Banner960*90，创建于2014-7-3*/(window.cproArray = window.cproArray || []).push({id:'u1607657'});  </script>  <script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/c.js" type="text/javascript"></script></div>
+<!-- 广告位结束 -->    </div>  
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_4482605"><dt class="comment_head" floor="4">4楼 <span class="user"><a class="username" href="http://blog.csdn.net/xiaolianglhl" target="_blank">嚎啕哥</a> <span class="ptime">2014-11-04 10:54发表</span>  <a href="http://blog.csdn.net/yu422560654/article/details/7466260#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4482605" username="xiaolianglhl"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/xiaolianglhl" target="_blank"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/3_xiaolianglhl.jpg" width="40" height="40"></a></dd><dd class="comment_body">真心不错</dd></dl><dl class="comment_item comment_topic" id="comment_item_2723925"><dt class="comment_head" floor="3">3楼 <span class="user"><a class="username" href="http://blog.csdn.net/hu1991die" target="_blank">鬼脚飞</a> <span class="ptime">2013-07-11 15:31发表</span>  <a href="http://blog.csdn.net/yu422560654/article/details/7466260#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2723925" username="hu1991die"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/hu1991die" target="_blank"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/3_hu1991die.jpg" width="40" height="40"></a></dd><dd class="comment_body">写的真好！学习了。。。</dd></dl><dl class="comment_item comment_topic" id="comment_item_2489484"><dt class="comment_head" floor="2">2楼 <span class="user"><a class="username" href="http://blog.csdn.net/jdfol" target="_blank">jdfol</a> <span class="ptime">2013-01-03 13:41发表</span>  <a href="http://blog.csdn.net/yu422560654/article/details/7466260#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2489484" username="jdfol"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/jdfol" target="_blank"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/3_jdfol.jpg" width="40" height="40"></a></dd><dd class="comment_body">你自己实际工作中用过吗？</dd><dl class="comment_item comment_reply" id="comment_item_2492074"><dt class="comment_head" floor="2">Re: <span class="user"><a class="username" href="http://blog.csdn.net/yu422560654" target="_blank">ORA-NO_DATA_FOUND</a> <span class="ptime">2013-01-05 17:29发表</span>  <a href="http://blog.csdn.net/yu422560654/article/details/7466260#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2492074" username="yu422560654"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/yu422560654" target="_blank"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/3_yu422560654.jpg" width="40" height="40"></a></dd><dd class="comment_body">回复jdfol：用得不多</dd></dl></dl><dl class="comment_item comment_topic" id="comment_item_2436137"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/liweiwei3257" target="_blank">liweiwei3257</a> <span class="ptime">2012-11-17 17:49发表</span>  <a href="http://blog.csdn.net/yu422560654/article/details/7466260#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2436137" username="liweiwei3257"> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/yu422560654/article/details/7466260#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/liweiwei3257" target="_blank"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/3_liweiwei3257.jpg" width="40" height="40"></a></dd><dd class="comment_body">很好的文章，谢谢。</dd></dl><div class="clear"></div></div>
+    <div id="comment_bar" style="display: none;">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:loginbox();">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fyu422560654%2Farticle%2Fdetails%2F7466260">[注册]</a></div></div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '7466260';
+    var commentscount = 5;
+    var islock = false
+</script>
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="">
+
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Hadoop" href="http://g.csdn.net/5272865" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title="AWS" href="http://g.csdn.net/5272866" target="_blank" onclick="LogClickCount(this,336);">AWS</a>
+<a title="移动游戏" href="http://g.csdn.net/5272870" target="_blank" onclick="LogClickCount(this,336);">移动游戏</a>
+<a title="Java" href="http://g.csdn.net/5272871" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="Android" href="http://g.csdn.net/5272872" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://g.csdn.net/5272873" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="Swift" href="http://g.csdn.net/5272868" target="_blank" onclick="LogClickCount(this,336);">Swift</a>
+<a title="智能硬件" href="http://g.csdn.net/5272869" target="_blank" onclick="LogClickCount(this,336);">智能硬件</a>
+<a title="Docker" href="http://g.csdn.net/5272867" target="_blank" onclick="LogClickCount(this,336);">Docker</a>
+<a title="OpenStack" href="http://g.csdn.net/5272925" target="_blank" onclick="LogClickCount(this,336);">OpenStack</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Spark" href="http://g.csdn.net/5272924" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+
+</div>
+  <script language="javascript" type="text/javascript">     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/yu422560654/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/async_new.js"></script>      
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/yu422560654" target="_blank">
+    <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/1_yu422560654.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/yu422560654" class="user_name" target="_blank">ORA-NO_DATA_FOUND</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=yu422560654&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>204966次</span></li>
+    <li>积分：<span>3012</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/blog5.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：3012 </div>
+        </span>  </li>
+    <li>排名：<span>第7252名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>84篇</span></li>
+    <li>转载：<span>94篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>51条</span></li>
+</ul>
+</ul>
+</div>
+
+
+
+
+<div id="custom_column_11811711" class="panel">
+<ul class="panel_head"><span>优秀论坛</span></ul>
+<ul class="panel_body">
+
+<ul class="panel_body">
+<ul>
+<li><a href="http://bbs.pediy.com/" target="_blank">看雪学院</a> </li><li><a href="http://www.wooyun.org/" target="_blank">乌云论坛</a></li><li><a href="http://www.programfan.com/" target="_blank">编程爱好者</a> </li><li><a href="http://seclab.hdu.edu.cn/" target="_blank">实验室主页</a> </li><li><a href="http://poj.org/" target="_blank">北大OJ</a> </li><li><a href="http://www.cnblogs.com/" target="_blank">博客园</a></li></ul>
+</ul>
+
+</ul>
+</div><div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script>
+
+<div id="custom_column_17330632" class="panel">
+<ul class="panel_head"><span>问题反馈</span></ul>
+<ul class="panel_body">
+
+<a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=w-fx8fb18-X294Oysu2grK4" style="text-decoration:none">联系我</a>
+
+</ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/3044423" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">一周一谈</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/818405" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">C++/C类</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/818177" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/818176" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">java web</a><span>(36)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/822579" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">其他</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/818248" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">学术摘要</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/863270" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">java</a><span>(43)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/866825" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">map</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/869220" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">算法</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/879414" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">心得</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/879909" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">for job</a><span>(47)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/887325" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Struts 2</a><span>(17)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/903165" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">杂谈</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/931753" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Hibernate</a><span>(19)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/1091099" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Spring</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/1157916" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">网络安全</a><span>(18)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/1212705" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Webgoat</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/yu422560654/article/category/2128575" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">oracle</a><span>(7)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/yu422560654/article/month/2015/03">2015年03月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2014/03">2014年03月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2013/04">2013年04月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2013/03">2013年03月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2013/02">2013年02月</a><span>(1)</span></li><span class="hidelist" style="display: none;"><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/10">2012年10月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/09">2012年09月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/08">2012年08月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/07">2012年07月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/06">2012年06月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/05">2012年05月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/04">2012年04月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/03">2012年03月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/02">2012年02月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2012/01">2012年01月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2011/12">2011年12月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2011/11">2011年11月</a><span>(18)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2011/10">2011年10月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2011/09">2011年09月</a><span>(17)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2011/08">2011年08月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2011/07">2011年07月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/yu422560654/article/month/2011/05">2011年05月</a><span>(11)</span></li></span><div id="archive_list_button" class="list_closed" style="display: none;">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/7318499" title="为什么要使用Spring？">为什么要使用Spring？</a><span>(10112)</span>
+</li>
+<li>
+<a href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET.html" title="Java为什么要使用内部类？">Java为什么要使用内部类？</a><span>(6743)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/7741778" title="Hibernate 更新部分更改的字段 hibernate update">Hibernate 更新部分更改的字段 hibernate update</a><span>(6623)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/7701524" title="如何进行网站挂马检测与清除">如何进行网站挂马检测与清除</a><span>(5438)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/7275409" title="windows下phpmyadmin的安装与配置">windows下phpmyadmin的安装与配置</a><span>(5431)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/7381211" title="JAVA中的static方法调用非static方法">JAVA中的static方法调用非static方法</a><span>(4802)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/7399566" title="java中构造器（Constructor）">java中构造器（Constructor）</a><span>(4497)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/6707752" title="C++获取毫秒级别的当前时间">C++获取毫秒级别的当前时间</a><span>(4070)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/6403919" title="C++实现大整数乘法">C++实现大整数乘法</a><span>(3363)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yu422560654/article/details/7892007" title="讯时网站管理系统通杀0DAY漏洞">讯时网站管理系统通杀0DAY漏洞</a><span>(3359)</span>
+</li>
+</ul>
+</div>
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/7381211#comments">JAVA中的static方法调用非static方法</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/HZL_Cracker" class="user_name">HZL_Cracker</a>:
+讲得很好啊 不错 今天就是在纠结这个问题 终于解决了
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/7399566#comments">java中构造器（Constructor）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/GitHubBoys" class="user_name">IUCocoa</a>:
+有点像疯狂java里面讲的，谢啦1
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/7399566#comments">java中构造器（Constructor）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/skj1065930713" class="user_name">奔跑吧小牛</a>:
+总结的真好
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/7318499#comments">为什么要使用Spring？</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/sjzzy_0" class="user_name">sjzzy_0</a>:
+很好
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/44087611#comments">Oracle的Filter,Nest loop,Merge sort join和Hash join</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/ncepuchen" class="user_name">ncepuchen</a>:
+Filter,Nest loop,Merge sort join和Hash join分析
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/7466260#comments">Java为什么要使用内部类？</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/xiaolianglhl" class="user_name">嚎啕哥</a>:
+真心不错
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/8026745#comments">大唐电信JAVA笔试题（不知道是哪一年滴）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/fupacker" class="user_name">heipacker</a>:
+这种题！！！！
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/7047661#comments">《精通Hibernate》学习(3)——对象关系映射基础</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/hitwh_Gypsy" class="user_name">hitwh_Gypsy</a>:
+赞
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/6403919#comments">C++实现大整数乘法</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/lizhenqi19890218" class="user_name">lizhenqi19890218</a>:
+999*999=888881？？？？
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yu422560654/article/details/7952851#comments">Java GC 算法总结</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/d_b_d" class="user_name">d_b_d</a>:
+好文
+    </p>
+    </li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/gqtcgq/article/details/51163558" target="_blank">*搭建docker私有仓库</a></li>
+<li><a href="http://blog.csdn.net/loveyaozu/article/details/51149467" target="_blank">*Android杂谈之RadioGroup+ViewPager制作的底部导航栏</a></li>
+<li><a href="http://blog.csdn.net/u011733020/article/details/51175635" target="_blank">* Android几种常见的多渠道(批量)打包方式介绍</a></li>
+<li><a href="http://blog.csdn.net/xoyojank/article/details/50927572" target="_blank">*Oculus Rift, HTC Vive, SONY PSVR的全面对比</a></li>
+<li><a href="http://blog.csdn.net/hjf_huangjinfu/article/details/51197826" target="_blank">*Android View的事件分发机制探索</a></li>
+<li><a href="http://blog.csdn.net/hjf_huangjinfu/article/details/51197826" target="_blank">*Redis源码解析：15Resis主从复制之从节点流程</a></li>
+
+</ul></ul>
+</div>
+
+
+
+
+<div id="custom_column_21667458" class="panel">
+<ul class="panel_head"><span>联系博主</span></ul>
+<ul class="panel_body">
+
+<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=124ec633f25eb234741434dc06929ed43ce026ebe3107f3d">联系我</a>
+
+</ul>
+</div>    </div>
+    <div class="clear">
+    </div>
+ </div>   
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/cnick.js"></script>
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/JavaScript1.js"></script><link rel="stylesheet" type="text/css" href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="http://wpa.qq.com/msgrd?v=3&uin=2431299880&site=qq&menu=yes" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&uin=2251809102&site=qq&menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-600-2320</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏乐知网络技术有限公司 提供商务支持</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;09002463&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2014, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display: none; position: absolute; z-index: 9990; width: 170px;">  <iframe src="about:blank" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/notify.js"></script>
+
+    <script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/msg.popup.js"></script>
+<script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ad-blog.js"></script><script type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ad-js1613.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+    </div><input type="hidden" id="aa_g_data_ids">
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/toolbar.js"></script>
+     <!--new top-->
+   
+    <link href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ask_float_block.css" type="text/css" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/wmd.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/showdown.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/prettify.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ask_float_block.js"></script>
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/52b5334.js"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   <div><iframe src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/skip.html" style="width: 1px; height: 1px; position: absolute; visibility: hidden;"></iframe></div></div>
+
+
+   
+ <div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><link rel="stylesheet" type="text/css" media="screen" href="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/ask_float_fonts_css-6b30a53970eb5c3a2a045e3df585b475.css"><div data-mod="popu_64" class="tracking-ad" chg-blk="0"><a id="com-quick-reply" title="快速回复" style="top:292px"></a><a id="com-d-top-a" style="top: 330px; display: inline;" title="返回顶部" onclick=""></a> </div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" type="text" style="font-size:14px;" placeholder="问题标题"></div><div class="cm_box"><div class="cm_dialog"></div> <div class="pop_cm cm_add_link"><input type="text" placeholder="链接内容" id="af_cm_link_txt"><input type="text" placeholder="链接地址" id="af_cm_link_url"><input type="text" placeholder="链接提示" id="af_cm_link_tit"><div class="text-right"><span class="btn btn-default btn-sm" id="add_link_btn">插入链接</span> </div> </div><div class="pop_cm cm_add_img"><div class="nav-tabs"><a class="img_tab active" href="http://blog.csdn.net/yu422560654/article/details/7466260#tab_upload">本地上传</a><a class="img_tab" href="http://blog.csdn.net/yu422560654/article/details/7466260#tab_weburl">网络图片</a></div><div class="tab_panel active" id="tab_upload"><div class="set_img"><iframe src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/upload.html"></iframe></div></div><div class="tab_panel" id="tab_weburl"><input type="text" placeholder="图片地址" id="af_cm_img_url"><input type="text" placeholder="图片说明" id="af_cm_img_alt"><div class="text-right"><span class="btn btn-default btn-sm" id="add_img_btn">插入图片</span> </div></div> </div></div> <textarea id="editor_all" rows="8" style="display: none;"></textarea><div class="editor-toolbar"><i class="separator">|</i><a class="icon-headline" title="标题一（Ctrl+Alt+1）"></a><a class="icon-heading" title="标题二（Ctrl+Alt+2）"></a><a class="icon-bold" title="粗体（Ctrl+B）"></a><a class="icon-italic" title="斜体（Ctrl+I）"></a><i class="separator">|</i><a class="icon-quote-left" title="引用（Ctrl+’）"></a><a class="icon-code" title="插入代码片（Ctrl+,）"></a><a class="icon-list-ul" title="无序列表（Ctrl+L）"></a><a class="icon-list-ol" title="有序列表（Ctrl+Alt+L）"></a><i class="separator">|</i><a class="icon-link" title="添加链接（Ctrl+K）"></a><a class="icon-picture" title="添加图片（Ctrl+Alt+I）"></a><i class="separator">|</i><a class="icon-reply" title="撤退（Ctrl+Z）"></a><a class="icon-share-alt" title="前进（Ctrl+Shift+Z）"></a><i class="separator">|</i><a class="icon-info" href="http://ask.csdn.net/pages/markdown" target="_blank" title="markdown语法参考"></a><a class="icon-preview" title="预览"></a><i class="separator">|</i></div><div class="CodeMirror cm-s-paper CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;" tabindex="0"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 33px;"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div class="CodeMirror-cursor" style="visibility: hidden;">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor" style="visibility: hidden;">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div><div class="editor-statusbar"><span class="lines">0</span><span class="words">0</span><span class="cursor">0:0</span></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input type="hidden" name="txtSearchTags"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm tracking-ad" data-mod="popu_73"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" nodetype="cancel" class="cancel">取消</a><a href="http://blog.csdn.net/yu422560654/article/details/7466260#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div><iframe src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/1613.html" style="width: 1px; height: 1px; position: absolute; visibility: hidden;"></iframe><div class="sogoutip" style="z-index: 2147483645; visibility: hidden; display: none;"></div><div class="sogoubottom" id="sougou_bottom" style="display: none;"></div><div id="ext_stophi" style="z-index: 2147483647;"><div class="extnoticebg"></div><div class="extnotice"><h2>关闭提示 <a href="http://blog.csdn.net/yu422560654/article/details/7466260#" title="关闭提示" id="closenotice" class="closenotice">关闭</a></h2><p id="sogouconfirmtxt"></p>  <a id="sogouconfirm" href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="extconfirm">确 认</a> <a id="sogoucancel" href="http://blog.csdn.net/yu422560654/article/details/7466260#" class="extconfirm">取 消</a></div></div><div id="ext_overlay" class="ext_overlayBG" style="display: none; z-index: 2147483646;"></div><iframe class="sogou_sugg_feedbackquan" frameborder="0" scrolling="no" src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/yun6.html" style="border: none; display: none; z-index: 2147483645; background: transparent;"></iframe><script src="./Java为什么要使用内部类？ - Exception_YHZ - 博客频道 - CSDN.NET_files/pv.gif"></script></body></html>

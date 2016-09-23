@@ -1,3 +1,0 @@
-select*from     --查询say表
-order by id desc     --按id列大小降序排列
-limit 100，15        --从查询的结果中取出一条数据，也就是从第101条开始取出15条数据

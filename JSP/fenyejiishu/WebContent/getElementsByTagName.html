@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>innerHTML</title>
+</head>
+
+<body>
+
+<p id="course">我的课程</p>
+
+<ul>
+<li>AAA</li>
+<li>BBB</li>
+<li>CCC</li>
+
+</ul>
+
+<script type="text/javascript">
+var list = document.getElementsByTagName("li");
+li = list[2];
+
+document.write(list.length+"<br>");
+
+document.write(li.innerHTML);
+
+</script>
+
+</body>
+</html>

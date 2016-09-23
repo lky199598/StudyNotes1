@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>innerHTML</title>
+</head>
+
+<body>
+<script type="text/javascript">
+function getElement() {
+    var l = document.getElementsByName("link");
+	alert("l.length: "+l.length);
+}
+</script>
+
+<a name="link" href="#"/>链接一</a><br>
+<a name="link" href="#"/>链接二</a><br>
+<a name="link" href="#"/>链接三</a><br>
+<a name="link" href="#"/>链接四</a><br>
+<a name="link" href="#"/>链接五</a><br>
+
+<input type="button" onclick="getElement()" value="查看链接长度"/>
+
+</body>
+</html>

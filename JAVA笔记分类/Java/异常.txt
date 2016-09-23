@@ -1,0 +1,101 @@
+class age18Exception extends Exception
+{
+    private employee e;
+    private int age;
+
+    public age18Exception(employee e, int age)
+    {
+        super("\nsuper  " + e.name + "年龄小于18异常.\n");
+        this.e=e;
+        this.age=age;
+    }
+
+    public String toString()
+    {
+        return "age Exception: " + e.name + "'s age is less than 18";
+    }
+}
+
+class age60Exception extends Exception
+{
+    private employee e;
+    private int age;
+
+    public age60Exception(employee e, int age)
+    {
+        super(" name: " + e.name + " 年龄大于60异常.\n");
+        this.e=e;
+        this.age=age;
+    }
+
+    public String toString()
+    {
+        return "age Exception: " + e.name + "'s age is greater than 60";
+    }
+}
+
+class employee
+{
+    String name;
+    int age;
+
+    public employee()
+    {}
+
+    public employee(String name, int age) throws age18Exception, age60Exception
+    {
+        if(age < 18)
+        {
+            throw new age18Exception(this, age);
+        }
+
+        if(age > 60)
+        {
+            throw new age60Exception(this, age);
+        }
+
+        this.name=name;
+        this.age=age;
+    }
+
+    public void show()
+    {
+        System.out.println("\nname: " + name + ",  age: " + age);
+    }
+}
+
+public class yichang
+{
+    /**
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        employee o1, o2, o3;
+        try
+        {
+            o1=new employee("aaa", 20);
+            o1.show();
+
+            o3=new employee("ccc", 68);
+            o3.show();
+
+            o2=new employee("bbb", 17);
+            o2.show();
+
+        }
+        catch(age18Exception e)
+        {
+            System.out.println(e);
+        }
+
+        catch(age60Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("\nfinish\n");
+        // TODO 自动生成的方法存根
+
+    }
+}

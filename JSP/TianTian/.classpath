@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebContent/about.html"/>
+	<classpathentry kind="lib" path="WebContent/add_information.jsp"/>
+	<classpathentry kind="lib" path="WebContent/admin_view.jsp"/>
+	<classpathentry kind="lib" path="WebContent/admin.jsp"/>
+	<classpathentry kind="lib" path="WebContent/alter_password.jsp"/>
+	<classpathentry kind="lib" path="WebContent/alter_user_information.jsp"/>
+	<classpathentry kind="lib" path="WebContent/become_landlady.jsp"/>
+	<classpathentry kind="lib" path="WebContent/fail.jsp"/>
+	<classpathentry kind="lib" path="WebContent/hahahahahahahaha.jsp"/>
+	<classpathentry kind="lib" path="WebContent/hehe.jsp"/>
+	<classpathentry kind="lib" path="WebContent/home_page.jsp"/>
+	<classpathentry kind="lib" path="WebContent/house_detail.jsp"/>
+	<classpathentry kind="lib" path="WebContent/index.html"/>
+	<classpathentry kind="lib" path="WebContent/log.jsp"/>
+	<classpathentry kind="lib" path="WebContent/login.html"/>
+	<classpathentry kind="lib" path="WebContent/manage_user.jsp"/>
+	<classpathentry kind="lib" path="WebContent/manage_view_house.jsp"/>
+	<classpathentry kind="lib" path="WebContent/my_rent_house.jsp"/>
+	<classpathentry kind="lib" path="WebContent/NewFile.jsp"/>
+	<classpathentry kind="lib" path="WebContent/NewFile1.jsp"/>
+	<classpathentry kind="lib" path="WebContent/register.jsp"/>
+	<classpathentry kind="lib" path="WebContent/rented_house_detail.jsp"/>
+	<classpathentry kind="lib" path="WebContent/search_view_1.htm"/>
+	<classpathentry kind="lib" path="WebContent/search_view_display1.htm"/>
+	<classpathentry kind="lib" path="WebContent/search_view_top1.htm"/>
+	<classpathentry kind="lib" path="WebContent/search_view_top1.jsp"/>
+	<classpathentry kind="lib" path="WebContent/select_result.jsp"/>
+	<classpathentry kind="lib" path="WebContent/success.jsp"/>
+	<classpathentry kind="lib" path="WebContent/temp.txt"/>
+	<classpathentry kind="lib" path="WebContent/test.jsp"/>
+	<classpathentry kind="lib" path="WebContent/tianshen.jsp"/>
+	<classpathentry kind="lib" path="WebContent/update_house_information.jsp"/>
+	<classpathentry kind="lib" path="WebContent/upload_house_information.jsp"/>
+	<classpathentry kind="lib" path="WebContent/user_view_display.htm"/>
+	<classpathentry kind="lib" path="WebContent/user_view_hole.htm"/>
+	<classpathentry kind="lib" path="WebContent/user_view_house.jsp"/>
+	<classpathentry kind="lib" path="WebContent/user_view_left.htm"/>
+	<classpathentry kind="lib" path="WebContent/user_view_top.jsp"/>
+	<classpathentry kind="lib" path="WebContent/user_view.jsp"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

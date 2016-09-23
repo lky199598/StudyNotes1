@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>使用数组</title>
+
+<script type="text/javascript">
+var arr =  new Array();
+arr[0]="小红";
+arr[1]="小明";
+arr[2]="小亮";
+arr[3]="小川";	
+
+ function UserInput() {
+	var num = parseInt(document.getElementById("num").value, 10);	
+    document.write("第"+num+"人是"+arr[num-1]); 
+} 
+</script>
+
+</head>
+
+
+<body>
+<form>
+<h2>输入序号(1~~4)</h2>
+<br>
+<input type="text" id="num"/><input type="button" value="提交" onclick="UserInput()"/>
+</form>
+
+</body>
+</html>

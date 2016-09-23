@@ -1,0 +1,71 @@
+public class chongzai
+{
+    private static int nextid=1;
+    private int id;
+    private String name, post;
+    private long salary;
+
+    public void setid()
+    {
+        id=nextid;
+        nextid++;
+    }
+
+    public void setname(String myname)
+    {
+        name=myname;
+    }
+
+    public void setpost(String mypost)
+    {
+        post=mypost;
+    }
+
+    public void setsalary(long mysalary)
+    {
+        salary=mysalary;
+    }
+
+    void print()
+    {
+        System.out.println("工号：" + id + "\t姓名:" + name + "\t职务：" + post + "\t月薪：" + salary);
+    }
+
+    public chongzai(String myname, String mypost, long mysalary)
+    {
+        setid();
+        setname(myname);
+        setpost(mypost);
+        setsalary(mysalary);
+    }
+
+    public chongzai()
+    {
+        this(null, null, 0);
+    }
+
+    public chongzai(String myname)
+    {
+        this(myname, null, 0);
+    }
+
+    public chongzai(String myname, String mypost)
+    {
+        this(myname, mypost, 0);
+    }
+}
+
+class Ex4
+{
+    public static void main(String[] args)
+    {
+        chongzai 狗蛋, 铁栓, 大锤;
+        狗蛋=new chongzai();
+        铁栓=new chongzai("铁栓");
+        大锤=new chongzai("大锤", "经理");
+
+        狗蛋.print();
+        铁栓.print();
+        大锤.print();
+    }
+}

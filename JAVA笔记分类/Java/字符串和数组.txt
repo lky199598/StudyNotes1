@@ -1,0 +1,218 @@
+package pao;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
+
+class sort
+{
+    public void number()
+    {
+        int[] num=new int[]
+        { 28, 38, 18, 68, 58, 88 };
+        System.out.println("\n1\t排序前的数组");
+        for(int n : num)
+        {
+            System.out.print(n + " ");
+        }
+
+        System.out.println("\n\n\t排序后的数组");
+        Arrays.sort(num);
+        for(int n : num)
+        {
+            System.out.print(n + " ");
+        }
+    }
+}
+
+class Matrix
+{
+    int[][] a=
+    {
+    { 1, 2, 3 },
+    { 4, 5, 6 },
+    { 7, 8, 9 } };
+    int[][] b=
+    {
+    { 1, 2, 3 },
+    { -4, 5, -6 },
+    { 7, 8, 9 } };
+    int[][] c=
+    {
+    { 1, 1 },
+    { 2, 2 },
+    { 3, 3 } };
+
+    void add()
+    {
+        int i, j;
+        int[][] add=new int[a.length][a[0].length];
+
+        System.out.println("\n\t矩阵A");
+        for(i=0; i < a.length; i++)
+        {
+            for(j=0; j < a[i].length; j++)
+                System.out.print(a[i][j] + "\t");
+
+            System.out.println();
+        }
+
+        System.out.println("\n\t矩阵B");
+        for(i=0; i < b.length; i++)
+        {
+            for(j=0; j < b[i].length; j++)
+                System.out.print(b[i][j] + "\t");
+
+            System.out.println();
+        }
+
+        System.out.println("\n\t矩阵A+B");
+        for(i=0; i < add.length; i++)
+        {
+            for(j=0; j < add[i].length; j++)
+            {
+                add[i][j]=a[i][j] + b[i][j];
+            }
+        }
+
+        for(i=0; i < add.length; i++)
+        {
+            for(j=0; j < add[i].length; j++)
+                System.out.print(add[i][j] + "\t");
+
+            System.out.println();
+        }
+    }
+
+    void mul()
+    {
+        int i, j, k;
+        int[][] mul=new int[a.length][c[0].length];
+
+        System.out.println("\n\t矩阵A");
+        for(i=0; i < a.length; i++)
+        {
+            for(j=0; j < a[i].length; j++)
+                System.out.print(a[i][j] + "\t");
+
+            System.out.println();
+        }
+
+        System.out.println("\n\t矩阵C");
+        for(i=0; i < c.length; i++)
+        {
+            for(j=0; j < c[i].length; j++)
+                System.out.print(c[i][j] + "\t");
+
+            System.out.println();
+        }
+
+        System.out.println("\n\t矩阵A乘矩阵C");
+        for(i=0; i < a.length; i++)
+            for(j=0; j < c[0].length; j++)
+                for(k=0; k < c.length; k++)
+                    mul[i][j]+=a[i][k] * c[k][j];
+
+        for(i=0; i < mul.length; i++)
+        {
+            for(j=0; j < mul[i].length; j++)
+                System.out.print(mul[i][j] + "\t");
+
+            System.out.println();
+        }
+    }
+
+}
+
+class demo
+{
+    public void amount(String s, char c)
+    {
+        int sum=0;
+        for(int i=0; i < s.length(); i++)
+        {
+            if(s.charAt(i) == c)
+                sum++;
+        }
+
+        System.out.println("字符" + c + "在字符串 " + s + "出现的频率： " + sum + "次");
+    }
+}
+
+public class shuzu
+{
+
+    void menu()
+
+    {
+        System.out.println("\n\n\n\t\t\t1.数组的排序\n");
+        System.out.println("\t\t\t2.实现两个矩阵的相加和相乘运算\n");
+        System.out.println("\t\t\t3.统计一个字符串中给定字符出现的次数\n");
+        System.out.println("\t\t\t4.退出");
+        System.out.print("\t\t请选择: ");
+
+    }
+
+    void show() throws IOException
+    {
+
+        sort a=new sort();
+        Matrix b=new Matrix();
+        demo c=new demo();
+
+        Scanner r=new Scanner(System.in);
+
+        menu();
+        do
+        {
+            int n=r.nextInt();
+            if(n < 1 || n > 4)
+            {
+                menu();
+                continue;
+            }
+
+            if(n == 1)
+            {
+                a.number();
+                menu();
+                continue;
+            }
+
+            if(n == 2)
+            {
+                b.add();
+                b.mul();
+
+                menu();
+            }
+
+            if(n == 3)
+            {
+                System.out.println("输入字符串: ");
+                String s=r.next();
+
+                System.out.println("\n输入要统计的字符: ");
+                char ch=(char) System.in.read();
+                c.amount(s, ch);
+                menu();
+                continue;
+            }
+
+            if(n == 4)
+            {
+                break;
+            }
+
+        }
+        while(true);
+
+    }
+
+    public static void main(String[] args) throws IOException
+    {
+        // TODO 自动生成的方法存根
+        shuzu s=new shuzu();
+        s.show();
+    }
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Command">
+	<resultMap type="JavaBean.Command" id="Command_Column">
+		<id column="command_id" jdbcType="INTEGER" property="command_id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+	 <collection property="content_list"  resultMap="Content.Content_Column"/>
+	</resultMap>
+
+	<select id="Query_Command_List" parameterType="String"
+		resultMap="Command_Column">
+		select
+		a.command_id,a.name,a.description,b.content_id,b.content,b.command_id
+		from command a left join content b on a.command_id=b.command_id
+		<where>
+			<if test="name != null and !&quot;&quot;.equals(name.trim())">
+				and a.name=#{_parameter}
+			</if>
+		</where>
+
+	</select> 
+
+    <insert id="Insert_Command" useGeneratedKeys="true" keyProperty="id" parameterType="JavaBean.Command">
+     insert into Command(command_id,name,description)values(#{command_id},#{name},#{description}) 
+    </insert>
+
+
+</mapper>

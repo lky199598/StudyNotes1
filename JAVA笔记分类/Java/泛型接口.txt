@@ -1,0 +1,51 @@
+interface Max_Min<T extends Comparable<T>>
+{
+    T max();
+
+    T min();
+}
+
+class compare<T extends Comparable<T>> implements Max_Min<T>
+{
+    T[] t;
+
+    compare(T[] t)
+    {
+        this.t=t;
+    }
+
+    public T max()
+    {
+        T max=t[0];
+        for(int i=1; i < t.length; i++)
+            if(t[i].compareTo(max) > 0)
+                max=t[i];
+        return max;
+    }
+
+    public T min()
+    {
+        T min=t[0];
+        for(int i=0; i < t.length; i++)
+            if(t[i].compareTo(min) < 0)
+                min=t[i];
+        return min;
+    }
+}
+
+public class hhh
+{
+
+    public static void main(String[] args)
+    {
+        Double[] d=new Double[]
+        { 26.6, 18.8, 36.8 };
+        Character[] c=new Character[]
+        { 'B', 'C', 'A' };
+
+        compare<Double> a=new compare<Double>(d);
+        compare<Character> b=new compare<Character>(c);
+
+        System.out.println(a.max() + "  " + a.min() + "\n\n" + b.max() + "  " + b.min());
+    }
+}

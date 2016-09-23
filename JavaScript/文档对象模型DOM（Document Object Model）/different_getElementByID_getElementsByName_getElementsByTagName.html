@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+<center>
+
+<ul>
+ <li>getElementById 通过id获得元素</li>
+ <li>getElementsByName 通过元素名称name属性获得元素</li>
+ <li>getElementsByTagName 通过标签名获得元素</li>
+ </ul>
+ 
+   <h2>请选择你的爱好</h2><br>
+   
+ <form>
+ <input type="checkbox" name="hobby" id="hobby1" value="音乐"/>音乐&nbsp;
+ <input type="checkbox" name="hobby" id="hobby2" value="登山" checked="checked">登山&nbsp;
+ <input type="checkbox" name="hobby" id="hobby3" value="游泳">游泳&nbsp;
+ <input type="checkbox" name="hobby" id="hobby4" value="阅读">阅读&nbsp;
+ <input type="checkbox" name="hobby" id="hobby5" value="打球">打球&nbsp;
+ <input type="checkbox" name="hobby" id="hobby6" value="跑步">跑步&nbsp;
+ 
+
+ <br> <br>
+ <input type="button" value="全选" onclick="CheckAll()"/>&nbsp;&nbsp;
+ <input type="button" value="全不选" onclick="ClearAll()"/>
+ <br> <br>
+ 
+ 请输入爱好的序号:<input type="text" id="num"/> <input type="button" value="确定" onclick="CheckOne()"/>
+ <br>
+ </form>
+ <p id="favorite"></p>
+ </center>
+ 
+ <script type="text/javascript">
+ function CheckAll() {
+	 
+	 var hobby=document.getElementsByTagName("input");
+	 for(var i=0; i<hobby.length; i++)
+		 hobby[i].checked=true;
+}
+ 
+ function ClearAll() {
+	var hobby=document.getElementsByName("hobby");
+	for(var i=0; i<hobby.length; i++)
+		hobby[i].checked=false;
+}
+ 
+ function CheckOne() {
+	 var num=document.getElementById("num").value;
+	 var hobby=document.getElementById("hobby"+num).value;
+	 var string = document.getElementById("favorite");
+	 string.innerHTML="选择的爱好： "+hobby;//改变<p>标签内容
+	 
+}
+ </script>
+ 
+ 
+</body>
+</html>

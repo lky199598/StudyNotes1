@@ -1,0 +1,376 @@
+input{
+    width: 200px;
+    height: 34px;
+    border: 1px solid rgba(255,255,255,.4);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box; 
+    display:block;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size:18px;
+    color:#fff;
+    padding-left:20px;
+   	float:left;
+    margin-bottom:10px;
+}
+
+input.location {
+
+	  background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_name.png) no-repeat scroll 16px 16px; 
+	  padding-left:45px;
+}
+input.indate {
+
+	  background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_name.png) no-repeat scroll 16px 16px; 
+	  padding-left:45px;
+}
+input.outdate {
+
+	  background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_name.png) no-repeat scroll 16px 16px; 
+	  padding-left:45px;
+}
+
+::-webkit-input-placeholder {
+	  color: #fff;
+}
+
+:-moz-placeholder{ 
+    color: #fff; 
+}
+
+::-moz-placeholder {
+    color: #fff;
+}
+
+:-ms-input-placeholder {  
+	  color: #fff; 
+}
+
+* {
+	margin:0;
+	padding:0;
+}
+body  {
+	font-family: 'Belgrano', serif;
+	font-size: 10px;
+	background: #FFF;
+	color: #677a83;
+}
+a {
+	color:#00adff;
+	text-decoration:underline;
+	
+}
+p {
+	line-height:140%;	
+}
+h1 {
+	font-size:30px;
+	color:#00adff;
+	font-family: 'Lobster', sans-serif;
+	padding:10px 0 0 0;
+}
+h2 {
+	font-size:24px;
+	color:#00adff;
+	font-family: 'Lobster', sans-serif;
+}
+.container { 
+	width: 100%;
+	margin-left:auto;
+    margin-right:auto;
+}
+
+.headerContainer {
+	width:1000px;
+	margin:0 auto;
+	
+	
+} 
+header h1 {
+	float:left;
+	padding:20px 0 0 0;
+}
+header h1 a {
+	font-family: 'Lobster', sans-serif;
+	font-size: 20px;
+	color:#00adff;
+	text-decoration:none;
+}
+.boxes {
+	padding:30px 0;
+}
+.boxes li {
+	background: #e2f6ff;
+	width:455px;
+	float:left;
+	margin:0 10px;
+	list-style:none;	
+}
+.boxes li .boxPic {
+	margin:20px 20px 10px 20px;
+}
+.boxes li h2, .boxes li p {
+	padding:20px 20px 0 20px;
+}
+.boxes li .button {
+	padding:10px 20px;
+}
+
+.floatPic {
+	float:right;
+	margin:0 0 10px 15px;
+}
+footer {
+	background:url(../images/footerBackground.jpg) repeat-x;
+}
+footer p {
+	text-align:center;
+	padding:30px 10px;
+}
+.clearfloat { 
+	clear:both;
+    height:0;
+    font-size: 1px;
+    line-height: 0px;
+}
+.shadowStyle {
+	border-radius:10px;
+	box-shadow: 0px 5px 4px 0px #30baff;
+}
+/*--------------------------------------------------------------------------------------------*/
+/********* begin MAIN NAV ********/
+/*--------------------------------------------------------------------------------------------*/
+#navcontainer {
+	float:right;
+	padding:30px 0 0 0;
+}
+ul#navlist {
+	margin-left: 0;
+	padding-left: 0;
+	white-space: nowrap;
+}
+#navlist li {
+	display: inline;
+	list-style-type: none;
+}
+#navlist a { 
+	padding: 10px 20px;
+	font-size:16px;
+	font-family: 'Lobster', sans-serif;
+	text-decoration:none;
+	color:#677a83;	
+	text-shadow: 0px 0px, 1px 1px #ffffff;
+}
+#navlist a:hover {
+	color: #fff;
+	text-decoration: none;
+	text-shadow:none;
+	background:#00adff;
+	border-radius:10px;
+}
+#navlist #active a {
+	color: #fff;
+	text-decoration: none;
+	text-shadow:none;
+	background:#00adff;
+	border-radius:10px;
+}
+/*--------------------------------------------------------------------------------------------*/
+/********* end MAIN NAV ********/
+/*--------------------------------------------------------------------------------------------*/
+/********* begin SLIDER ********/
+/*--------------------------------------------------------------------------------------------*/
+.slider { 
+	width:956px;
+	position:relative; 
+	z-index:1; 
+	margin:20px 0 80px 0;
+}
+.flexslider {
+	margin: 0;
+}
+.flexslider .slides > li {
+	display: none; 
+	list-style:none;
+} 
+.flexslider .slides img {
+	max-width: 100%; 
+	display: block; 
+}
+.flex-pauseplay span {
+	text-transform: capitalize;
+}
+/* Clearfix for the .slides element */
+.slides:after {
+	content: "."; 
+	clear: both; 
+	visibility: hidden; 
+	line-height: 0; 
+	height: 0;
+} 
+/* control Nav */
+.flex-control-nav {
+	position:relative;
+	left:7px;
+}
+.flex-control-nav li { 
+	display: block;
+	padding:0 0 2px 0; 
+	margin-right:1px;
+}
+.flex-control-nav li a {
+	display:block;
+	background:url(../images/pagination.png) 0 0 no-repeat; 
+	width:40px; 
+	height:35px; 
+	text-indent:-5000px;
+}
+.flex-control-nav li a:hover,.flex-control-nav li a.active { 
+	background-position:0 -34px;
+	width:40px;
+	cursor:pointer;
+}
+/*--------------------------------------------------------------------------------------------*/
+/********* end SLIDER ********/
+/*--------------------------------------------------------------------------------------------*/
+/********* begin MEDIA QUERIES ********/
+/*--------------------------------------------------------------------------------------------*/
+/* for 980px or less */
+@media screen and (max-width: 960px) {
+	.container {
+		width: 98%;
+	}
+	.leftList {
+		width: 70%;
+	}
+	.rightList {
+		width: 29%;
+	}
+	.slider {
+		width:99.6%;
+	}
+}
+/* for 768px or less */
+@media screen and (max-width: 768px) {
+	header h1 {
+    	float: left;
+		padding: 45px 0 0 10px;
+	}
+	header h1 a {
+
+	}
+	.rightList {
+		width: auto;
+		float:none;
+	}
+	.leftList {
+		margin:0;
+		width: auto;
+	}
+	.slider {
+		margin-top:10px;
+		margin:20px 0 80px 0;
+	}
+	.flex-control-nav { 
+		position:absolute; 
+	}
+	#navcontainer {
+		float:right;
+		padding:60px 10px 0 0;
+	}
+	#navlist li {
+		display: inline;
+		list-style-type: none;
+	}
+	.boxes li {
+		width:auto;
+		float:none;
+		margin:0 0 20px 0;
+	}
+	.footerContent {
+		width:auto;
+	}
+	header .headerContainer {
+		width: auto;
+	}
+	.boxes li img {
+		text-align:center;
+	}
+}
+/* for 480px or less */
+@media screen and (max-width: 480px) {
+	header h1 {
+    	float: none;
+		padding: 5px 0 10px 0;
+		text-align:center;
+	}
+	.slider {
+		margin-top:0px;
+		margin-bottom:0px;
+	}
+	.rightList {
+		width: auto;
+		float:none;
+	}
+	.leftList {
+		margin:0;
+		width: auto;
+	}
+	.flex-control-nav { 
+		position:absolute; 
+	}
+	#navcontainer {
+		float:none;
+		padding:0;
+	}
+	#navlist li {
+		display: block;
+		text-align:center;
+	}
+	#navlist a { 
+		padding: 0 10px;
+	}
+	.floatPic {
+		display:none;
+	}
+	.boxes li .boxPic {
+		margin:5px;
+		width:70%;
+		margin:10px 20px;
+	}
+}
+
+
+#main{
+ 	margin-left:auto;
+    margin-right:auto;
+	width:960px;
+	height:auto;
+	}
+	
+
+#main_pic{
+	width:460px;
+	heigth:206px;
+	float:left;
+	}
+
+.pic{
+	padding:10px;
+	border:1px solid #CCC;
+	border-radius:5px;
+	box-shadow:0 0 5px #CCC;
+	width:440px;
+	}
+
+.pic img{
+	display:block;
+	width:440px;
+	height:183px;
+	}	
+	
+

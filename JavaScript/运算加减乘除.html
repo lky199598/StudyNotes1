@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+function opera() {
+	
+	var num1=parseFloat(document.getElementById("num1").value);
+	
+	var num2=parseFloat(document.getElementById("num2").value);
+	
+	var select=document.getElementById("select").value;
+	
+	var result;
+
+	switch(select)
+	{
+	case "+":
+		result=num1+num2;
+		break;
+	case "-":
+		result=num1-num2;
+		break;
+	case "*":
+		result=num1*num2;
+		break;
+		
+	case "/":
+		result=num1/num2;
+	}
+	document.write(num1+" "+select+" "+num2+" = "+result);
+}
+
+</script>
+
+</head>
+
+<body>
+<h2>加减乘除</h2><br><br>
+
+<input type="text" id="num1">
+<select id="select">
+
+<option value="+">+</option>
+<option value="-">-</option>
+<option value="*">*</option>
+<option value="/">/</option>
+
+</select>
+
+<input type="text" id="num2">
+<input type="button" value="=" onclick="opera()"/>
+
+</body>
+</html>

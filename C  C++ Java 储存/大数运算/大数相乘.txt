@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<string.h>
+#define N 200
+void mul(char a[], int n, char b[], int m)
+{
+	int s[N] = {0}, i=N-1, p=0;
+	int l, j;
+	for( ; n>=0; n--)
+	{
+		for(j=i, l=m; l>=0; j--, l--)
+		{
+			s[j] = s[j] + (a[n]-'0')*(b[l]-'0')+p;
+			p = s[j]/10;
+			s[j] = s[j]%10;
+		}
+	   	while(p)
+		{
+	    	s[j--] = p%10;
+		    p = p/10;
+		}
+		i--;
+	}
+	for(i=j+1; i<N; i++)
+		printf("%d", s[i]);
+	printf("\n");
+}
+
+int main()
+{
+	char a[20], b[20];
+	int n, m;
+	printf("\nPlease input the first  number: ");
+	gets(a);
+	n = strlen(a)-1;
+	printf("\nPlease input the second number: ");
+	gets(b);
+	m = strlen(b)-1;
+	printf("\nThe two  numbers  multibly is: ");
+	mul(a, n, b, m);
+	return 0;
+}

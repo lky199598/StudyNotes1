@@ -1,0 +1,45 @@
+#include<iostream>
+using namespace std;
+class complex
+{
+public:
+	complex(){}
+	complex(double r, double i):real(r), imag(i){}
+
+	operator double() //类型转换函数
+	{
+		return real;
+	}
+
+	complex (double r)//转换构造函数
+	{
+		real = r;
+		imag = 0;
+	}
+	void display()
+	{
+		cout<<"( "<<real<<", "<<imag <<"i )"<<endl<<endl;
+	}
+
+private:
+	double real;
+	double imag;
+};
+
+int main()
+{
+	complex c1(6,8), c2;
+	double d;
+	d = c1 + 6.8;
+
+	c2 = c1 + 6.8;
+
+	cout<<"d: "<<d<<endl;
+	cout<<"c2: "<<c2<<endl;
+
+	c2.display();
+
+	return 0;
+}
+
+

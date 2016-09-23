@@ -1,0 +1,631 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
+#include<conio.h>
+struct user
+{
+	char name[10];
+	char pass[10];
+	int locked;
+};
+FILE *filename;//用户信息
+FILE *fp;
+
+void showmenu1()
+{
+	system("cls");
+	printf("\n\n");
+	printf("\t\t_____________________________________\n\n");
+	printf("\t\t        管   理   系   统\n\n");
+	printf("\t\t          1. 用户登录\n\n");
+	printf("\t\t          2. 管理员登陆\n\n");
+	printf("\t\t          3. 退出系统\n\n");
+	printf("\t\t_____________________________________\n\n");
+	printf("\t\t请选择操作: ");
+}
+void showmenu2()
+{
+	system("cls");
+	printf("\n\n");
+	printf("\t\t_____________________________________\n\n");
+	printf("\t\t        管   理   系   统\n\n\n");
+	printf("\t\t          1. 修改密码\n\n");
+	printf("\t\t          2. 退出登陆\n\n");
+	printf("\t\t_____________________________________\n\n");
+	printf("\t\t登陆成功，请选择操作: ");
+
+}
+void showmenu3()
+{
+	system("cls");
+	printf("\t\t_____________________________________\n\n");
+	printf("\t\t        管   理   系   统\n\n\n");
+	printf("\t\t          1. 修改密码\n\n");
+	printf("\t\t          2. 新建用户\n\n");
+	printf("\t\t          3. 删除用户\n\n");
+	printf("\t\t          4. 查询操作\n\n");
+	printf("\t\t          5. 打印信息\n\n");
+	printf("\t\t          6. 用户解锁\n\n");
+	printf("\t\t          7. 退出登录\n\n");
+	printf("\t\t_____________________________________\n\n");
+	printf("\t\t登陆成功，请选择操作(1~~5): ");
+}
+void password(char a[]) //密码的输入
+{
+	int i;
+	for(i=0; ; )
+	{
+		a[i] = getch();
+		if(a[i] == 8)
+		{
+			printf("\b \b");
+			i--;
+		}
+		else
+			if(a[i] == 13)
+		{
+			a[i] ='\0';
+			break;
+		}
+		else
+		{
+			putchar('*');
+		i++;
+		}
+	}
+}
+
+
+void check() //验证码的输入
+{
+	char s1[5], s2[5];
+	int i, m, n;
+	srand( (unsigned)time(NULL) );
+	printf("\n\n请输入验证码: ");
+	do
+	{
+		for(i=0; i<4; i++)
+			{
+				m = rand()%3; //设定验证码中数字与字母比例为1:2.
+				if(m==0)
+				{
+					n = rand()%10; //0~~9
+					s1[i] = '0'+n ;
+				}
+				else
+				{
+					m=rand()%2;	//设定大写字母与小写字母为1:1.
+
+					n=rand()%26;//0~25
+					if(m==0)
+					s1[i] = 'a'+n;
+					else
+					s1[i] = 'A'+n;
+				}
+			}
+
+			s1[i] = '\0';
+			puts(s1);
+			printf("\n");
+		    fflush(stdin);
+		    gets(s2);
+
+			if( !strcmp(s1, s2))
+			{
+			printf("\n验证码正确,操作成功!\n");
+			break;
+			}
+			else
+				printf("\n\n验证码错误，请重新输入验证码: ");
+	}while( strcmp(s1, s2) );
+
+}
+
+void set(struct user *p)
+{
+	int i;
+	char password[5][10] ={"111111", "222222", "333333","444444", "555555"}; //初始化5个账户的密码
+	char adminpass[10] = "123456"; //管理员登录密码
+	char a[2];
+	char user[6] = "user";
+	filename = fopen("user.txt", "wb"); //保存用户信息，用户名，密码，五个数据块.
+	fp = fopen("admin.txt", "wb"); //保存管理员登录密码.
+	for(i=0; i<5; i++)
+	{
+		itoa(i+1, a, 10);
+		user[4] = '\0'; //每次都让user[6]="user", 不然会有"user1", "user2", ····"user12345";
+		strcpy( p[i].name, strcat(user, a) );
+	    strcpy(p[i].pass, password[i]);
+		p[i].locked=0;
+	    fwrite( &p[i], sizeof(struct user), 1, filename);
+	}
+	fclose(filename);
+	fwrite(adminpass, sizeof(adminpass), 1, fp);
+	fclose(fp);
+}
+int existuser(struct user *p)
+{
+	int i;
+	if( ( filename=fopen("user.txt", "rb") ) == NULL)
+	{
+		printf("不能打开文件，请检查文件是否存在或损坏\n");
+		exit(0);
+	}
+	for(i=0; fread(&p[i], sizeof(struct user), 1, filename) == 1; i++);
+	fclose(filename);
+	return i;
+}
+int isexist(struct user *p, char name[])
+{
+	int i;
+	int count = existuser(p);
+	for(i=0; i<count; i++)
+	{
+		if( !strcmp(p[i].name, name) )
+			return 0;
+	}
+
+			return 1;
+}
+
+void fixpass1(struct user *p, struct user userdata) //修改用户登录密码
+{
+	char s1[10], s2[10];
+	int count, i=0;
+	count = existuser(p);
+	printf("请输入原始密码: ");
+    password(s1);
+	while( strcmp(s1, userdata.pass) )
+	{
+		printf("\n\n与原密码不一致，请重新输入: ");
+	    password(s1);
+	}
+	printf("\n\n请输入新密码: ");
+	do
+	{
+		password(s1);
+	    printf("\n\n请再次输入密码确认: ");
+	    password(s2);
+		if( !strcmp(s1, s2) )
+		break;
+		else
+		printf("\n\n两次输入的密码不一致，请重新输入新密码: "); 
+	}while( strcmp(s1, s2) );
+
+	strcpy( userdata.pass, s1 );
+	for(i=0; i<count; i++)
+		if( !strcmp(p[i].name, userdata.name) )
+		{
+			p[i] = userdata;
+		}
+	printf("\n\n密码修改完成，任意键返回.\n");
+	filename = fopen("user.txt", "wb");
+	fwrite(p, sizeof(struct user), count, filename); 
+	fclose(filename);
+	getch();
+	return ;
+}
+void userload(struct user *p)//用户登录函数
+{
+	int count=existuser(p), i, n, m=1;
+	char s[10];
+	char name[10];	
+	struct user userdata; 
+	printf("请输入用户名: ");
+	fflush(stdin);
+	gets(name);
+	while( isexist(p, name) )
+	{
+		printf("\n\n用户名不存在，请重新输入: ");
+		fflush(stdin);
+		gets(name);
+	}
+	for(i=0; i<count; i++)
+	{
+			if( !strcmp(p[i].name, name) )
+			{
+				userdata = p[i];
+			    break;
+			}
+	}
+	if( userdata.locked == 1 )
+	{
+		printf("\n\n该账户已被锁定，请找管理员解锁\n");
+	    printf("\n\n按任意键返回！");
+		getch();
+		return;
+	}
+
+	printf("\n\n请输入密码(密码长度小于10): ");
+	fflush(stdin);
+	password(s);
+	while( strcmp(s, userdata.pass) )
+	{
+				
+		printf("\n\n密码不正确，请重新输入: ");
+		fflush(stdin);
+		password(s);
+		m++;	
+		if(m==3)
+			break;
+	}
+	if(m==3)
+	{
+		for(i=0; i<count; i++)
+		{
+			if( !strcmp(p[i].name, name) )
+			{
+				p[i].locked=1;
+			    break;
+			}
+		}
+		filename = fopen("user.txt", "wb");
+		fwrite(p, sizeof(struct user), count, filename);
+		fclose(filename);
+		printf("\n\n连续输入密码三次错误，账户 %s 被锁定,请找管理员解锁", p[i].name);
+		printf("\n\n按任意键返回！");
+		getch();
+		return;
+	}
+	check();
+	showmenu2();		
+loop:	scanf("%d", &n);
+		switch(n)
+		{
+		case 1:
+			system("cls");
+			fixpass1(p, userdata);
+			break;
+		case 2:	
+			return ;
+		default:
+			printf("\n\n\t\t请重新选择操作(1--2): ");
+			goto loop;
+		}
+		showmenu2();
+		goto loop;
+}
+void fixpass2(struct user *p)
+{
+	char s1[10],s2[10], pass[10];
+	fp = fopen("admin.txt", "rb");
+	fread(pass, sizeof(pass), 1, fp);
+	fclose(fp);
+	printf("\n\n请输入原始密码(密码长度小于10): ");
+	password(s1);
+	while( strcmp(s1, pass) )
+	{
+		printf("\n\n与原密码不一致，请重新输入: ");
+		password(s1);
+	}
+	printf("\n\n请输入新密码: ");
+	password(s1);
+	printf("\n\n请再次输入密码确认: ");
+	password(s2);
+	while( strcmp(s1, s2) )
+	{
+		printf("\n\n两次输入密码不一致，请重新输入新密码: ");
+		password(s1);
+	    printf("\n\n请再次输入密码确认: ");
+     	password(s2);
+	}
+	fp = fopen("admin.txt", "wb");
+	fwrite(s1, sizeof(s1), 1, fp);
+	fclose(fp);
+	printf("\n\n密码修改完成，请按任意键返回！\n");
+	getch();
+	return ;
+}
+void adduser(struct user *p)
+{
+	int count;
+	char s1[10], s2[10], name[10];
+	count = existuser(p);
+	if(count == 10)
+	{
+		printf("\n\n账户已满!\n");
+		return ;
+	}
+	printf("\n\n请输入第 %d 个用户信息", count+1);
+	printf("\n\n用户名: ");
+	fflush(stdin);
+	gets(name);
+	while(isexist(p, name) == 0)
+	{
+		printf("\n\n用户名已存在，请重新输入: ");
+		fflush(stdin);
+		gets(name);
+	}
+	printf("\n\n请输入密码: ");
+	password(s1);
+	printf("\n\n请再次输入密码确认: ");
+	password(s2);
+	while( strcmp(s1, s2) )
+	{
+		printf("\n\n两次输入的密码不一致，请重新输入新密码: ");
+		password(s1);
+		printf("\n\n请再次输入密码确认: ");
+		password(s2);
+	}
+	check();
+	strcpy(p[count].name, name);
+	strcpy(p[count].pass, s1);
+	p[count].locked = 0;
+	filename=fopen("user.txt", "a+b");
+	fwrite(&p[count], sizeof(struct user), 1, filename);
+	fclose(filename);
+
+	printf("\n\n第 %d 名用户添加成功,任意键退出", count+1);
+	getch();
+	return;
+}
+void deluser(struct user *p)
+{
+	int count=existuser(p);
+	int i, j;
+	char pass[10], name[10];
+	printf("\n\n请输入您要删除的账户: ");
+	fflush(stdin);
+	gets(name);
+	while( isexist(p, name) )
+	{
+		printf("\n\n没有建立该账户信息，请重新输入: ");
+		fflush(stdin);
+		gets(name);
+	}
+	for(i=0; i<count; i++)
+	{
+		if( !strcmp(p[i].name, name) )
+			break;
+	}
+	printf("\n\n请输入该账户密码(密码长度小于10): ");
+	fflush(stdin);
+	password(pass);
+	while( strcmp(p[i].pass, pass) )
+	{
+		printf("\n\n密码不正确，请重新输入: ");
+		fflush(stdin);
+		password(pass);
+	}
+	check();
+	for(j=i; j<count; j++)
+		p[j] = p[j+1];
+	filename = fopen("user.txt", "wb");
+	fwrite(p, sizeof(struct user), count-1, filename);
+	fclose(filename);
+	printf("\n\n%s 账户信息删除成功，请按任意键返回！", name);
+	getch();
+	return ;
+}
+			
+
+void find(struct user *p)
+{
+	int i, count, n=0;
+	char s[10], name[10];
+	count = existuser(p);
+loop1:	printf("\n\n请输入您要查询的用户: ");
+		fflush(stdin);
+	gets(name);
+
+	printf("\n\n查询到以下信息\n\n(用户名\t\t密码)\n\n");
+	for(i=0; i<count; i++)
+	{
+		if( strstr(p[i].name, name) )
+		{
+			printf("%s\t\t%s\n", p[i].name, p[i].pass);
+			n++;
+		}
+	}
+	printf("\n共查询到 %d 条信息\n", n);
+
+	printf("\n\n是否要继续查询:(Yes or No): ");
+loop2:	fflush(stdin);
+	gets(s);
+	if( !strcmp(s, "Yes") )
+	{
+		n=0;
+		goto loop1;
+	}
+	else
+		if( !strcmp(s, "No") )
+		{
+			printf("查询结束，任意键返回！");
+			getch();
+	     	return ;
+		}
+		else
+		{
+			printf("\n\n请选择Yes 或 No: ");
+			goto loop2;
+		}
+}
+void print(struct user *p)
+{
+	
+	int count = existuser(p);
+	int i;
+	for(i=0; i<count; i++)
+		printf("\n\n\t\t\t%s\n", p[i].name);
+	printf("\n\t\t\t按任意键返回!");
+	getch();
+	return ;
+}
+void unlocked(struct user *p)
+{
+	int i, count = existuser(p);
+	char name[10], s[10];
+loop1:	for(i=0; i<count; i++)
+	{
+		if( p[i].locked == 1)
+			printf("\n\n账户 %s 被锁定\n\n", p[i].name);
+	}
+
+	i=0;
+	while( p[i].locked==0 )
+		i++;
+	if(i==count)
+	{
+		printf("\n\n没有被锁定的账户，请按任意键返回！\n");
+		getch();
+		return ;
+	}
+
+	printf("\n\n请输入您要解锁的账户: ");
+	fflush(stdin);
+	gets(name);
+loop2:	for(i=0; i<count; i++)
+	{
+		if( !strcmp(p[i].name, name) )
+			break;
+	}
+		while(p[i].locked == 0)
+		{
+			printf("\n\n该账户没有被锁定，请重新输入: ");
+		    fflush(stdin);
+		    gets(name);
+			goto loop2;
+		}
+	    while( isexist(p, name) )
+		{
+			printf("\n\n没有建立该账户信息，请重新输入: ");
+		    fflush(stdin);
+		    gets(name);
+			goto loop2;
+		}
+		p[i].locked =0;
+		filename = fopen("user.txt", "wb");
+		fwrite(p, sizeof(struct user), count, filename);
+		fclose(filename);
+		printf("\n\n该账户成功解锁！\n");
+
+		printf("\n\n是否要继续解锁(Yes or No): ");
+loop3:		fflush(stdin);
+		gets(s);
+		if( !strcmp(s, "Yes") )
+	{
+		goto loop1;
+	}
+	else
+		if( !strcmp(s, "No") )
+		{
+			printf("\n解锁结束，任意键返回！\n");
+			getch();
+	     	return ;
+		}
+		else
+		{
+			printf("\n\n请选择Yes 或 No: ");
+			goto loop3;
+		}
+
+	
+
+}
+
+
+void adminload(struct user *p)
+{	
+	char s[10];
+	char pass[10];
+	int  n;
+	fp = fopen("admin.txt", "rb");
+	fread(pass, sizeof(pass), 1, fp);
+	fclose(fp);
+	printf("\n请输入管理员密码( 密码长度小于10 ): ");
+    password(s);
+	while( strcmp( s, pass) )
+	{
+		printf("\n\n密码错误，请再次输入: ");
+	    password(s);
+	}
+	showmenu3();
+loop:	scanf("%d", &n);
+	switch(n)
+	{
+	case 1:
+		system("cls");
+		fixpass2(p);
+		break;
+	case 2:
+		system("cls");
+		adduser(p);
+		break;
+	case 3:
+		system("cls");
+		deluser(p);
+		break;
+	case 4:
+		system("cls");
+		find(p);	
+		break;
+	case 5:
+		system("cls");
+		print(p);
+		break;
+	case 6:
+		system("cls");
+		unlocked(p);
+		break;
+	case 7:
+		return;
+	default:
+		printf("\n\t\t请重新选择操作(1~~5): ");
+		goto loop;
+	}
+	showmenu3();
+	goto loop;
+
+}
+
+void main()
+{
+	struct user s[10];
+	struct user *p;
+	int n;
+	p = s;
+	set(p);
+	showmenu1();
+loop:	scanf("%d", &n);
+	switch(n)
+	{
+	case 1:	
+		system("cls");
+		userload(p);
+		break;
+	case 2:
+		system("cls");
+		adminload(p);	
+		break;
+	case 3:
+		system("cls");
+		return ;
+	default:
+		printf("\n\t\t请重新选择(1--3): ");
+		goto loop;
+	}
+	showmenu1();
+	goto loop;
+}
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+

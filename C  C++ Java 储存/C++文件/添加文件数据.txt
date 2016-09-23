@@ -1,0 +1,51 @@
+#include<fstream>
+#include<iostream>
+#include<iomanip>
+using namespace std;
+struct student
+{
+	char name[20];
+	int num;
+	int age;
+};
+int main()
+{
+	int count = 0;
+	student stu[5] = {"aaa", 111, 18, "bbb", 222, 19, "ccc", 333, 20, "ddd", 444, 21, "eee", 555, 22};
+	ofstream outfile("a.txt", ios::binary);
+	if( !outfile)
+	{
+		cout<<"\nopen error\n";
+		exit(0);
+	}
+	for(int i=0; i<5; i++)
+	{
+		outfile.write( (char*)&stu[i], sizeof(stu[i]) );
+		count++;
+	}
+	outfile.close();
+
+	student add[3]= {"fff", 666, 23, "ggg", 777, 24, "hhh", 888, 25};
+	ofstream outfile_1("a.txt", ios::binary|ios::app);//以输出方式打开文件，写入的数据添加在文件末尾
+	for(i=0; i<3; i++)
+	{
+		outfile_1.write( (char *)&add[i], sizeof(add[i]) );
+		count++;
+	}
+	outfile_1.close();
+
+	ifstream infile("a.txt", ios::binary);
+	if( !infile )
+	{
+		cout<<"\nopen file\n\n";
+		abort();
+	}
+	student s[8];
+	for(i=0; i<count; i++)
+	{
+		infile.read( (char *)&s[i], sizeof(s[i]) );
+		cout<<s[i].name<<setw(8)<<s[i].num<<setw(8)<<s[i].age<<endl;
+	}
+	infile.close();
+	return 0;
+}

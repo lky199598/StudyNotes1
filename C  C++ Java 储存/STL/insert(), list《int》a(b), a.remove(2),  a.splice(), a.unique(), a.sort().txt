@@ -1,0 +1,59 @@
+#include<iostream>
+#include<list>
+#include<iterator>
+#include<algorithm>
+using namespace std;
+void outint(int n)
+{
+	cout<<n<<"  ";
+}
+int main()
+{
+	list<int>a(5, 1);
+	list<int>c;
+	int b[5] = {2, 3, 4, 2 , 5};
+	
+
+	cout<<"list<int>a(5, 1)\n";
+	for_each(a.begin(), a.end(), outint);
+	
+	
+	c.insert( c.begin(), b, b+5);
+	cout<<"\n\nc.insert(c.begin(), b, b+5)\n";
+	for_each(c.begin(), c.end(), outint);
+	
+	list<int>d(c);
+	d.insert( d.end(), b, b+5 );
+	cout<<"\n\nlist<int>d(c), d.insert(d.end(), b, b+5)\n\n";
+	for_each( d.begin(), d.end(), outint );
+
+	d.remove(2);
+	cout<<"\n\nd.move(2)\n\n";
+	for_each(d.begin(), d.end(), outint);
+
+	d.splice(d.begin(), a);
+	cout<<"\n\nd.splice(d.begin(), a)\n\n";
+	for_each(d.begin(), d.end(), outint);
+	cout<<"\n\nd.splice(d.begin(), a), list a\n\n";
+	for_each(a.begin(), a.end(), outint);
+
+	d.unique();//将连续相同的元素压缩为单个元素
+	cout<<"\n\nd.unique()\n\n";
+	for_each(d.begin(), d.end(), outint);
+
+	d.sort();
+	d.unique();
+	cout<<"\n\nd.sort(), d.unique()\n\n";
+	for_each(d.begin(), d.end(), outint);
+
+	c.sort();
+	d.merge(c);//将链表c与调用链表合并，两个链表必须已经排序。合并后经过排序的链表保存在调用链表中，c为空。
+	cout<<"\n\nc.sort(), d.merge(c), list d\n\n";
+	for_each(d.begin(), d.end(), outint);
+	cout<<"\n\nc.sort(), d.merge(c), list c\n\n";
+	for_each(c.begin(), c.end(), outint);
+	cout<<"\n\n";
+	return 0;
+}
+
+

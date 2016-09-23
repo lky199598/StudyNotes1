@@ -1,0 +1,47 @@
+#include<iostream>
+using namespace std;
+class shape
+{
+public:
+	virtual double area() const=0;
+};
+class triangle:public shape
+{
+public:
+	triangle(double H, double W):h(H), w(W){}
+	double area() const
+	{
+		return h*w*0.5;
+	}
+private:
+	double h,w;
+};
+
+class rectangle:public shape
+{
+public:
+	rectangle(double H, double W):h(H), w(W){}
+	double area() const
+	{
+		return h*w;
+	}
+private:
+	double h, w;
+};
+
+double total(shape *s[], int n)
+{
+	double sum=0;
+	for(int i=0; i<n; i++)
+		sum+=s[i]->area();
+	return sum;
+}
+int main()
+{
+	triangle t(3, 4);
+	rectangle r(4, 5);
+	shape *s[2];
+	s[0] = &t, s[1] = &r; //area()声明为虚函数，可以通过基类指针去调用派生类中的成员函数
+	cout<<total(s, 2)<<endl;
+	return 0;
+}

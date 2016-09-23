@@ -1,0 +1,176 @@
+#include<stdio.h>
+int i, j;
+void f(int *b[] )//b[][3]不可以, **b和*b[3]可以
+{
+	for(i=0; i<3; i++)
+	{
+		for(j=0; j<3; j++)
+		printf("%d ", b[i][j]);
+
+		putchar('\n');
+	}
+
+}
+void main()
+{
+	int **b;
+	b=(int **)malloc( sizeof(int*)*3 );
+
+	for(i=0; i<3; i++)
+	{
+		b[i]=(int *)malloc( sizeof(int)*3 );
+	}
+
+
+
+	for(i=0; i<3; i++)
+		for(j=0; j<3; j++)
+			b[i][j]=6;
+
+		f(b);	
+}
+
+
+ 
+
+
+
+
+
+
+#include<stdio.h>
+int i;
+void main()
+{
+	char s[3][10]={"123", "456", "789"};//s代表的的是首行的起始地址，s=&s[0], s+2=&s[2],代表s[2]的起始地址.
+	//s[2]=&s[2][0]，代表数组首元素地址
+	char (*p)[10];  char *q[3];
+	p=s;	; //p=&s[0], p+1=&s[1], *p=&s[0][0], *(p+1)=&s[1][0];
+	printf("%s\n%s\n%s\n", *p, *(p+1), *(p+2) );
+	printf("%c %c %c\n", *( *p+2 ), *( *(p+1) +2 ), *( *(p+2)+2 )  );
+
+	for(i=0; i<3; i++)
+	{
+		q[i]=s[i];
+	}
+
+    //q=s;//q=&s[0], q+2=&s[2], q[0]=&s[0][0], q[2]=&s[2][0]	
+	printf("%s\n%s\n%s\n", q[0], q[1], q[2] );
+	printf("%c %c %c\n", *(q[0]+2), *( q[1]+2 ), *( q[2]+2 )  );
+
+	
+}
+
+
+ 
+
+
+#include <stdio.h>    
+int main(void)  
+{  
+	int i;
+
+	char s[][10] = {"123", "abc"};
+	char *s1 = "123456abc";
+	char *s2[] = {"123", "abc"};//==char *(s2[])
+	char (*s3)[10];
+	s3 = s;
+	for(i=0; i<2; i++)
+		printf("\nchar s[][10]\n%s  %c  %c\n", s[i], s[i][0], s[i][2] );
+	
+	printf("\nchar *s1 = “123456abc“\n%s  %c  %c\n", s1, *s1, *(s1+1) );
+	for(i=0; i<2; i++)
+		 printf("\nchar *s2[] = {“123”, “abc”}\n%s  %c  %c\n", s2[i], *s2[i], *(s2[i]+2) );
+	
+	for(i=0; i<2; i++)
+	printf("\nchar (*s3)[10], s3 = s\n%s  %c  %c\n", *（s3+i）, ( *(s3+i) )[0], ( *(s3+i) )[2] );
+	return 0; 
+} 
+
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>    
+int main(void)  
+{  
+	int i;
+
+	char s[][10] = {"123", "abc"};
+	char *s1 = "123456abc";
+	char *s2[] = {"123", "abc"};//==char *(s2[])
+	char (*s3)[10];
+	s3 = s;
+	for(i=0; i<2; i++)
+		printf("\n1.char s[][10]\n%s  %c  %c\n", s[i], s[i][0], s[i][2] );
+	
+	printf("\n2.char *s1 = “123456abc“\n%s  %c  %c\n", s1, s1[0], s1[2] );
+	for(i=0; i<2; i++)
+		 printf("\n3.char *s2[] = {“123”, “abc”}\n%s  %c  %c\n", s2[i], s2[i][0], s2[i][2]);
+	
+	for(i=0; i<2; i++)
+	printf("\n4.char (*s3)[10], s3 = s\n%s  %c  %c\n", *（s3+i）, s3[i][0], s3[i][2] );
+	return 0; 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+main()
+{
+	int a[]={1,2,3,4,5};
+	int *s, *s1[1];
+	s=a;
+	s1[0]=a;
+
+	printf("\n%d  %d  %d\n", s[0], s[1], s[2]);
+	printf("\n%d  %d  %d\n", *(s), *(s+1), *(s+2) );
+	
+	
+	printf("\n%d  %d  %d\n", *s1[0], *(s1[0]+1), *(s1[0]+2) );
+
+
+}
+
+
+
+
+
+#include<stdio.h>
+main()
+{
+	int a[]={1,2,3,4,5};
+	int *s, *s1[1];
+	s=a;
+	s1[0]=a;
+
+	printf("\n%d  %d  %d\n", s[0], s[1], s[2]);
+	printf("\n%d  %d  %d\n", *(s), *(s+1), *(s+2) );
+	
+	
+	printf("\n%d  %d  %d\n", s, s+1,  s+2 );
+
+	printf("\n%d\n", s+1);
+
+	printf("\n%d\n", (s+1)-s);
+
+
+
+}
+	

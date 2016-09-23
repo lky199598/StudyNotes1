@@ -1,0 +1,545 @@
+#include<iostream>
+#include <windows.h>
+#include<time.h>  
+#include<conio.h>
+using namespace std;
+
+#define framex 6
+#define framey 2
+#define high 22
+#define width 40
+
+class seat
+{
+public:
+	int x;
+	int y;
+};
+
+class Tetris:public seat
+{
+private:
+	int flag;//产生方块的序号
+	int next_flag;//产生方块的下一个序号
+	int sign;//标志是否产生方块 
+	
+	static int speed;
+	static int score;
+	static int level;
+	static int count;
+	static int a[framex+width+15][framey+high+1];//产生方块的范围
+
+public:
+	void locate(HANDLE hOut, int x, int y);//用句柄控制光标变量
+	void make_frame(HANDLE hOut);//制作游戏框架
+	void get_flag();//得到要产生的方块的序号
+	void make_tetris();//俄罗斯方块的制作
+	void print(HANDLE hOut);//打印方块
+	void del_full(HANDLE hOut);//删除满行的方块
+	int move_able();//判断方块是否可以移动
+	void clear(HANDLE hOut);//方块将要移动，标记方块，清除痕迹
+	void tetris_move(HANDLE hOut);//游戏主要规划
+	void start_game();
+}tetris;
+
+int Tetris::speed=0;
+int Tetris::score=0;
+int Tetris::level=1;
+int Tetris::count=0;
+int Tetris::a[framex+width+15][framey+high+1]={0};
+
+void Tetris::locate(HANDLE hOut, int x, int y)
+{
+	COORD pos;
+	pos.X=x;
+	pos.Y=y;
+	SetConsoleCursorPosition(hOut, pos);
+}
+
+//a[i][j]=0是空格，a[i][j]=1是有方块，a[i][j]=2是边界
+void Tetris::make_frame(HANDLE hOut)
+{	
+	locate(hOut, width/2, framey-2);
+	cout<<"俄罗斯方块            按任意键开始游戏"; 
+
+	locate(hOut, framex, framey);
+	cout<<"╔";
+	a[framex][framey]=2;
+
+	locate(hOut, framex+width, framey);
+	cout<<"╗";
+	a[framex+width][framey]=2;
+
+	locate(hOut, framex, framey+high); 
+	cout<<"╚";
+	a[framex][framey+high]=2;  
+
+	locate(hOut, framex+width, framey+high);
+	cout<<"╝";
+	a[framex+width][framey+high]=2;
+
+	for(int i=2; i<=width-2; i+=2)
+	{
+		locate(hOut, framex+i, framey);
+		cout<<"═"; 
+		
+		locate(hOut, framex+i, framey+high);
+		cout<<"═"; 
+		a[framex+i][framey+high]=2;
+	}
+
+	for(i=1; i<high; i++)
+	{
+		locate(hOut, framex, framey+i);
+		cout<<"║";
+		a[framex][framey+i]=2;   
+		
+		locate(hOut, framex+width, framey+i);
+		cout<<"║";
+		a[framex+width][framey+i]=2;   
+
+	}
+
+	locate(hOut, framex+width+8, framey);
+	cout<<"level: "<<level<<endl;
+
+	locate(hOut, framex+width+8, framey+2);
+	cout<<"Score="<<score;
+
+	locate(hOut, framex+width+8, framey+4);
+	cout<<"speed: "<<speed<<"ms";
+
+	locate(hOut, framex+width+8, framey+6);
+	cout<<"-----------下一方块";
+
+	locate(hOut, framex+width+8, framey+14);
+	cout<<"-----------";
+
+	locate(hOut, framex+width+8, framey+16);
+	cout<<"Esc: 退出游戏";
+
+	locate(hOut, framex+width+8, framey+18);
+	cout<<"↑键：变体";  
+
+	 locate(hOut, framex+width+8, framey+20); 
+	 cout<<"空格暂停游戏"; 
+
+
+}
+
+
+void Tetris::get_flag()
+{
+	count++;
+	srand( (unsigned)time(NULL) );
+	if(count==1)
+	{
+		flag=rand()%19+1;
+	}
+	next_flag=rand()%19+1;
+}
+
+void Tetris::make_tetris()
+{
+	a[x][y]=sign;
+	switch(flag)
+	{
+	case 1:
+		a[x][y+1]=a[x+2][y]=a[x+2][y+1]=sign;//田
+		break;
+	case 2:
+		a[x+2][y]=a[x+4][y]=a[x+6][y]=sign;// ----
+		break;
+	case 3:
+		a[x][y+1]=a[x][y+2]=a[x][y+3]=sign;// |
+		break;
+	case 4:
+		a[x][y+1]=a[x+2][y+1]=a[x+4][y+1]=sign;//|___
+		break;
+	case 5:
+		a[x-2][y]=a[x-2][y+1]=a[x-2][y+2]=sign;//|~
+		break;
+	case 6:
+		a[x+2][y]=a[x+4][y]=a[x+4][y+1]=sign;//~~~|
+		break;
+	case 7:
+		a[x][y+1]=a[x][y+2]=a[x-2][y+2]=sign;//_|
+		break;
+	case 8:
+		a[x+2][y]=a[x+4][y]=a[x+4][y-1]=sign;//___|
+		break;
+	case 9:
+		a[x][y+1]=a[x][y+2]=a[x+2][y+2]=sign;//|_
+		break;
+	case 10:
+		a[x][y-1]=a[x+2][y-1]=a[x+4][y-1]=sign;//|~~~
+		break;
+	case 11:
+		a[x+2][y]=a[x+2][y+1]=a[x+2][y+2]=sign;//~|
+		break;
+	case 12:
+		a[x][y+1]=a[x-2][y+1]=a[x][y+2]=sign;//-|
+		break;
+	case 13:
+		a[x][y+1]=a[x-2][y+1]=a[x+2][y+1]=sign;// __-__
+		break;
+	case 14:
+		a[x][y+1]=a[x][y+2]=a[x+2][y+1]=sign;//|-
+		break;
+	case 15:
+		a[x+2][y]=a[x+4][y]=a[x+2][y+1]=sign;//--_--
+		break;
+	case 16:
+		a[x+2][y]=a[x+2][y+1]=a[x+4][y+1]=sign;//z
+		break;
+	case 17:
+		a[x][y+1]=a[x-2][y+1]=a[x-2][y+2]=sign;//z顺时针旋转90度
+		break;
+	case 18:
+		a[x+2][y]=a[x+2][y-1]=a[x+4][y-1]=sign;//__--
+		break;
+	case 19:
+		a[x][y+1]=a[x+2][y+1]=a[x+2][y+2]=sign;
+		break;
+	}
+}
+
+void Tetris::print(HANDLE hOut)
+{		
+	int i, j;
+	sign=1;
+	make_tetris();
+	for(i=x-6; i<=x+6; i+=2)
+		for(j=y+3; j>=y-3; j--)
+		{
+
+			if(a[i][j]==1 && j>framey)//j>framey不让方块出现在横线外
+			{
+				locate(hOut, i, j);
+				cout<<"□";     //打印边框内的方块  
+			}
+		}
+			
+}
+
+void Tetris::clear(HANDLE hOut)
+{	
+	sign=0;
+	make_tetris();
+
+	for(int i=x-6; i<=x+6; i+=2)
+		for(int j=y-3; j<=y+3; j++)
+		{	
+			
+			if(a[i][j]==0 && i>framex+width+6 && j>framey+6 && j<framey+14)
+			{
+				locate(hOut, i, j);
+				cout<<"  ";     //清除方块 
+			}
+
+			else
+			if(a[i][j]==0 && j>framey)
+			{
+				locate(hOut, i, j);
+				cout<<"  ";     //清除方块 
+			}
+		}
+}
+
+
+void Tetris::del_full(HANDLE hOut)
+{	
+	int b=0, c=0;	    
+	for(int i=framey+high-1; i>=framey+1; )
+	{
+		b=0;
+		for(int j=framex+2; j<=framex+width-2 && a[j][i]==1; j+=2)
+		{
+				b++;
+		}
+
+		if( b==(width-4)/2 )
+		{
+			c++;
+			for(int k=framex+2; k<=framex+width-2; k+=2)
+			{
+				Sleep(10);
+				a[k][i]=0;
+				locate(hOut, k, i);
+				cout<<"  ";
+		
+			}
+			Sleep(30);
+
+			for(k=i-1; k>=framey+1; k--)
+			{
+				for(int t=framex+2; t<=framex+width-2; t+=2)
+				{
+					if(a[t][k]==1)
+					{
+						locate(hOut, t, k);
+						cout<<"  ";
+						a[t][k]=0;
+
+						locate(hOut, t, k+1);
+						cout<<"□";
+						a[t][k+1]=1;
+					}
+				}
+			}
+		}
+		else
+			i--;
+	}
+
+	score+=100*c;
+	if(score>0 && score % 300 == 0)
+	{
+		level++;
+		speed+=50;
+		locate(hOut, framex, framey+high+2);
+		cout<<"闯关成功，速度加快,按任意键继续";
+		getch();
+		locate(hOut, framex+width+5, framey);
+		cout<<"level: "<<level<<endl;
+
+		locate(hOut, framex+width+5, framey+2);
+		cout<<"Score="<<score;
+
+		locate(hOut, framex+width+5, framey+4);
+		printf("speed: %dms", speed);
+	}
+}
+
+
+int Tetris::move_able()
+{
+	if(a[x][y] != 0)
+	{
+		return 0;
+	}
+
+	 if( flag == 1 && a[x][y+1]==a[x+2][y]==a[x+2][y+1]==0 )//田
+		return 1;
+
+	 if(flag == 2 && a[x+2][y]==a[x+4][y]==a[x+6][y]==0 )// ----
+		return 1;	
+
+	if(flag == 3 && a[x][y+1]==a[x][y+2]==a[x][y+3]==0)
+		 return 1;// |
+
+	if(flag == 4 && a[x][y+1]==a[x+2][y+1]==a[x+4][y+1]==0)//|___
+		return 1;	
+
+	if(flag == 5 && a[x-2][y]==a[x-2][y+1]==a[x-2][y+2]==0)//|~
+		return 1;
+
+	if(flag == 6 && a[x+2][y]==a[x+4][y]==a[x+4][y+1]==0)//~~~|
+		return 1;
+
+	if(flag == 7 && a[x][y+1]==a[x][y+2]==a[x-2][y+2]==0)//_|
+		return 1;
+
+	if(flag == 8 && a[x+2][y]==a[x+4][y]==a[x+4][y-1]==0)//___|
+		return 1;
+
+	if(flag == 9 && a[x][y+1]==a[x][y+2]==a[x+2][y+2]==0)//|_
+		return 1;
+
+	if(flag == 10 && a[x][y-1]==a[x+2][y-1]==a[x+4][y-1]==0)//|~~~
+		return 1;
+
+	if(flag == 11 && a[x+2][y]==a[x+2][y+1]==a[x+2][y+2]==0)//~|
+		return 1;	
+
+	if(flag == 12 && a[x][y+1]==a[x-2][y+1]==a[x][y+2]==0)//-|
+		return 1;
+
+	if(flag == 13 && a[x][y+1]==a[x-2][y+1]==a[x+2][y+1]==0)// __-__
+		return 1;	
+
+	if(flag == 14 && a[x][y+1]==a[x][y+2]==a[x+2][y+1]==0)//|-
+		return 1;	 
+
+	if(flag == 15 && a[x+2][y]==a[x+4][y]==a[x+2][y+1]==0)//--_--
+		return 1;	
+
+	if(flag == 16 && a[x+2][y]==a[x+2][y+1]==a[x+4][y+1]==0)//z
+		return 1;
+
+	if(flag == 17 && a[x][y+1]==a[x-2][y+1]==a[x-2][y+2]==0)//z顺时针旋转90度
+		return 1;
+	
+	if(flag == 18 && a[x+2][y]==a[x+2][y-1]==a[x+4][y-1]==0)//__--
+		return 1;	
+
+	if(flag == 19 && a[x][y+1]==a[x+2][y+1]==a[x+2][y+2]==0)	
+		return 1;
+	
+	return 0;
+}
+
+void Tetris::tetris_move(HANDLE hOut)
+{
+	int temp_x, temp_y, temp_flag;
+    while(1)
+	{ 
+		x=framex+width+10;
+		y=framey+10;
+
+		get_flag();
+		temp_flag=flag;
+		flag=next_flag;
+		print(hOut);
+	
+		x=framex+width/2;
+		y=framey+1;
+		flag=temp_flag;	
+		
+	    while(1)
+		{
+		temp_x=x;
+		temp_y=y;
+		temp_flag=flag;
+
+		print(hOut);	
+		Sleep(speed);
+		clear(hOut);//清除方块现在的位置的标记，进入下一位置
+
+		char ch;
+	    if( kbhit() )
+		{
+			ch=getch();
+			if(ch==27)
+			{
+			system("cls");
+			cout<<"\n\n\n\n\n\n\t\t\t您已经成功退出游戏\n\n";
+			exit(0);
+			}
+
+			if(ch==32)
+			{
+				print(hOut);
+				locate(hOut, framex, framey+high+2);
+				cout<<"\t暂停游戏，请按任意键继续!";
+				getch();
+				continue;
+			}
+
+			if( ch==72 )
+			{
+				if(flag >=2 && flag <= 3)
+				{
+				flag++;
+				flag=flag%2+2;
+				goto loop;
+				}
+
+				if(flag >=4 && flag <= 7)
+				{
+				flag++;
+				flag=flag%4+4;
+				goto loop;
+				}	
+
+				if(flag >=8 && flag <= 11)
+				{
+				flag++;
+				flag=flag%4+8;	
+				goto loop;
+				}
+			    
+				if(flag >=12 && flag <= 15)
+				{
+				flag++;
+				flag=flag%4+12;	
+				goto loop;
+				}	
+
+				if(flag >=16 && flag <=17)
+				{
+				flag++;
+				flag=flag%2+16;	
+				goto loop;
+				}
+			
+				if(flag >=18 && flag <= 19)
+				{
+				flag++;
+				flag=flag%2+18;
+				goto loop;
+				}
+	
+			}
+
+			if(ch==75)
+			{
+				x-=2;
+				goto loop;
+			}
+		
+			if(ch==77)
+			{
+			x+=2;
+			}
+	
+   loop:	if( move_able() == 0 )//左右方向不可行，还可以试探向下的方向
+			{	
+				x=temp_x;
+				flag=temp_flag;
+			}
+		}
+
+		else
+		{
+			y++;
+		    if( move_able() == 0 )//若向下的方向不可行，则停止移动	
+			{
+		     	y=temp_y;
+		    	print(hOut);//返回原来可行的位置，同时标记为1，	证明已经走过
+
+		    	for(int i=x-6; i<=x+6; i+=2)
+			    	for(int j=y-3; j>=y+3; j++)
+					{
+				    	if(a[i][j]==1 && j<=framey)
+						{
+				
+			        	locate(hOut, framex, framey+high+2);
+				        cout<<"方块触到顶部，游戏结束！";
+						getch();	 
+						exit(0);
+						}
+					}
+					
+			    del_full(hOut);	
+				x=framex+width+10;//清除右边的提示下一个方块的痕迹
+	         	y=framey+10;
+				flag=next_flag;
+				clear(hOut);
+				break;
+			}
+		}
+	 }
+  } 
+		
+}
+
+void Tetris::start_game()
+{	
+	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	cout<<"\n\n\n\n\n\t\t\t欢迎来到俄罗斯方块";
+	cout<<"\n\n\n\n\t\t\t请输入速度(50~300): ";
+	cin>>speed;
+	system("cls");
+	
+	speed=15000/speed;
+	make_frame(hOut);
+	getch();
+	tetris_move(hOut);
+	
+}
+
+void main()
+{
+	tetris.start_game();
+} 

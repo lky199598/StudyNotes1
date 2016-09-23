@@ -1,0 +1,20 @@
+#include<iostream>
+#include<string>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	string s;
+	cout<<"string: ";
+	while( cin>>s && s != "quit")
+	{
+		cout<<"\n\noutput: "<<s<<endl;
+		sort(s.begin(), s.end() );
+		cout<<"\n\nsort string: "<<s<<endl;
+		while( next_permutation( s.begin(), s.end() ) )
+			cout<<"\n\nnext_permutation: "<<s<<endl;
+	}
+	return 0;
+}
+
+

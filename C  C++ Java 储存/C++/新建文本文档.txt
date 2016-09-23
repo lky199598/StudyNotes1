@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+class shape
+{
+public:
+	virtual double area()=0;
+};
+class triangle:public shape	
+{
+public:
+	triangle(double h, double w):H(h), W(w){}
+	double area() 
+	{
+		return H*W*0.5;
+	}
+private:
+	double H, W;
+};
+
+class rectangle:public shape
+{
+public:
+	rectangle(double h, double w):H(h), W(w){}
+	double area() 
+	{
+		return H*W;
+	}
+private:
+	double H, W;
+};
+
+double total(shape *s[], int n)
+{
+	int i;
+	float sum = 0.0;
+	for(i=0; i<n; i++)
+		sum += s[i]->area();
+		return sum;
+}
+
+int main()
+{
+	triangle t(3,4);
+	rectangle r(4,5);
+	shape *s[2];
+	s[0]=&t;
+	s[1]=&r;
+	cout<<total(s, 2)<<endl;
+	return 0;
+}

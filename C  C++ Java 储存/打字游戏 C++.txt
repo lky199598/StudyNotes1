@@ -1,0 +1,344 @@
+#include<iostream>
+#include<fstream>
+#include<cstdlib>
+#include<vector>
+#include<algorithm>
+#include<cstring>
+#include <conio.h>
+#include<iomanip>
+#include<windows.h>
+#include<ctime>
+#include<cmath>
+using namespace std;
+
+class game//构造函数来处理对象的初始化，不需要用户来调用，建立对象时自动执行
+{
+private:
+	char s[3][3];
+	int i;
+	int j;
+
+	static int score;
+	static int t;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+public:
+	game()
+	{
+		strcpy(s[0], "   ");
+		strcpy(s[1], "   ");
+		strcpy(s[2], "   ");	
+		i=0;
+		j=0;
+	
+	}
+	void menu();
+	void main_game();
+	void start_game();
+	void time_read();
+	void score_read();
+	void show_game(char *ch);
+	char rand_char();
+	void write_score();
+	void DIY_menu();
+	void set_DIY();
+	void set_time();
+	void show_score();
+};
+
+vector<int> max_score(5,0);//定义了一个里面盛有整型数据的一个容器，这个容器里面有5个为零的元素,相当于vector<int> Max_score(5,0)
+
+
+int game::score=0;
+int game::t=30; 
+
+void game::menu()
+{
+	cout << "  \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3" << endl;
+	cout << "  \3                                                                   \3"<< endl;
+    cout << "  \3                    * * * * * * * * * * * * * * *                  \3\n";
+	cout << "  \3                    *                           *                  \3\n";
+	cout << "  \3                    *      打字游戏             *                  \3\n";
+	cout << "  \3                    *                           *                  \3\n";
+	cout << "  \3                    * * * * * * * * * * * * * * *                  \3\n";
+	cout << "  \3                                                                   \3"<< endl;
+	cout << "  \3                          1.开始游戏                               \3\n";
+	cout << "  \3                                                                   \3"<< endl;
+	cout << "  \3                          2.自定义模式                             \3\n";
+	cout << "  \3                                                                   \3"<< endl;
+    cout << "  \3                          3.查看最高分                             \3\n";
+	cout << "  \3                                                                   \3"<< endl;
+	cout << "  \3                          4.退出游戏                               \3\n";
+	cout << "  \3                                                                   \3"<< endl;
+	cout << "  \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3 \3" << endl;
+	cout << endl<<"请输入你要选的功能" <<endl;
+
+}
+
+void game::main_game()
+{
+	int n;
+	do
+	{
+		menu();
+		scanf("%d", &n);
+		system("cls");
+		switch(n)
+		{
+		case 1:
+			start_game();
+			break;
+		case 2:
+			set_DIY();
+			break;
+		case 3:
+			show_score();
+			break;
+		}
+		system("cls");
+	
+	}while( n!=4 );
+}
+
+
+void game::start_game()//开始游戏
+{
+	char c, ch;	
+	clock_t tt = clock();
+
+	score=0;
+	time_read();
+	score_read();
+
+	for(i=0; clock()-tt < t*1000; i++)
+	{
+		system("cls");
+		show_game(&ch);
+		c=getch();
+		if(c==27)
+		{
+			break;
+		}
+		if(c==ch)
+			score+=10;
+		else
+		{
+			cout<<"\a";
+			score-=10;
+		}		
+		
+		Sleep(100);
+	}
+
+	system("cls");
+	cout<<"\n\n您的得分是: "<<score;
+
+	sort( max_score.begin(), max_score.end() );
+	if( score > max_score[4])
+	{
+		cout<<", 恭喜您打破最高分!";
+	}
+
+	if( score > max_score[0] )
+	{
+		max_score.erase( max_score.begin() );
+		max_score.push_back(score);
+	}
+	sort( max_score.begin(), max_score.end() );
+	write_score();
+
+	cout<<", 按任意键返回\n\n";
+	getch();
+}
+
+
+void game::time_read()
+{
+	ofstream outfile("time.txt", ios::binary|ios::app);//两个作用：1.程序第一次运行创建一个空白文件，否则第一次读取时打开失败。
+	//2.以后运行时以输出方式打开一个文件，要添加在文件末尾(ios::app)，否则清除原来数据，读取不到上次设定的值
+	outfile.close();
+
+	ifstream infile("time.txt", ios::binary);
+	if( !infile )
+	{
+		cout<<"\nopen time.txt error!\n\n";
+		exit(0);
+	}
+	infile.read( (char*)&t, sizeof(int) );
+	infile.close();
+}
+
+void game::score_read()
+{
+	vector<int>::iterator it=max_score.begin();
+
+	ofstream outfile("score.txt", ios::binary|ios::app);
+	outfile.close();
+
+	ifstream infile("score.txt", ios::binary);
+	if(!infile)
+	{
+		cout<<"\nopen time.txt error!\n";
+		exit(0);
+	}
+	while( !infile.eof() )
+	{
+		infile.read( (char *)it++, sizeof(int) );
+	}
+	infile.close();
+}
+void game::show_game(char *ch)
+{	
+	*ch=rand_char();
+	cout << "score: "<< score <<",  按Esc键退出游戏"<<endl<<endl;
+	printf("                            ┏━━┳━━┳━━┓\n"); 
+	printf("                            ┃    ┃    ┃    ┃\n");
+	printf("                            ┃ %c  ┃%c   ┃%c   ┃\n", s[ 0 ][ 0 ], s[ 0 ][ 1 ], s[ 0 ][ 2 ]);
+	printf("                            ┣━━╋━━╋━━┫\n");
+	printf("                            ┃    ┃    ┃    ┃\n");
+	printf("                            ┃ %c  ┃%c   ┃%c   ┃\n", s[ 1 ] [ 0 ], s[ 1 ][ 1 ], s[ 1 ] [ 2 ]);
+	printf("                            ┣━━╋━━╋━━┫\n");
+	printf("                            ┃    ┃    ┃    ┃\n");
+	printf("                            ┃ %c  ┃%c   ┃ %c  ┃\n", s[ 2] [ 0 ],  s[ 2 ][ 1 ],  s[ 2 ][ 2 ]);
+	printf("                            ┗━━┻━━┻━━┛\n");  
+	strcpy( s[ 0 ], "   " );
+	strcpy( s[ 1 ], "   " );
+	strcpy( s[ 2 ], "   " );
+
+}
+
+char game::rand_char()
+{
+	char ch;
+	char a=rand()%10+'0'; 
+	char b=rand()%26+'a';
+	char c=rand()%26+'A';
+	int m=3;
+	char (*p)[3];
+	p=s;
+
+	m=rand()%m;
+	if(m==0) 
+		ch=a; 
+	else if(m==1) 
+		ch=b; 
+	else 
+		ch=c;
+
+	i=rand()%3; j=rand()%3;
+	*( *(p+i) + j )=ch;
+	return ch;
+}
+
+  
+void game::write_score()
+{
+	ofstream outfile("score.txt", ios::binary);
+	if (!outfile )
+	{
+		cout<<"\nscore.txt open error\n";
+		exit(0);
+	}
+
+	vector<int>::iterator it=max_score.begin();
+	while( it != max_score.end() )
+	{
+		outfile.write( (char*)it, sizeof(int) );
+		it++;
+	}
+	outfile.close();
+}
+
+
+void game::DIY_menu()
+{
+
+	system( "cls" );
+	cout << endl << endl;
+	cout <<"       * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl;
+	cout <<"       *                                                   *" << endl; 
+	cout <<"       *                  1 自定义时间                     *" << endl;
+	cout <<"       *                                                   *" << endl; 
+	cout <<"       *                  2 退出设置                       *"<< endl;
+	cout <<"       *                                                   *" << endl; 
+	cout <<"       * * * * * * * * * * * * * * * * * * * * * * * * * * *\n" << endl;
+	cout <<"请输入你要选的功能" <<endl;
+}
+
+void game::set_DIY() //自定义模式
+{
+	int n;
+	do
+	{	
+		system("cls");	
+		DIY_menu();
+		scanf("%d", &n);
+
+		system("cls");
+		switch(n)
+		{
+		case 1:
+			set_time();
+			break;
+		default:
+			break;
+		}
+	}while( n!= 2);
+}
+
+void game::set_time()
+{
+	time_read();
+	cout << "\n\n您之前定义的时间模式为 :" << t<< 's' << endl;
+	cout << "\n\n请输入您想要自定义的时间(s): ";
+	
+	fflush(stdin);
+	cin>>t;
+
+	cout << "\n\n设定时间成功 : " << t <<'s' << endl << endl;
+	cout <<  "按任意键返回主界面" << endl;
+
+	ofstream outfile("time.txt", ios::binary);
+	if( !outfile )
+	{
+		cout<<"\n\ntime.txt open error\n";
+		exit(0);
+	}
+
+	outfile.write( (char*)&t, sizeof(int) );
+	outfile.close();
+	getch();
+}
+
+
+void game::show_score()
+{
+	vector<int>:: iterator it=max_score.begin();
+	cout<<"五次最高的历史成绩\n\n";
+	while( it != max_score.end() )
+	{
+		cout<<*it++<<setw(5);
+	}
+	cout<<endl<<endl;
+	system("pause");
+}
+
+void main()
+{ 
+	game G;
+	G.time_read();
+	G.score_read();
+	G.main_game();
+}
+	
+
+
+
+
+
+		
+
+
+
+
+
+
+

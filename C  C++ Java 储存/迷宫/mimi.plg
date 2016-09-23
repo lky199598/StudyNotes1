@@ -1,0 +1,58 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: mimi - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP75DC.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/mimi.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP75DC.tmp" 
+<h3>Output Window</h3>
+Compiling...
+mimi.c
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(46) : error C2065: 'fp' : undeclared identifier
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(46) : warning C4047: '=' : 'int ' differs in levels of indirection from 'struct _iobuf *'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(46) : warning C4047: '==' : 'int ' differs in levels of indirection from 'void *'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(52) : warning C4047: '=' : 'char *' differs in levels of indirection from 'int '
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(57) : error C2065: 'size' : undeclared identifier
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(57) : warning C4013: '_msize' undefined; assuming extern returning int
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(61) : warning C4013: 'fsanf' undefined; assuming extern returning int
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(64) : warning C4047: 'function' : 'struct _iobuf *' differs in levels of indirection from 'int '
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(64) : warning C4024: 'fclose' : different types for formal and actual parameter 1
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(83) : error C2040: 'calculate' : 'int *(int *,struct bianma *,int *,char *)' differs in levels of indirection from 'void (int *,struct bianma *,int *,char *)'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(251) : warning C4047: '=' : 'char ** ' differs in levels of indirection from 'char *'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(288) : error C2143: syntax error : missing ')' before '*'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(288) : error C2143: syntax error : missing '{' before '*'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(288) : error C2059: syntax error : 'type'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(288) : error C2059: syntax error : ')'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(332) : warning C4028: formal parameter 3 different from declaration
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(332) : warning C4029: declared formal parameter list different from definition
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(333) : error C2057: expected constant expression
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(333) : error C2466: cannot allocate an array of constant size 0
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(341) : warning C4047: 'function' : 'struct _iobuf *' differs in levels of indirection from 'int '
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(341) : warning C4024: 'fscanf' : different types for formal and actual parameter 1
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(342) : warning C4047: 'function' : 'struct _iobuf *' differs in levels of indirection from 'int '
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(342) : warning C4024: 'fclose' : different types for formal and actual parameter 1
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(346) : error C2065: 'n' : undeclared identifier
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(386) : error C2065: 's' : undeclared identifier
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(386) : warning C4047: 'function' : 'char *' differs in levels of indirection from 'int '
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(386) : warning C4024: 'calculate' : different types for formal and actual parameter 4
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(386) : error C2120: 'void' illegal with all types
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(401) : warning C4013: 'output_article' undefined; assuming extern returning int
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(401) : error C2065: 'bian' : undeclared identifier
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(401) : error C2297: '*' : illegal, right operand has type 'struct bianma *'
+C:\Users\Administrator\Desktop\C,C++¥¢¥Ê\√‘π¨\mimi.c(401) : error C2059: syntax error : 'type'
+÷¥–– cl.exe  ±≥ˆ¥Ì.
+
+
+
+<h3>Results</h3>
+mimi.obj - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

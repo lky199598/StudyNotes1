@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct s
+{
+	int n;
+	struct s *next;
+};
+int i;
+struct s *creat(int m)
+{
+	struct s *head, *p, *p1;
+	head = NULL; 
+	for(i=0; i<m; i++)
+	{
+		p = (struct s*)malloc(sizeof(struct s));
+		printf("Num %d: ", i+1);
+		scanf("%d", &p->n);
+			if(i==0)
+				head = p;
+			else
+				p1->next = p;
+			p1 = p;
+	}
+	p1->next =NULL;
+	return head;
+}
+struct s *rev_1(struct s *head)//第一种逆序方法
+{
+	struct s *t, *p;
+	p = head;
+	head = NULL;
+	if(p == NULL || p->next==NULL)
+	{
+		return p;
+	}
+
+	while(p)
+	{
+		t = p;
+		p = p->next;
+		t->next = head;
+		head = t;
+	}
+	return head;
+}
+
+struct s *rev_2(struct s *head)//第二种逆序方法
+{
+	struct s *t, *p, *q;
+	p = head;
+	q = head->next;
+	t = NULL;
+	if(head==NULL || head->next==NULL)
+	{
+		return head;
+	}
+	while(q)
+	{
+		t = q->next;
+		q->next = p;
+		p = q;
+		q = t;
+	}
+	head->next = NULL;
+	return p;
+}
+
+void output(struct s *head)
+{
+	int i=0;
+	while(head)
+	{
+		printf("Num %d: %d \n",i+1, head->n);
+		head = head->next;
+		i++;
+	}	
+	printf("\n");
+}
+void main()
+{
+	struct s *head;
+	int m;
+	printf("                                 \nPlease input the list nodes number: ");
+	scanf("%d", &m);
+	head = creat(m);	
+
+	printf("                         \nOutput the list\n");
+	output(head);
+
+	printf("                         \nOutput the list of reverse\n");
+	head = rev_1(head);
+	output(head);
+
+	printf("                         \noutput the list of reverse\n");
+	head = rev_2(head);
+	output(head);
+}

@@ -1,0 +1,43 @@
+#include<iostream>
+using namespace std;
+class complex
+{
+public:
+	complex()
+	{
+
+	}
+	complex(double r, double i):real(r), imag(i){}
+
+	friend complex operator + (complex & c1, complex & c2)
+	{
+		return complex(c1.real + c2.real, c1.imag+c2.imag);
+	}
+
+	friend ostream & operator << (ostream & output, complex & c)
+	{
+		output<<"( "<<c.real<<" + "<<c.imag<<"i )"<<endl;
+		return output;
+	}
+
+	friend istream & operator >> (istream & input, complex & c)
+	{
+		cout<<"Please input real part and imaginary part of complex number: ";
+		input>>c.real>>c.imag;
+		return input;
+	}
+private:
+	double real;
+	double imag;
+};
+
+int main()
+{
+	complex c1, c2, c3;
+	cin>>c1>>c2;
+	c3 = c1+c2;
+	cout<<c3<<endl;
+	return 0;
+}
+
+

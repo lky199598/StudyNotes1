@@ -1,0 +1,39 @@
+#include<iostream.h>
+class complex
+{
+public:
+	complex()
+	{
+		real=0;
+		imag=0;
+	}
+	complex(double r, double i):real(r), imag(i){}
+	complex com(complex & c2)
+	{
+		complex c; //调用构造函数，是无参构造函数。
+		c.real = real+c2.real;
+		c.imag = imag + c2.imag;
+		return c;
+	}
+	void display()
+	{
+		cout<<"("<<real<<", "<<imag<<")"<<endl;
+	}
+private:
+	double real;
+	double imag;
+};
+
+int main()
+{
+	complex c1(3,4), c2(5,-10), c3;
+	c3=c1.com(c2);
+	c1.display();
+	cout<<endl;
+	c2.display();
+	cout<<endl<<endl;
+	c3.display();
+	return 0;
+}
+
+

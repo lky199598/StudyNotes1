@@ -1,0 +1,2 @@
+¼üÅÌ³£ÓÃASCIIÂë ESC¼ü VK_ESCAPE (27)
+»Ø³µ¼ü£º VK_RETURN (13)TAB¼ü£º VK_TAB (9)Caps Lock¼ü£º VK_CAPITAL (20)Shift¼ü£º VK_SHIFT ($10)Ctrl¼ü£º VK_CONTROL (17)Alt¼ü£º VK_MENU (18)¿Õ¸ñ¼ü£º VK_SPACE ($20/32)ÍË¸ñ¼ü£º VK_BACK (8)×ó»Õ±ê¼ü£º VK_LWIN (91)ÓÒ»Õ±ê¼ü£º VK_LWIN (92)Êó±êÓÒ¼ü¿ì½Ý¼ü£ºVK_APPS (93) Insert¼ü£º VK_Insert (45)Home¼ü£º VK_HOME (36)Page Up£º VK_PRIOR (33)PageDown£º VK_NEXT (34)End¼ü£º VK_END (35)Delete¼ü£º VK_Delete (46)

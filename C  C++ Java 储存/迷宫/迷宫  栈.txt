@@ -1,0 +1,188 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#define stack_size 100
+#define n 8
+
+int i, j;
+
+struct seat
+{
+	int x, y;//坐标
+	int direct;
+};
+
+struct stack
+{
+	struct seat *top, *base;
+};
+
+struct stack s;
+
+int initstack()
+{
+	s.base=(struct seat*)malloc( stack_size*sizeof(struct seat) );
+	if( !s.base )
+		return 0;
+	s.top=s.base;
+	return 1;
+}
+
+
+void push(struct seat elem)
+{
+	*s.top++=elem;
+}
+
+int pop()
+{
+	if(s.top==s.base)
+	return 0;
+
+	s.top--;
+	return 1;
+}
+
+
+int empty()
+{
+	if(s.top==s.base)
+		return 0;
+	return 1;
+}
+
+int pass(struct seat point, char maze[n][n])
+{
+	struct seat *head=s.top;
+
+	if(point.x<0 || point.x>n-1 || point.y<0 || point.y>n-1 )
+	{
+		return 0;
+	}
+	if(maze[point.x][point.y] == '0')
+		return 0;
+
+	while(head != s.base)
+	{
+		head--;
+		if(point.x==head->x && point.y==head->y)
+			return 0;	
+	}
+	return  1;
+}
+
+		
+
+struct seat next_point(struct seat point, int direct)
+{
+	switch(direct)
+	{
+	case 1:	
+		point.y=point.y+1;
+		break;
+	case 2:
+		point.x=point.x+1;
+		break;
+	case 3:
+		point.y=point.y-1;
+		break;
+	case 4:
+    	point.x=point.x-1;
+		break;
+	default:
+		break;
+	}
+	return point;
+}
+
+
+int horse_stack(struct seat start, struct seat end, char maze[n][n])
+{
+	struct seat next_seat;
+	int  step=0;
+	start.direct=1;
+	
+	next_seat=start;
+	do
+	{
+		if( pass(next_seat, maze) )
+		{
+			step++;
+			push(next_seat);
+			maze[next_seat.x][next_seat.y] = '*';//通路标记
+
+			if(next_seat.x == end.x && next_seat.y == end.y )
+			{
+				printf("\n\n          成功通过\n\n");
+				return 0;
+			
+			}
+			next_seat = next_point( *(s.top-1), (s.top-1)->direct );
+			next_seat.direct=1;	
+			
+		}
+		else
+		{
+			while( empty() && (s.top-1)->direct==4)
+			{
+				maze[(s.top-1)->x][(s.top-1)->y]='-';//走过但不通的道路标记
+				pop();
+				step--;
+			}
+			if( empty() && (s.top-1)->direct<4)
+			{
+	
+				next_seat = next_point( *(s.top-1), ++(s.top-1)->direct);
+				next_seat.direct=1;
+			}
+			
+		}
+	}while( empty() );
+	printf("\n\n                      没有通路\n\n");
+	return 1;
+}
+void output(char maze[n][n])
+{
+
+	for(i=0; i<n; i++)
+	{
+		printf("\n");
+		for(j=0; j<n; j++)
+		{
+			printf("%5c", maze[i][j]);
+		}
+	}
+	printf("\n");
+}
+
+void main()
+{
+	struct seat start, end;
+	char maze[n][n];
+	int m;
+	srand( (unsigned)time(NULL) );
+	for(i=0; i<n; i++)
+		for(j=0; j<n; j++)
+		{
+			maze[i][j]= rand()%2+'0';
+		}
+
+
+	output(maze);
+	printf("\n\n\n");
+	printf("start x(0--%d): ", n-1);
+	scanf("%d", &start.x);
+
+	printf("\nstart y(0--%d): ", n-1);
+	scanf("%d", &start.y);
+	
+	printf("\nend x(0--%d): ", n-1);
+	scanf("%d", &end.x);
+
+	printf("\nend y(0--%d): ", n-1);
+	scanf("%d", &end.y);
+	
+	initstack();
+	horse_stack(start, end, maze);
+	output(maze);
+}

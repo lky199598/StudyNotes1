@@ -1,0 +1,139 @@
+#include<stdio.h>
+void add(int i)
+{
+	i+=2;
+	printf("%d\n", i);
+}
+void main()
+{
+	int i = 1;
+	add(i);
+	printf("%d\n", i);
+}
+
+
+
+#include<stdio.h>
+void add(int i)
+{
+	i+=2;
+	printf("%d\n", i);
+}
+
+void add_2(int i)
+{
+	i+=8;
+	printf("%d\n", i);
+}
+
+void main()
+{
+	int i=0;
+	add(i);
+	add_2(i);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+struct s
+{
+	int n;
+	int m;
+};
+
+void main()
+{
+	struct s *head, *p, *t;
+	t =head = (struct s*)malloc( sizeof(struct s) );
+	p = (struct s*)malloc( sizeof(struct s) );
+	 
+	head->n=1;
+	head->m=2;
+	p->n=6;
+	p->m=8;
+	printf("\n%d  %d\n%d  %d\n %d  %d\n", head->n, head->m, p->n, p->m, t->n, t->m);
+
+	*t = *head;
+	*head = *p;
+	*p = *t;
+	printf("\n%d  %d\n%d  %d\n %d  %d\n", head->n, head->m, p->n, p->m, t->n, t->m);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*#include<stdio.h>
+#include<malloc.h>
+void main()
+{
+	char ch;
+	while( ch=getchar() == 'A');//==运算符优先于=,getchar()='A'时，ch!=0; getchar()!='A',ch==0;
+	putchar(ch);
+}
+*/
+
+#include<stdio.h>
+#include<malloc.h>
+void main()
+{
+	char ch;
+	while( ( ch=getchar() ) == 'A');
+	putchar(ch);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

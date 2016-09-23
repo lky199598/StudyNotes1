@@ -1,0 +1,52 @@
+#include<iostream>
+using namespace std;
+class time
+{
+public:
+	time()
+	{
+		minute = 0;
+		sec = 0;
+	}
+	time(int m, int s):minute(m), sec(s){}
+	time operator++()
+	{
+		++sec;
+		if(sec >=60 )
+		{
+			sec-=60;
+			++minute;
+		}
+		return *this;
+	}
+	time operator++(int)
+	{
+		time t(*this);
+		if(	sec++ >=60)
+		{
+			sec-=60;
+			++minute;
+		}
+		return t;
+	}
+	void display()
+	{
+		cout<<minute<<":"<<sec<<endl<<endl;
+	}
+private:
+	int minute;
+	int sec;
+};
+int main()
+{
+	time t(34, 0), t1;
+		++t;
+		t.display();
+		t1=t++;
+		t.display();
+
+		t1.display();
+
+	return 0;
+}
+

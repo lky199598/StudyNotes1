@@ -1,0 +1,33 @@
+#include<strstream>
+#include<iostream>
+using namespace std;
+int main()
+{
+	char s[50]="2 3 1 6 4 5 7 8 ";
+	int a[8], j, t, n=8;
+	cout<<"\nchar s[50]\n"<<s<<endl;
+	istrstream strin( s, sizeof(s) );
+	for(int i=0; i<8; i++)
+		strin>>a[i];
+	
+	cout<<"\n\nistrstream strin( s, sizeof(s) )\n";
+	for(i=0; i<8; i++)
+		cout<<a[i]<<" ";
+	cout<<endl;
+
+	for(i=0; i<n; i++)
+		for(j=0; j<n-i-1; j++)
+			if(a[j] > a[j+1])
+			{
+				t = a[j];
+				a[j] = a[j+1];
+				a[j+1] = t;
+			}
+			
+			ostrstream strout( s, sizeof(s) );
+			for(i=0; i<8; i++)
+				strout<<a[i]<<" ";
+			strout<<ends;
+			cout<<"\n\nostrstream strout( s, soizeof(s) )\n"<<s<<endl;
+
+}

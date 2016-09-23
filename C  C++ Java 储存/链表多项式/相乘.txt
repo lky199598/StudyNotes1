@@ -1,0 +1,187 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int coef;
+	int exp;
+	struct node * next;
+}list;
+
+int i;
+list *creat1(int n)
+{
+	list *head, *p, *q;
+	printf("Input %d numbers\n", n);
+	for(i=0; i<n; i++)
+	{
+		p = (list *)malloc( sizeof(list) );
+
+		scanf("%d", &p->coef);
+
+		scanf("%d", &p->exp);
+		if(i==0)
+			head = p;
+		else
+			q->next = p;	
+		q = p;
+	}
+	q->next = NULL;//尾节点必须置空
+	return head;
+}
+
+list *creat2(int n)
+{
+	list *head, *p, *q;
+	printf("\nInput %d numbers\n", n);
+	for(i=0; i<n; i++)
+	{
+		p = (list *)malloc( sizeof(list) );
+		scanf("%d", &p->coef);
+		scanf("%d", &p->exp);
+		if(i==0)
+			head = p;
+		else
+			q->next = p;	
+		q = p;
+	}
+	q->next = NULL;//尾节点必须置空
+	return head;
+}
+
+
+list* polysub(list *h1, list *h2)
+{
+	list *p, *q, *head, *s,*t;
+	head=(list*)malloc( sizeof(list) );
+	
+	s=head;
+	s->next=NULL;
+	for(p=h1; p; p=p->next)
+		for(q=h2; q; q=q->next)
+		{
+			t=(list*)malloc( sizeof(list) );
+			t->coef=(p->coef)*(q->coef);
+			t->exp = p->exp + q->exp;
+
+			t->next=s->next;
+			s->next=t;
+			s=t;
+		}
+
+		s=head;
+		p=head->next;
+		
+		while(p)
+		{
+			q=p;
+			while(q->next)
+			{
+				if(p->exp == q->next->exp)
+				{
+					p->coef+=q->next->coef;
+					t=q->next; q->next=t->next; free(t);
+				}
+				q=q->next;
+			}
+
+			if(p->coef==0)
+			{
+				t=p; p=p->next; free(t); s->next=p;
+			}
+			else
+			{
+				s->next=p, s=p, p=p->next;
+			}
+
+		}
+
+
+		q=head->next;
+		head->next=NULL;
+		while(q)
+		{
+			p=head;
+			while(p->next && p->next->exp < q->exp)
+			{
+				p=p->next;
+			}
+			t=q->next;
+			q->next=p->next;
+			p->next=q;
+			q=t;
+		}
+	return head->next;
+}
+
+
+void print(list *head)
+{	
+	list *p=head;
+	printf("\n\noutput the data\n");
+
+	if(p->coef == 1 && p->exp > 0 )
+	{
+
+	}
+	
+	else
+		if(p->coef == -1 && p->exp >0 )
+			 printf("-");
+	else
+	printf("%d", p->coef);
+
+	if(p->exp > 0)
+	{
+		printf("x^%d", p->exp);
+	}
+	p=p->next;
+
+	while(p != NULL)
+	{	
+		
+	     if(p->coef == 1 && p->exp > 0 )
+		 {printf("+");
+
+		 }
+		 else
+			 if(p->coef == -1 && p->exp >0 )
+			 printf("-");
+
+		else
+			if(p->coef > 0)
+	    printf("+%d", p->coef);
+
+		 else
+			 printf("%d", p->coef);
+
+
+	   if(p->exp > 0)
+	   {
+		   printf("x^%d", p->exp);
+	   }
+    	
+	   p=p->next;
+	}
+	printf("\n\n");
+}
+	
+
+
+int main()
+{
+    list *head1,*head2, *head3;
+	int n, m;
+	printf("\n多项式个数: ");
+	scanf("%d", &n);
+	head1=creat1(n);
+	print(head1);
+
+
+	printf("\n多项式个数: ");
+	scanf("%d", &m);
+	head2=creat2(m);
+	print(head2);
+
+	head3=polysub(head1,head2);
+	print(head3);
+}

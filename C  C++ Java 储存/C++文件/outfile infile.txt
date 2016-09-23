@@ -1,0 +1,49 @@
+#include<fstream>
+#include<iostream>
+using namespace std;
+void save(char a[])
+{
+	ofstream outfile("a.dat");
+	if( !outfile )
+	{
+		cout<<"\nopen error!\n";
+		exit(1);
+	}
+	for(int i=0; a[i] != '\0'; i++)
+	{
+		outfile.put(a[i]);//outfile<<a[i]
+		cout<<a[i];
+	}
+	outfile.close();
+}
+
+void get()
+{
+	char ch;
+	ifstream infile("a.dat");
+	if( !infile )
+	{
+		cout<<"\nopen error\n";
+		exit(1);
+	}
+	while( infile.get(ch) )//infile>>ch;
+	{
+		if(ch>=97 &&ch<=122)
+			ch-=32;
+
+		cout<<ch;
+	}
+	infile.close();
+}
+
+int main()
+{
+	char a[100];
+	cin.getline(a, 100);
+	cout<<"\n\n";
+	save(a);
+	cout<<"\n\n";
+	get();
+	return 0;
+}
+

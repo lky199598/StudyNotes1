@@ -1,0 +1,71 @@
+#include<iostream>
+#include<string>
+#include<map>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	multimap<int, string>code;
+	code.insert( pair<const int, string>(111, "aaa") );
+	code.insert( pair<const int, string>(333, "ccc") );
+	code.insert( pair<const int, string> (222, "bbb") );
+	code.insert( pair<const int, string> (222, "ggg"));
+	code.insert( pair<const int, string> (666, "aaa"));
+
+	cout<<"code.count(111):  ";
+	cout<<code.count(111)<<endl;
+	cout<<"\n\ncode.count(333):  ";
+	cout<<code.count(333)<<endl;
+	cout<<"\n\ncode.count(222):  ";
+	cout<<code.count(222)<<endl;
+
+	multimap<int, string>::iterator pr;
+	for(pr=code.begin(); pr != code.end(); pr++)
+		cout<<(*pr).first<<"   "<<(*pr).second<<endl<<endl;
+
+	pair< multimap<int, string>::iterator, multimap<int, string>::iterator >range = code.equal_range(222);
+	for(pr = range.first; pr != range.second; pr++)
+		cout<<(*pr).second<<endl<<endl;
+	return 0;
+
+}
+
+
+
+
+
+
+#include<iostream>
+#include<string>
+#include<map>
+#include<algorithm>
+using namespace std;	
+  
+int main()
+{  
+	typedef	multimap<int, string> mul;
+	typedef pair<const int, string> P;
+	mul code;
+	code.insert( P(111, "aaa") );
+	code.insert( P(333, "ccc") );
+	code.insert( P(222, "bbb") );
+	code.insert( P(222, "ggg") );
+	code.insert( P(666, "aaa") );
+
+	cout<<"code.count(111):  ";
+	cout<<code.count(111)<<endl;
+	cout<<"\n\ncode.count(333):  ";
+	cout<<code.count(333)<<endl;
+	cout<<"\n\ncode.count(222):  ";
+	cout<<code.count(222)<<endl;
+
+	mul::iterator pr;
+	for(pr=code.begin(); pr != code.end(); pr++)
+		cout<<(*pr).first<<"   "<<(*pr).second<<endl<<endl;
+
+	pair< mul::iterator, mul::iterator >range = code.equal_range(222);
+	for(pr = range.first; pr != range.second; pr++)
+		cout<<(*pr).second<<endl<<endl;
+	return 0;
+
+}

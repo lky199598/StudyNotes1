@@ -1,0 +1,24 @@
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+int main()
+{
+	map<string, int>m;
+	int i;
+	m.insert( pair<string, int>("aaa", 111) );
+	m.insert( pair<string, int>("bbb", 222) );
+	m.insert( pair<string, int>("ccc", 333) );
+	m.insert( pair<string, int>("ddd", 444) );
+	string s;
+	cout<<"Enter the name: "<<endl;
+	cin>>s;
+	map<string, int>::iterator p;
+	p=m.find(s);
+	if( p!=m.end() )
+		cout<<s<<" "<<p->second<<endl;
+	else
+		cout<<s<<" phone number is not in the phoneboook.\n";
+	return 0;
+}
+

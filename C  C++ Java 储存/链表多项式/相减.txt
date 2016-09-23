@@ -1,0 +1,169 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int coef;
+	int exp;
+	struct node * next;
+}list;
+
+int i;
+list *creat1(int n)
+{
+	list *head, *p, *q;
+	printf("Input %d numbers\n", n);
+	for(i=0; i<n; i++)
+	{
+		p = (list *)malloc( sizeof(list) );
+
+		scanf("%d", &p->coef);
+
+		scanf("%d", &p->exp);
+		if(i==0)
+			head = p;
+		else
+			q->next = p;	
+		q = p;
+	}
+	q->next = NULL;//尾节点必须置空
+	return head;
+}
+
+list *creat2(int n)
+{
+	list *head, *p, *q;
+	printf("\nInput %d numbers\n", n);
+	for(i=0; i<n; i++)
+	{
+		p = (list *)malloc( sizeof(list) );
+		scanf("%d", &p->coef);
+		scanf("%d", &p->exp);
+		if(i==0)
+			head = p;
+		else
+			q->next = p;	
+		q = p;
+	}
+	q->next = NULL;//尾节点必须置空
+	return head;
+}
+
+
+list* polysub(list *h1, list *h2)
+{
+	list *p=h1, *q=h2, *h3, *r;
+	list *head;
+	int sum;
+	int i=1;
+	h3 = (list*)malloc(sizeof(list));
+	head = h3;
+
+	while( p && q)
+	{
+		if(p->exp < q->exp)
+		{
+			h3->next=p, h3=p, p=p->next;
+		}
+
+		else
+		if(p && q && p->exp == q->exp)
+		{			
+			sum = p->coef - q->coef;
+			if(sum == 0)
+			{
+				r=p; p=p->next; free(r); 
+				r=q; q=q->next; free(r);				
+			}
+			else
+			{
+				p->coef = sum;
+				h3->next=p; h3=p; p=p->next;
+				r=q; q=q->next; free(r);
+			}
+		}
+
+		else
+			{
+				h3->next=q; h3=q; q=q->next;
+			}
+	}
+	
+	if(p)
+	h3->next = p;
+	else
+		h3->next = q;
+
+	return head->next;
+}
+
+
+void print(list *head)
+{	
+	list *p=head;
+	printf("\n\noutput the data\n");
+
+	if(p->coef == 1 && p->exp > 0 )
+	{
+
+	}
+	
+	else
+		if(p->coef == -1 && p->exp >0 )
+			 printf("-");
+	else
+	printf("%d", p->coef);
+
+	if(p->exp > 0)
+	{
+		printf("x^%d", p->exp);
+	}
+	p=p->next;
+
+	while(p != NULL)
+	{	
+		
+	     if(p->coef == 1 && p->exp > 0 )
+		 {printf("+");
+
+		 }
+		 else
+			 if(p->coef == -1 && p->exp >0 )
+			 printf("-");
+
+		else
+			if(p->coef > 0)
+	    printf("+%d", p->coef);
+
+		 else
+			 printf("%d", p->coef);
+
+
+	   if(p->exp > 0)
+	   {
+		   printf("x^%d", p->exp);
+	   }
+    	
+	   p=p->next;
+	}
+	printf("\n\n");
+}
+	
+
+
+int main()
+{
+    list *head1,*head2, *head3;
+	int n, m;
+	printf("\n多项式个数: ");
+	scanf("%d", &n);
+	head1=creat1(n);
+	print(head1);
+
+	printf("\n多项式个数: ");
+	scanf("%d", &m);
+	head2=creat2(m);
+	print(head2);
+
+	head3=polysub(head1,head2);
+	print(head3);
+}

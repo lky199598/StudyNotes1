@@ -1,0 +1,72 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class str
+{
+public:
+	str(char *s1):p(s1){}
+
+	friend bool operator > (str & s1, str & s2)
+	{
+		if( strcmp(s1.p, s2.p) >0 )
+			return true;
+		else
+			return false;
+	}
+	friend bool operator < (str & s1, str & s2)
+	{
+		if( strcmp(s1.p, s2.p) < 0)
+			return true;
+		else
+			return false;
+	}
+	friend bool operator == (str &s1, str & s2)
+	{
+		if( strcmp(s1.p, s2.p) == 0)
+			return true;
+		else
+			return false;
+	}
+	void display()
+	{
+		cout<<p;
+	}
+
+private:
+		char *p;
+};
+
+void compare(str & s1, str & s2)
+{
+	s1.display();
+	if( operator > (s1, s2)==1 )
+	{
+		cout<<" > ";	
+	}
+	
+	else
+		if( operator < (s1, s2) == 1)
+		{
+			cout<<" < ";
+		}
+		else
+			if( operator == (s1, s2 ) == 1)
+			{
+				cout<<" = ";
+			}
+			s2.display();
+}
+
+int main()
+{
+	str s1("Hello"), s2("book");
+	compare(s1, s2);
+	cout<<endl;
+	compare(s1, s1);
+	cout<<endl;
+	compare(s2,s1);
+	cout<<endl;
+	return 0;
+}
+	
+		

@@ -1,0 +1,36 @@
+#include<iostream>
+#include<list>
+#include<algorithm>
+using namespace std;
+void show(int n)
+{
+	cout<<n<<"  ";
+}
+int main()
+{
+
+	int a[8] = {3, 8, 2, 4, 5, 3, 6, 3};
+	list<int>la(a, a+8);
+	list<int>lb(la);
+	cout<<"\n\nfor_each(la.begin(), la.end(), show)\n";
+	for_each(la.begin(), la.end(), show);
+	cout<<"\n\nfor_each(lb.begin(), lb.end(), show)\n";
+	for_each(lb.begin(), lb.end(), show);
+	la.remove(3);
+	cout<<"\n\nla.remove(3)\n";
+	for_each(la.begin(), la.end(), show);
+
+	list<int>::iterator pr;
+	pr = remove(lb.begin(), lb.end(), 3);
+	cout<<"\n\npr = remove(lb.begin(), lb.end(), 3)\n";
+	for_each(lb.begin(), lb.end(), show);
+
+	lb.erase( pr, lb.end() );
+	cout<<"\n\nlb.erase( pr, lb.end() ), lb.erase( pr, lb.end() )\n";
+	for_each(lb.begin(), lb.end(), show);
+	cout<<"\n\n";
+	return 0;
+
+}
+
+

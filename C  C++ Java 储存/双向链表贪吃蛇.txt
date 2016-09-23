@@ -1,0 +1,293 @@
+//通过增加头结点，删除尾结点,尾节点置空，来实现贪吃蛇运动
+#include<iostream>
+#include<time.h>
+#include<windows.h>
+#include<stdlib.h>
+#include<conio.h>
+using namespace std;
+#define n 20
+
+int x, y; //头坐标
+int i, j;
+class fence
+{
+public:
+	char game[n][2*n];
+	void input();
+	void output();
+}s1;
+
+void fence::input()
+{
+	for(i=0; i<n; i++)
+		for(j=0; j<2*n; j++)
+			game[i][j] = ' ';
+
+	for(i=0; i<2*n; i++)
+	{
+		game[0][i] = '_';
+		game[n-1][i] = '-';
+	}
+	for(i=1; i<n-1; i++)
+	{
+		game[i][0] = '|';
+		game[i][2*n-1] = '|';
+	}
+}
+
+
+void fence::output()
+{
+	for(i=0; i<n; i++)
+	{
+		for(j=0; j<2*n; j++)
+			cout<<game[i][j];
+		cout<<endl;
+	}
+}
+
+class snake
+{
+public:
+	int x, y;
+	snake *piror, *next;
+	void add_head(int a, int b);
+	void delete_tail();
+}*s2;
+
+snake *head=NULL, *tail=NULL, *q;//snake 对象
+
+
+void snake::add_head(int a, int b)
+{
+	snake *p = new snake;//
+	p->x = a;
+	p->y = b;
+	p->next = head;
+	p->piror = NULL;
+
+	if( head )
+	{
+		head->piror = p;
+	}
+
+	if( !tail )
+	   tail = head;//使尾节点等于第一个头结点.
+
+	head = p;
+	s1.game[head->x][head->y] = '*';
+}
+
+
+void snake::delete_tail()
+{
+	s1.game[tail->x][tail->y] = ' ';
+	if( tail == head )
+		tail = NULL;
+	else
+	{
+		tail = tail->piror;
+		tail->next = NULL;
+	}
+
+}
+
+class move
+{
+private:
+	int level;
+	int foodx;
+	int foody;
+public:
+	void moving();
+	char direct(char d);
+	void get_food();
+}s3;	
+
+
+char move::direct(char d)
+{
+	char temp;
+	if( kbhit() )
+	{
+		if( ( temp=getch() ) == 32)
+		{
+			system("pause");
+		}
+		if( temp == 27 )
+		{
+			system("cls");
+			exit(0);
+		}
+
+		if( temp == 'a')
+			d = 'a';
+		if( temp == 'd')
+			d = 'd';
+		if( temp == 'w')
+			d = 'w';
+		if( temp == 's')
+			d = 's';
+	}
+
+	switch(d)
+	{
+	case 'w':
+		if(head->x - head->next->x == 1)
+			x++;
+		else
+		    x--;
+		break;
+	case 's':
+		if(head->next->x - head->x == 1)
+			x--;
+		else
+		    x++;
+		break;
+	case 'a':
+		if(head->y - head->next->y == 1)
+			y++;
+		else
+			y--;
+		break;
+	case 'd':
+		if( head->next->y - head->y == 1 )
+		    y--;
+		else
+		    y++;
+		break;
+	default:
+		break;
+	}
+	return d;
+}
+
+
+void move::get_food()
+{
+	srand( (unsigned) time(NULL) );
+	foodx = rand()%(n-2)+1;
+	foody = rand()%(2*n-2)+1;
+	s1.game[foodx][foody] = '@';
+}
+
+void move::moving()
+{
+	char d;
+	int length;
+
+	level = 1;
+
+loop:	
+	length=3;
+	d = 'a';
+	s1.input();
+
+	s2->add_head(6, 2*n-2);
+	s2->add_head(6, 2*n-3);
+	s2->add_head(6, 2*n-4);
+
+	get_food();
+	s1.output();
+	cout<<"\nlevel = "<<level<<" ,请按任意键开始游戏\n";
+	getch();
+	system("cls");
+
+	while( true )
+	{	
+		x=head->x, y=head->y;
+		d = direct(d);
+		s2->add_head(x, y);
+		if(head->x==foodx && head->y==foody)
+		{
+			get_food(); 
+			length++;
+			
+		}
+		
+		else
+		{
+			s2->delete_tail();
+		}
+		
+		if(length==5)
+		{
+			level++; 
+			system("cls");
+			head=NULL;
+			tail=NULL;//要改变tail，不然tail是上次的,使头尾置空.
+			goto loop;
+		}
+
+		q = head;
+		while( q )
+		{
+			if( q->x==foodx && q->y == foody )
+			{
+				get_food();
+				q = head;
+			}
+			else
+			q = q->next;
+		}
+		system("cls");
+		s1.output();
+
+		Sleep( 200/(level) );
+
+		if( head->x==0 || head->x==n-1 || head->y==0 || head->y==2*n-1 )
+		{
+			cout<<"\ngame over\n";
+			getch();
+			exit(0);
+		}	
+		q = head;
+	
+		while( q->next )
+		{
+			if(head->x == q->next->x && head->y == q->next->y)
+			{
+				cout<<"\ngame over\n";	
+			    getch();
+			    exit(0);
+			}
+			q = q->next;
+		}
+	}
+}
+
+int main()
+{
+	s3.moving();
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

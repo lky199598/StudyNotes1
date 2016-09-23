@@ -1,0 +1,38 @@
+#include<fstream>
+#include<iostream>
+#include<iomanip>
+using namespace std;
+struct student
+{
+	char name[20];
+	int num;
+	int age;
+};
+int main()
+{
+	student stu[3] = {"aaa", 111, 18, "bbb", 222, 19, "ccc", 333, 20};
+	student s[3];
+	ofstream outfile("a.txt", ios::binary);
+	if( !outfile)
+	{
+		cout<<"\nopen error\n";
+		exit(0);
+	}
+	for(int i=0; i<3; i++)
+		outfile.write( (char*)&stu[i], sizeof(stu[i]) );
+	outfile.close();
+
+	ifstream infile("a.txt", ios::binary);
+	if( !infile )
+	{
+		cout<<"\nopen file\n\n";
+		abort();
+	}
+	infile.read( (char*)s, sizeof(s) );
+	for(i=0; i<3; i++)
+	{
+		cout<<s[i].name<<setw(8)<<s[i].num<<setw(8)<<s[i].age<<endl;
+	}
+	infile.close();
+	return 0;
+}

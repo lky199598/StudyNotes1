@@ -1,0 +1,27 @@
+#include<iostream>
+#include<iterator>
+#include<vector>
+using namespace std;
+int main()
+{
+	int a[10] = {1,2,3,4,5,6,7,8,9,10};
+	vector<int>b(10);
+	copy( a, a+10, b.begin() );
+	cout<<"copy( a, a+10, b.begin() )\n\n";
+	ostream_iterator<int, char>out_iter(cout, " ");
+	copy(b.begin(), b.end(), out_iter);
+
+	cout<<"\n\nb.rbegin(), b.rend(), out_iter)\n\n";
+	copy(b.rbegin(), b.rend(), out_iter);
+
+	cout<<"\n\nvector<int>::reverse_iterator ri\n\n";
+
+	vector<int>::reverse_iterator ri; 
+	for(ri=b.rbegin(); ri != b.rend(); ri++)
+		cout<<*ri<<" ";
+	cout<<"\n";
+	return 0;
+}
+
+
+

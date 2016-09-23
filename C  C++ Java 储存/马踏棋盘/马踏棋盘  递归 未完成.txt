@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define n 8
+
+int a[n][n]={0};
+int step=0;
+int found=0;
+
+void output();
+void pass(int x, int y)
+{
+   
+	if(!found && x >= 0 && x < n && y>=0 && y < n && a[x][y]==0 ) // a[x][y]==0 表示没有走过的位置
+	{
+		step++;
+		a[x][y]=step;
+		if(step==n*n)
+		{
+			output();
+	        found=1;//走到终点后，应该结束整个程序，而不是本次函数调用
+			return ;
+		}
+
+		pass(x+1, y-2);
+		pass(x+2, y-1);
+		pass(x+2, y+1);
+		pass(x+1, y+2);
+		pass(x-1, y+2);
+		pass(x-2, y+1);
+		pass(x-2, y-1);
+		pass(x-1, y-2);
+
+		a[x][y]=0;
+		step--; // 在返回上一层之前，要将step减1
+		return;
+	}
+	else return ;
+}
+
+
+void output()
+{
+	int i, j;
+	for(i=0; i<n; i++)
+	{
+		printf("\n");
+		for(j=0; j<n; j++)
+		{
+			printf("\t%d", a[i][j]);
+		}
+	}
+	printf("\n");
+}
+
+void main()
+{
+	int x, y;
+	printf("start x(0--7): ");
+	scanf("%d", &x);
+
+	printf("\nstart y(0--7): ");
+	scanf("%d", &y);
+   
+	pass(x, y);
+	getchar();
+}

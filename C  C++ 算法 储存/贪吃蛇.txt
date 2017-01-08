@@ -1,0 +1,260 @@
+#include<stdio.h>
+#include<string.h>
+#include <stdlib.h>
+#include<windows.h>
+#include<time.h>
+#include<conio.h>//_kbhit()
+#define N 21	
+int i, j;
+int level=1;
+
+void set(char stage[][2*N]);
+void show(char stage[][2*N], int level);
+char direct(char stage[][2*N], char *length[2*N], char *food, int now_long, char d);
+void begin(char (*stage)[2*N], char **length, char *food);
+void move(char stage[][2*N], char *length[2*N], char *food, int now_long);
+int life_snake(char stage[][2*N], char *length[], int now_long);
+void display(char stage[][2*N], char *length[2*N], char *food, int now_long);
+
+
+void set(char stage[][2*N])//初始化框架
+{	
+	for(i=0; i<N; i++)
+		for(j=0; j<2*N; j++)
+			stage[i][j] = ' ';
+
+		for(i=0; i<2*N; i++)
+		{
+			stage[0][i] = '_';
+		    stage[N-1][i] = '-';
+		}
+
+		for(i=1; i<N-1; i++)
+		{
+			stage[i][0] = '|';
+		    stage[i][2*N-1] = '|';
+		}
+
+}
+void show(char stage[][2*N], int level) //框架展示
+{
+	printf("this is %d level, 方向(w, s, a, d), 空格键暂停, esc键退出\n", level);
+	for(i=0; i<N; i++)
+	{
+		for(j=0; j<2*N; j++)
+			putchar(stage[i][j]);
+		putchar('\n');
+	}
+}
+char direct(char stage[][2*N], char *length[2*N], char *food, int now_long, char d)//方向
+{
+	char temp;
+	if( kbhit() )
+	{
+		if( ( temp=getch() ) == 32)
+		{
+			system("pause");
+		}
+		if( temp == 27)
+		{
+			system("cls");
+			display(stage, length, food, now_long);
+		}
+
+		if( temp == 'a')
+			d = 'a';
+		if( temp == 'd')
+			d = 'd';
+		if( temp == 'w')
+			d = 'w';
+		if( temp == 's')
+			d = 's';
+	}
+	switch(d)
+	{
+	case 'w':
+		if(length[1] - length[2] == 2*N )//if语句不能向左时向右，向上不能向下.
+			(*length)+=2*N;
+		else
+		(*length)-=2*N;	
+		break;
+	case 's':
+		if(length[2] - length[1] == 2*N )
+			(*length)-=2*N;
+		else
+		(*length)+=2*N;
+		break;
+	case 'd':
+	    if( length[2] - length[1] == 1 )
+			(*length)--;
+		else
+			(*length)++;
+		break;
+	case 'a':
+		if(length[1] - length[2] == 1 )
+		(*length)++;
+		else
+			(*length)--;
+		break;
+	default:
+		break;
+	}
+	return d;
+	//return *length;
+}
+void begin(char (*stage)[2*N], char **length, char *food)
+{
+	set(stage);
+	for( i=0; i<3; i++)
+	{
+		length[i] = &stage[7][2*N-1-3+i];
+		*length[i] = '*';
+	}
+	*length[0] = '$';
+
+	*food = '@';
+	show(stage, level);
+	printf("\n\nPlease press any key to start");
+	getch();
+	system("cls");
+}
+
+void move(char stage[][2*N], char *length[2*N], char *food, int now_long)
+{	
+	char  d;//方向
+	srand( (unsigned)time(NULL) );
+ loop:   d = 'a';
+		 now_long = 3;
+ 	while(1)
+	{
+	    set(stage);
+		for(i=now_long-1; i>=1; i--)
+		{
+			length[i] = length[i-1];
+			*length[i] = '*';
+		}
+	    d = direct(stage, length, food, now_long, d); //不能direct(length, d), 一定要d = direct(length, d),因为方向可能改变
+		*length[0] = '$';
+		if( length[0] == food ) //头地址==食物地址
+		     now_long++;
+		for(i=0; i<now_long; i++)
+		{
+			if( length[i] == food )
+			{
+				food = &stage[rand()%(N-2)+1][rand()%(2*N-2)+1];			
+				i = -1;
+			}
+		}
+		*food = '@';	
+		while( life_snake(stage, length, now_long) ==0 )
+		{
+			system("cls");
+			show(stage, level);	
+			printf("\nGame Over, please press any key to quit!\n\n");
+			getch();
+			system("cls");
+			display(stage, length, food, now_long);
+		}
+		
+		
+
+    	if( now_long == 10 )
+		{
+		level++;
+		if(level == 5)
+		{
+			printf("\n全部关卡闯关成功，请按任意键退出\n");
+			getch();
+			system("cls");
+			display(stage, length, food, now_long);
+		}
+		printf("\nCongratilations!, please press any key to the next level");
+		getch();
+		system("cls");
+		begin(stage, length, food);
+		goto loop;	
+		}
+		system("cls");		
+		show(stage, level);	
+		Sleep(200/level);		
+	 }
+
+}
+
+int life_snake(char stage[][2*N], char *length[], int now_long)
+{
+	int life;
+	for(i=0; i<2*N; i++)
+	{
+		if( length[0] == &stage[0][i] || length[0] == &stage[N-1][i])
+			life=0;
+	}
+	for(i=1; i<N-1; i++)
+	{
+		if( length[0] == &stage[i][0] || length[0] == &stage[i][2*N-1] )
+			life = 0;
+	}
+	for(i=1; i<now_long; i++)
+		if(length[0] == length[i])	
+			life = 0;
+	return life;
+}
+
+void display(char stage[][2*N], char *length[2*N], char *food, int now_long)
+{
+	int n;
+	printf("\n\n\n\t\t\t\t  贪 吃 蛇\n");
+	printf("\n\n\t\t\t\t请选择难度等级\n");
+	printf("\n\t\t\t 1.level = 1\t2.level = 2\n\n\t\t\t 3.level = 3\t4.level = 4\n\n");
+loop:	scanf("%d", &n);
+	switch(n)
+	{
+	case 1:
+		level = 1;
+		system("cls");
+		begin(stage, length, food);
+		move(stage, length, food, now_long); 
+		break;
+	case 2:
+		level = 2;
+		system("cls");
+		begin(stage, length, food);
+		move(stage, length, food, now_long);
+		break;
+	case 3:
+		level = 3;
+		system("cls");
+		begin(stage, length, food);
+		move(stage, length, food, now_long);
+		break;
+	case 4:
+		level = 4;
+		system("cls");
+		begin(stage, length, food);
+		move(stage, length, food, now_long);
+		break;
+	default:
+		printf("\n\t\t\t\t请重新选择(1~~4): ");
+		goto loop;
+		break;	
+	}
+}
+
+int main()
+{
+	int now_long = 3;
+	char stage[N][2*N];
+	char *length[2*N];
+	char *food = &stage[7][2*N-1-3-5];//char *s; s="123abc";	
+	display(stage, length, food, now_long);
+	return 0;
+}	
+
+
+
+
+
+
+
+
+

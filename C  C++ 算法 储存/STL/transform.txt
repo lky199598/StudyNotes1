@@ -1,0 +1,92 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<set>
+#include<map>
+#include<iterator>
+#include<algorithm>
+#include<cctype>
+using namespace std;
+char change(char ch)
+{
+	return tolower(ch);
+}
+string & tol(string & st)
+{
+	transform(st.begin(), st.end(), st.begin(), change);
+	return st;
+}
+void display(const string & s)
+{
+	cout<<s<<"  ";
+}
+int main()
+{
+	vector<string>str;
+	string s;
+	while( cin>>s && s != "quit")
+	str.push_back(s);
+	cout<<"\nstr.push_back(s)\n";
+	for_each(str.begin(), str.end(), display);
+
+	set<string>words;
+	transform(str.begin(), str.end(), insert_iterator< set<string> >(words, words.begin() ), tol);
+	cout<<"\n\ntranform( str.begin(), str.end(), insert_iterator< set<string> >( words, words.begin() ), tol)\n";
+	for_each( words.begin(), words.end(), display );
+
+	cout<<"\n\n";
+	map<string, int>wordmap;
+	set<string>::iterator pr;
+	for(pr = words.begin(); pr != words.end(); pr++)
+		wordmap[*pr] = count( str.begin(), str.end(), *pr);
+	for( pr = words.begin(); pr != words.end(); pr++)
+		cout<<*pr<<"\t"<<wordmap[*pr]<<endl;
+	return 0;
+}
+
+
+
+
+
+#include<iostream>
+#include<string>
+#include<vector>
+#include<set>
+#include<map>
+#include<iterator>
+#include<algorithm>
+#include<cctype>
+using namespace std;
+char change(char ch)
+{
+	return tolower(ch);
+}
+string & tol(string & st)
+{
+	transform(st.begin(), st.end(), st.begin(), change);
+	return st;
+}
+void display(const string & s)
+{
+	cout<<s<<"  ";
+}
+int main()
+{
+	vector<string>str;
+	string s;
+	while( cin>>s && s != "quit")
+	str.push_back(s);
+	cout<<"\nstr.push_back(s)\n";
+	for_each(str.begin(), str.end(), display);
+
+	set<string>words;
+	transform(str.begin(), str.end(), insert_iterator< set<string> >(words, words.begin() ), tol);
+	cout<<"\n\ntranform( str.begin(), str.end(), insert_iterator< set<string> >( words, words.begin() ), tol)\n";
+	for_each( words.begin(), words.end(), display );
+
+	cout<<"\n\n";
+	set<string>::iterator pr;
+	for( pr = words.begin(); pr != words.end(); pr++)
+		cout<<*pr<<"\t"<<count( str.begin(), str.end(), *pr)<<endl;
+	return 0;
+}

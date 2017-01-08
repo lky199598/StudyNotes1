@@ -1,0 +1,109 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node * next;
+}list;
+int i;
+list *creat1(int n)
+{
+	list *head, *p, *q;
+	printf("Input %d numbers\n", n);
+	for(i=0; i<n; i++)
+	{
+		p = (list *)malloc( sizeof(list) );
+		scanf("%d", &p->data);
+		if(i==0)
+			head = p;
+		else
+			q->next = p;	
+		q = p;
+	}
+	q->next = NULL;//尾节点必须置空
+	return head;
+}
+
+list *creat2(int n)
+{
+	list *head, *p, *q;
+	printf("\nInput %d numbers\n", n);
+	for(i=0; i<n; i++)
+	{
+		p = (list *)malloc( sizeof(list) );
+		scanf("%d", &p->data);
+		if(i==0)
+			head = p;
+		else
+			q->next = p;	
+		q = p;
+	}
+	q->next = NULL;//尾节点必须置空
+	return head;
+}
+
+
+list* difference(list *h1, list *h2)
+{
+	list *p, *p1, *q, *head;
+	int i=1;
+	p1=(list *)malloc( sizeof(list) );
+	head=p1;
+	p1->next=h1, p=h1;
+
+	while( p )
+	{
+		q=h2;
+		while( q !=NULL )
+		{ 
+			if(q->data != p->data)
+			q=q->next;
+
+			else
+				break;
+		}
+		if(q)
+		{
+			p1->next=p->next;
+			free(p);
+			p=p1->next;
+		}
+		
+		else
+		{
+			p1=p1->next;
+			p=p->next;
+		}
+	}
+
+	return head->next;
+
+}
+
+
+void print(list *head)
+{
+	printf("\noutput the data\n");
+	while(head != NULL)
+	{
+		printf("%d ", head->data);
+		head = head->next;
+	}
+	printf("\n");
+}
+	
+
+
+int main()
+{
+    list *head1,*head2;
+
+	head1=creat1(6);
+	print(head1);
+
+	head2=creat2(5);
+	print(head2);
+
+	head1=difference(head1,head2);
+	print(head1);
+}

@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<malloc.h>
+struct s
+{
+	int n;
+	struct s *next;
+};
+int i;
+struct s *head, *tail;
+void creat(m)
+{
+	struct s *p, *p1;
+	head = NULL; 
+	for(i=0; i<m; i++)
+	{
+		p = (struct s*)malloc(sizeof(struct s));
+		scanf("%d", &p->n);
+		if(i==0)
+			head = p;
+		else
+			p1->next = p;
+		p1 = p;
+	}
+	tail = p1;
+	tail->next = head;
+}
+void select_1(int m)//第一种循环方法
+{
+	struct s *p, *q;
+	int w=0;
+	p = tail;
+	while( p != p->next)
+	{
+		w++;
+		q = p, p = p->next;
+		if( w%m == 0)
+		{
+			printf("\nDelete the number: %d\n", p->n); 
+			q->next = p->next;
+			free(p); //不能写成 p = p->next,因为free(p),已释放p节点所占用的内存空间.
+			p = q->next;
+			w++;
+		}
+	}
+	printf("\nOutput circular list the last node: %d\n\n", p->n);
+}
+
+void select_2(int m)//第二种循环循环方法
+{
+	struct s *p, *q;
+	int w=0;
+	q = tail;
+	while( q != q->next)
+	{
+		w++; 
+		p = q->next;
+		if( w%m == 0)
+		{
+			printf("\nDelete the number: %d\n", p->n); 
+			q->next = p->next;
+			free(p);
+		}
+		else
+			q = q->next;
+	}
+	printf("\nOutput circular list the last node: %d\n\n", q->n);
+}
+
+void main()
+{
+	int a, n, b, m;
+	printf("                                 \nPlease input the list nodes number: ");
+	scanf("%d", &a);
+	creat(a);
+	printf("\nPlease input the interval: ");
+	scanf("%d", &n);
+	select_1(n);
+	
+	printf("                                 \nPlease input the list nodes number: ");
+	scanf("%d", &b);
+	creat(b);
+	printf("\nPlease input the interval: ");
+	scanf("%d", &m);
+	select_2(m);
+}

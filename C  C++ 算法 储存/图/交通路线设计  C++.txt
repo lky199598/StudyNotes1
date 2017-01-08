@@ -1,0 +1,400 @@
+//new int 创建一个int大小的内存, 如int* p = new int; 
+//new int (100) 创建一个int型的内存,并赋值为100; int *p = new int(100);
+// new int[100] 创建100个int型的内存; int* p[] = new int[100];
+#include<iostream>
+#include<string>
+#include<fstream>
+
+using namespace std;
+#define N 32768
+
+class message
+{
+public:
+	int No;
+	string name;
+}g1;
+
+class city
+{
+public:
+	message *vex;
+	int **arcs;
+	int vexnum;//顶点数目
+	int arcnum;//边数目
+
+	void read_file();
+	void write_file();
+	int locate(string name);
+	void display();
+	void search();
+	void add();
+	void del();
+	void Dijkstra(int start, int end, int dist[], int *path[]);
+	void shortcut();
+
+}g2;//class city g;
+
+void city::read_file()
+{
+	string name1, name2;
+	int n;
+	int i, j,k, t;
+	ifstream infile("city.txt", ios::in);
+	if(!infile)
+	{
+		cout<<"\nopen error\n";
+		exit(1);
+	}
+	infile>>vexnum>>arcnum;
+	
+	vex=new message[vexnum];//  T* p1 = new T[NUM]; delete[] p1; //snake *p = new snake;
+
+	arcs=new int*[vexnum]; //arcs=(int **)malloc( vexnum*sizeof(int*) );
+	//Type *m=new Type[10];只不过Type类型可以是int,也可以是int*;
+	for(i=0; i<vexnum; i++)
+	{
+		arcs[i]=new int[vexnum];   //(int*)malloc( vexnum*sizeof(int) )
+	}
+	for(i=0; i<vexnum; i++)
+		for(j=0; j<vexnum; j++)
+			arcs[i][j]=N;
+
+	for(i=0; i<vexnum; i++)
+	{
+		infile>>vex[i].name;
+		vex[i].No=i+1;
+	}
+	
+	for(i=0; i<arcnum; i++)
+	{
+		infile>>name1>>name2>>n;
+		k=locate(name1); t=locate(name2);
+		arcs[k][t]=n;
+		arcs[t][k]=n;
+	}
+	infile.close();
+}
+
+void city::write_file()
+{
+	int i, j;
+	ofstream outfile("city.txt", ios::out);
+	if( !outfile )
+	{
+		cout<<"\nopen error\n";
+		exit(2);
+	}
+	outfile<<vexnum<<" "<<arcnum<<endl<<endl;
+	for(i=0; i<vexnum; i++)
+	outfile<<vex[i].name<<" ";
+	outfile<<endl<<endl;
+
+	for(i=0; i<vexnum; i++)
+	{
+		for(j=0; j<i; j++)
+			if(arcs[i][j] != N)
+			{
+				outfile<<vex[i].name<<" "<<vex[j].name<<" "<<arcs[i][j]<<endl;
+			}
+	}
+	outfile.close();
+
+}
+
+void city::display()
+{
+	int i, j;
+	cout<<"\n\t城市交通图\n\n";
+	cout<<"城市: ";
+	for(i=0; i<vexnum; i++)
+	{
+		cout<<vex[i].name<<"  ";
+	}
+	cout<<"\n\n城市数目: "<<vexnum<<", 路线数目: "<<arcnum<<endl<<endl;
+	for(i=0; i<vexnum; i++)
+	{
+		for(j=0; j<i; j++)
+			if(arcs[i][j] != N )
+			{
+				cout<<vex[i].name<<"<------>"<<vex[j].name<<": "<<arcs[i][j]<<"km\n\n";
+			}
+	}
+}
+
+int city::locate(string name)
+{
+	int i;
+	for(i=0; i<vexnum; i++)
+		if( name == vex[i].name )
+			return i;
+		return -1;
+}
+
+void city::search()
+{
+	string city;
+	int i, No;
+	cout<<"\n请输入查询的城市: ";
+	cin>>city;
+
+	No=locate(city);
+	for(i=0; i<vexnum; i++)
+	{
+		if(arcs[No][i] != N)
+			cout<<endl<<vex[No].name<<"<------>"<<vex[i].name<<": "<<arcs[No][i]<<"km\n\n";
+	}
+
+
+}
+
+void city::add()
+{
+	string city;
+	int start, end, w;
+	cout<<"\n请输入增加路线的起点城市: ";
+	cin>>city;
+	start=locate(city);
+	
+	cout<<"\n\n请输入终点路线的起点城市: ";
+	cin>>city;
+	end=locate(city);
+
+	cout<<"\n公里数: ";
+	cin>>w;
+	arcs[start][end]=w;
+	arcs[end][start]=w;
+	arcnum++;
+	write_file();
+	cout<<endl;
+}
+
+void city::del()
+{
+	string city;
+	int start, end;
+	cout<<"\n请输入撤销路线的起点城市: ";
+	cin>>city;
+	start=locate(city);
+
+	cout<<"\n请输入终点城市: ";
+	cin>>city;
+	end=locate(city);
+	arcs[start][end]=N;
+	arcs[end][start]=N;
+	arcnum--;
+	write_file();
+	cout<<endl;
+}
+void city::Dijkstra(int start, int end, int dist[], int *path[])
+{
+	int min, i, j, k, t=1;
+
+	for(i=0; i<vexnum; i++)
+	{
+		dist[i]=arcs[start][i];//dist[i]是保存城市start到城市i的路径长度
+		if(arcs[start][i] != N)
+			path[i][1]=start; //path[i][j]是保存城市start到城市i的 j条路线
+	}
+
+	path[start][0]=1;//path[i][0]=1是路线i已经访问过
+
+	for(i=1; i<vexnum; i++)//从起点城市到各终点城市的最短路线
+	{
+		min=N;
+		for(j=0; j<vexnum; j++)
+			if( path[j][0] != 1 && dist[j] < min)
+			{
+				min=dist[j];
+				k=j;
+			}
+			if(min==N)
+				return;
+			path[k][0]=1;
+
+		for(j=0; j<vexnum; j++)
+		{
+			if(path[j][0] != 1 && arcs[k][j] < N && dist[k]+arcs[k][j] < dist[j])
+			{
+				dist[j]=dist[k]+arcs[k][j];
+				t=1;
+				while(path[k][t] !=0)
+				{
+					path[j][t]=path[k][t];
+					t++;
+				}
+				path[j][t]=k;
+				path[j][t+1]=0;
+			}
+		}
+	}
+	for(i=0; i<vexnum; i++)
+		if(i==end)
+			break;
+		cout<<endl<<vex[start].name<<"--->"<<vex[end].name<<"的最短路线为: "<<vex[start].name;
+		for(t=2; path[end][t] != 0; t++)
+			cout<<"-->"<<vex[ path[end][t] ].name;
+
+		cout<<"-->"<<vex[end].name<<",  距离为: "<<dist[end]<<"km";
+		cout<<"\n\n";
+}
+
+void city::shortcut()
+{
+	int i, j;
+	string city;
+	int start, end;
+	int *dist=new int[vexnum];      //(int*)malloc( sizeof(int)*vexnum );
+	int **path;
+	path=new int*[vexnum]; //(int **)malloc( sizeof(int*)*vexnum );
+	for(i=0; i<vexnum; i++)
+		path[i]=new int[vexnum];     //(int*)malloc( sizeof(int)*vexnum );
+
+	for(i=0; i<vexnum; i++)
+		for(j=0; j<vexnum; j++)
+			path[i][j]=0;
+
+	cout<<"\n请输入起点城市: ";
+	cin>>city;
+	start=locate(city);
+
+	cout<<"\n请输入终点城市: ";
+	cin>>city;
+	end=locate(city);
+
+	Dijkstra(start, end, dist, path);
+}
+
+class Prim
+{
+private:
+	int adjvex;
+	int lowcost;
+public:
+	void prim(int start);
+	void search_prim();
+}g3;
+
+
+void Prim::prim(int start)
+{
+	Prim *closedge=new Prim[g2.vexnum]; //Prim closedge[vexnum]
+	int i, e, k, m, min;
+	closedge[start].lowcost=0;//标志顶点U已加入U-生成树集合
+	for(i=0; i<g2.vexnum; i++)
+		if(i != start )
+		{
+			closedge[i].adjvex=start;
+			closedge[i].lowcost=g2.arcs[start][i];
+		}
+
+	for(e=0; e<g2.vexnum-1; e++)
+	{
+		min=N;
+		for(k=0; k<g2.vexnum; k++)
+		{
+			if(closedge[k].lowcost != 0 && closedge[k].lowcost<min)
+			{
+				min=closedge[k].lowcost;
+				m=k;
+			}
+		}
+
+		cout<<"\n从"<<g2.vex[ closedge[m].adjvex ].name<<"---"<<g2.vex[m].name<<": "<<closedge[m].lowcost<<"km\n";
+		closedge[m].lowcost=0;
+
+		for(i=0; i<g2.vexnum; i++)
+		{
+			if(i != m && g2.arcs[m][i] < closedge[i].lowcost)
+			{
+				closedge[i].lowcost=g2.arcs[m][i];
+				closedge[i].adjvex=m;
+			}
+		}
+	}
+	cout<<endl;
+	delete[] closedge;
+}
+
+
+void Prim::search_prim()
+{
+	string city;
+	int start;
+	cout<<"\n请输入城市: ";
+	cin>>city;
+	start=g2.locate(city);
+	prim(start);
+}
+void main()
+{
+	int n;
+	g2.read_file();
+	do{	
+		system("cls");
+		cout<<"\n\t\t\t城市交通情况查询系统\n\n";
+		cout<<"\t\t\t1.显示基本信息\n\n";
+		cout<<"\t\t\t2.查询某个城市交通路线基本情况\n\n";
+		cout<<"\t\t\t3.添加新路线\n\n";
+		cout<<"\t\t\t4.撤销旧路线\n\n";
+		cout<<"\t\t\t5.查询从某个城市出发到另外一个城市的最短路线\n\n";
+		cout<<"\t\t\t6.查询从某个城市出发的最短连通路线\n\n";
+		cout<<"\t\t\t0.退出\n\n";
+		cout<<"\t\t 请输入选择: ";
+		cin>>n;
+		system("cls");
+
+		switch(n)
+		{
+		case 1:
+			g2.display();	system("pause");
+			break;
+		case 2:
+			g2.search();system("pause");
+			break;
+		case 3:
+			g2.add();system("pause");
+			break;
+		case 4:
+			g2.del();system("pause");
+			break;
+		case 5:
+			g2.shortcut();system("pause");
+			break;
+		case 6:
+			g3.search_prim();system("pause");
+			break;
+		case 0:
+			return ;
+		}
+	}while(1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+

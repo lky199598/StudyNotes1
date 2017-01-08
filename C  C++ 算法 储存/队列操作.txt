@@ -1,0 +1,104 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct node
+{
+	char ch;
+	struct node *next;
+}node;
+
+typedef struct 
+{
+	node *front;
+	node *rear;
+}queue;
+
+
+void inqueue(queue *H, char ch);
+int outqueue(queue *H, char *data);
+void input(queue *H);
+void output(queue *H);
+
+
+queue* init()
+{
+	queue *H;
+	H=(queue*)malloc( sizeof(queue) );
+	H->front=H->rear=(node*)malloc( sizeof(node) );
+	H->front->next=H->rear->next=NULL;//头结点不是第一个节点,让开始初始化队列时 头结点和尾节点指向同一地址，进队的时候头地址不变，尾节点等于新节点的地址
+	return H;
+}
+
+
+void inqueue(queue *H, char ch)
+{
+	node *p=(node*)malloc( sizeof(node) );
+	p->ch=ch;
+	p->next=H->rear->next;
+	H->rear->next=p;
+	H->rear=p;
+}
+
+int outqueue(queue *H, char *data)
+{
+	node *p;
+	if(H->front->next == NULL)
+	{
+		printf("\n队空\n");
+		return 0;
+	}
+
+	p=H->front->next;
+	H->front->next=p->next;
+
+	*data=p->ch;
+	free(p);
+
+	if(H->front->next == NULL) //只有一个元素时，出对后尾指针指向的空间被释放，修改尾指针
+		H->rear=H->front;
+
+	return 1;
+}
+
+void input(queue *H)
+{
+	char ch;
+	printf("输入\n");
+	ch=getchar();
+
+	while(ch != '#')
+	{
+		inqueue(H, ch);
+		ch=getchar();
+	}
+
+}
+
+void output(queue *H)
+{
+	char ch;
+	
+	printf("\n输出\n");
+	printf("\n\n");
+	while( H->front->next )
+	{
+		outqueue(H, &ch);
+
+		printf("%c", ch);
+	}
+	printf("\n\n");
+}
+
+
+void main()
+{
+	queue *H;
+	H=init();
+	input(H);
+	output(H);
+}
+
+
+
+
+

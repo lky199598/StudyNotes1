@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+	int data;
+	struct node * next;
+}list;
+int i;
+list *creat1(int n)
+{
+	list *head, *p, *q;
+	printf("Input %d numbers\n", n);
+	for(i=0; i<n; i++)
+	{
+		p = (list *)malloc( sizeof(list) );
+		scanf("%d", &p->data);
+		if(i==0)
+			head = p;
+		else
+			q->next = p;	
+		q = p;
+	}
+	q->next = NULL;//Î²½Úµã±ØĞëÖÃ¿Õ
+	return head;
+}
+
+
+
+list* delete_same(list *head)
+{
+	list *p, *q, *r;
+	p = head;
+
+	while( p )
+	{
+		q=p;
+		while(q->next)
+		{
+			if(q->next->data == p->data)
+			{
+				r=q->next;
+				q->next=r->next;
+				free(r);
+			}
+			else
+				q=q->next;
+		}
+		p=p->next;
+	}
+
+	/*
+list *p, *q, *r;
+	p = head;
+
+	while( p )
+	{
+		r = p;
+		q = p->next;
+		while( q )
+		{	
+			if(p->data == q->data)
+			{	
+				r->next = q->next;
+				free(q);
+		    	q = r->next;
+			}
+			else
+			{
+			q = q->next;
+			r = r->next;
+			}
+		}
+		p=p->next;
+	}*/	
+	return head;
+
+}
+
+
+void print(list *head)
+{
+	printf("\noutput the data\n");
+	while(head != NULL)
+	{
+		printf("%d ", head->data);
+		head = head->next;
+	}
+	printf("\n");
+}
+	
+
+
+int main()
+{
+    list *head;
+
+	head=creat1(6);
+	print(head);
+
+	head=delete_same(head);
+	print(head);
+}

@@ -46,7 +46,7 @@ public class ClassDemo1 {
 	{
 		ArrayList<Object> list = new ArrayList<Object>();
 		
-		Class c = obj.getClass();
+		 Class c = obj.getClass();
 		 System.out.println(c.getName() + "\n" + c.getSimpleName()+"\n");
 		 
 		 try {

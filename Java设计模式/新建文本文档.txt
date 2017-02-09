@@ -1,54 +1,26 @@
-JDK中所要进行动态代理的类必须要实现一个接口，也就是说只能对该类所实现接口中定义的方法进行代理，这在实际编程中具有一定的局限性，而且使用反射的效率也并不是很高。
-二、使用CGLib实现：
-使用CGLib实现动态代理，完全不受代理类必须实现接口的限制，而且CGLib底层采用ASM字节码生成框架，使用字节码技术生成代理类，比使用Java反射效率要高。唯一需要注意的是，CGLib不能对声明为final的方法进行代理，因为CGLib原理是动态生成被代理类的子类。
-下面，将通过一个实例介绍使用CGLib实现动态代理。
-1、被代理类：
-首先，定义一个类，该类没有实现任何接口，包含两个方法。
-Java代码  收藏代码
-public class ConcreteClassNoInterface {  
-    public String getConcreteMethodA(String str){  
-        System.out.println("ConcreteMethod A ... "+str);  
-        return str;  
-    }  
-    public int getConcreteMethodB(int n){  
-        System.out.println("ConcreteMethod B ... "+n);  
-        return n+10;  
-    }  
-}  
-2、拦截器：
-定义一个拦截器。在调用目标方法时，CGLib会回调MethodInterceptor接口方法拦截，来实现你自己的代理逻辑，类似于JDK中的InvocationHandler接口。
-Java代码  收藏代码
-public class ConcreteClassInterceptor implements MethodInterceptor{  
-    public Object intercept(Object obj, Method method, Object[] arg, MethodProxy proxy) throws Throwable {  
-        System.out.println("Before:"+method);    
-        Object object=proxy.invokeSuper(obj, arg);  
-        System.out.println("After:"+method);   
-        return object;  
-    }  
-}  
-参数：Object为由CGLib动态生成的代理类实例，Method为上文中实体类所调用的被代理的方法引用，Object[]为参数值列表，MethodProxy为生成的代理类对方法的代理引用。
-返回：从代理实例的方法调用返回的值。
-其中，proxy.invokeSuper(obj,arg)：
-调用代理类实例上的proxy方法的父类方法（即实体类ConcreteClassNoInterface中对应的方法）
-在这个示例中，只在调用被代理类方法前后各打印了一句话，当然实际编程中可以是其它复杂逻辑。
-3、生成动态代理类：
-Java代码  收藏代码
-Enhancer enhancer=new Enhancer();  
-enhancer.setSuperclass(ConcreteClassNoInterface.class);  
-enhancer.setCallback(new ConcreteClassInterceptor());  
-ConcreteClassNoInterface ccni=(ConcreteClassNoInterface)enhancer.create();  
-这里Enhancer类是CGLib中的一个字节码增强器，它可以方便的对你想要处理的类进行扩展，以后会经常看到它。
-首先将被代理类ConcreteClassNoInterface设置成父类，然后设置拦截器ConcreteClassInterceptor，最后执行enhancer.create()动态生成一个代理类，并从Object强制转型成父类型ConcreteClassNoInterface。
-最后，在代理类上调用方法：
-Java代码  收藏代码
-ccni.getConcreteMethodA("shensy");  
-ccni.getConcreteMethodB(0);  
-查看控制台输出：
-控制台代码  收藏代码
-Before :public java.lang.String generic.cglib.proxy.ConcreteClassNoInterface.getConcreteMethodA(java.lang.String)  
-ConcreteMethod A ... shensy  
-After :public java.lang.String generic.cglib.proxy.ConcreteClassNoInterface.getConcreteMethodA(java.lang.String)  
-Before :public int generic.cglib.proxy.ConcreteClassNoInterface.getConcreteMethodB(int)  
-ConcreteMethod B ... 0  
-After :public int generic.cglib.proxy.ConcreteClassNoInterface.getConcreteMethodB(int)  
-可以看到，拦截器在调用被代理类方法前后都执行了print操作。
+* 方法四
+ * 单例模式最优方案
+ * 线程安全  并且效率高  
+ */  public class SingletonTest { 
+//定义一个静态私有变量(不初始化，不使用final关键字，使用volatile保证了多线程访问时instance变量的可见性，避免了instance初始化时其他变量属性还没赋值完时，被另外线程调用)   
+//  volatile保证了多线程访问时instance变量的可见性
+ private  static  volatile  SingletonTest   instance;  
+    // 定义一个私有构造方法
+    private SingletonTest() { 
+}   
+
+//定义一个共有的静态方法，返回该类型实例
+public  static  SingletonTest   getIstance() { 
+        // 对象实例化时与否判断（不使用同步代码块，instance不等于null时，直接返回对象，提高运行效率）
+        if (instance == null) {
+            //同步代码块（对象未初始化时，使用同步代码块，保证多线程访问时对象在第一次创建后，不再重复被创建）
+            synchronized (SingletonTest.class) {
+                //再进行空值判断，不然可能创建多个对象，所以要判断两次
+                if (instance == null) {
+                    instance = new SingletonTest();   
+                }   
+            }   
+        }
+        return instance;   
+    }   
+}

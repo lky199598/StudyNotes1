@@ -16,7 +16,7 @@ import javax.lang.model.element.Element;
 @Documented
 
 //使用@interface关键字定义注解
-//成员以无参无异常方式声明	
+//成员以 无参无异常 方式声明	
 //可以使用default为成员指定一个默认值
 
 public @interface Description {
